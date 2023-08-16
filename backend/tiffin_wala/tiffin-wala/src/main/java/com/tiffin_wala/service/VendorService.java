@@ -1,3 +1,4 @@
+
 package com.tiffin_wala.service;
 
 import java.util.List;
@@ -23,5 +24,9 @@ public interface VendorService {
 	public List<VendorDto> getAllUnapprovedVendors();
 
 	public VendorDto getUnapprovedVendorById(int vendorId);
+
+	public VendorDto changeAvailability(VendorDto vendor);
+
+	public VendorDto changeBlockingStatus(VendorDto vendor);
 
 }

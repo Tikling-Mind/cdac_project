@@ -1,3 +1,4 @@
+
 package com.tiffin_wala.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,13 @@ public class CustomerSubscriptionController {
 	@Autowired
 	CustomerSubscriptionService  subscriptionService ;
 	
-	@PostMapping("/{customerId}/{planId}")
-	public ResponseEntity<?> subscribeToPlan(@PathVariable int customerId, @PathVariable int planId){
+	@PostMapping("/{customerId}/{tiffinId}")
+	public ResponseEntity<?> subscribeToTiffin(@PathVariable int customerId, @PathVariable int planId){
 		return new ResponseEntity<>(subscriptionService.subscribeToPlan(customerId,planId), HttpStatus.CREATED) ;
 	}
 	
-	@DeleteMapping("/{customerId}/{planId}")
-	public ResponseEntity<?> unsubscribeFromPlan(@PathVariable int customerId, @PathVariable int planId){
+	@DeleteMapping("/{customerId}/{tiffinId}")
+	public ResponseEntity<?> unsubscribeFromTiffin(@PathVariable int customerId, @PathVariable int planId){
 		return new ResponseEntity<>(subscriptionService.unsubscribeFromPlan(customerId,planId), HttpStatus.CREATED) ;
 	}
 }
