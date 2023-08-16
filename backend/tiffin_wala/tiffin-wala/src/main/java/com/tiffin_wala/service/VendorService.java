@@ -24,4 +24,8 @@ public interface VendorService {
 
 	public VendorDto getUnapprovedVendorById(int vendorId);
 
+	public VendorDto changeAvailability(VendorDto vendor);
+
+	public VendorDto changeBlockingStatus(VendorDto vendor);
+
 }

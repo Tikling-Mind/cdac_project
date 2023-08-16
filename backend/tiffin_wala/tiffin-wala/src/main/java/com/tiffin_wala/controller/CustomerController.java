@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tiffin_wala.dto.ApiResponse;
 import com.tiffin_wala.dto.CustomerDto;
+import com.tiffin_wala.dto.VendorDto;
 import com.tiffin_wala.service.CustomerService;
 
 @RestController
@@ -28,7 +29,7 @@ public class CustomerController {
 	public ResponseEntity<?> createCustomer(@RequestBody CustomerDto customer) {
 		try {
 			System.out.println("In create Customer" + customer);
-			// Add location header in the h
+			// Add location header in the 
 			return new ResponseEntity<>(customerService.createCustomer(customer), HttpStatus.CREATED);
 		} catch (RuntimeException e) {
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.CONFLICT);
@@ -38,12 +39,7 @@ public class CustomerController {
 	
 	@GetMapping // Get list of all  customers --------------------------
 	public ResponseEntity<?> getAllCustomers() {
-		try {
-			System.out.println("In get all customer controller");
 			return new ResponseEntity<>(customerService.getAllCustomers(), HttpStatus.OK);
-		} catch (RuntimeException e) {
-			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.NOT_FOUND);
-		}
 	}
 	
 	@GetMapping("/{customerId}") // get customer by Customer Id-----------
@@ -57,19 +53,19 @@ public class CustomerController {
 	}
 	
 	@PutMapping("/{customerId}") // Update Customer Details -----------------
-	public ResponseEntity<?> updateCustomerById(@PathVariable int customerId){
-		return new ResponseEntity<>(customerService.updateCustomerDetails(customerId), HttpStatus.OK) ;
+	public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customer){
+		return new ResponseEntity<>(customerService.updateCustomerDetails(customer), HttpStatus.OK) ;
 	}
 	 
 	@DeleteMapping("/{customerId}") // Delete Customer ----------------------
 	public ResponseEntity<?> deleteCustomerById(@PathVariable int customerId){
 		return new ResponseEntity<>(customerService.deleteCustomerById(customerId), HttpStatus.OK ) ;
 	}
+
 	
-	@PatchMapping("/{customerId}") // Block Customer ------------------------
-	public ResponseEntity<?> blockCustomerById(@PathVariable int customerId){
-		return new ResponseEntity<>(customerService.blockCustomerById(customerId), HttpStatus.OK) ;
+	@PatchMapping("/status/")
+	public ResponseEntity<?> changeBlockingStatus(@RequestBody CustomerDto customer){
+		return new ResponseEntity<> (customerService.changeBlockingStatus(customer), HttpStatus.OK) ;
 	}
-	
 
 }
