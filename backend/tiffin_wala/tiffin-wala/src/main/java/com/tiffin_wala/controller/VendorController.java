@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tiffin_wala.dto.VendorDto;
@@ -47,12 +48,7 @@ public class VendorController {
 	public ResponseEntity<?> deleteVendorById(@PathVariable int vendorId){
 		return new ResponseEntity<> (vendorService.deleteVendorById(vendorId), HttpStatus.OK) ;
 	}
-	
-	@PatchMapping("/{vendorId}")
-	public ResponseEntity<?> blockVendorById(@PathVariable int vendorId){
-		return new ResponseEntity<> (vendorService.blockVendorById(vendorId), HttpStatus.OK) ;
-	}
-	
+		
 	@PostMapping("/approve/{vendorId}")
 	public ResponseEntity<?> approveVendorById(@PathVariable int vendorId){
 		return new ResponseEntity<>(vendorService.approveVendorById(vendorId), HttpStatus.OK) ;
@@ -68,5 +64,14 @@ public class VendorController {
 		return new ResponseEntity<>(vendorService.getUnapprovedVendorById(vendorId),HttpStatus.OK) ;
 	}
 
+	@PatchMapping("/status/availible")
+	public ResponseEntity<?> changeAvailablibility(@RequestBody VendorDto vendor){
+		return new ResponseEntity<>(vendorService.changeAvailability(vendor), HttpStatus.OK) ;
+	}
+	
+	@PatchMapping("/status/block")
+	public ResponseEntity<?> changeBlockingStatus(@RequestBody VendorDto vendor){
+		return new ResponseEntity<> (vendorService.changeBlockingStatus(vendor), HttpStatus.OK) ;
+	}
 	
 }
