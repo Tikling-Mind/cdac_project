@@ -12,7 +12,7 @@ import com.tiffin_wala.service.OrderService;
 @RequestMapping("/order")
 public class OrderController {
 	@Autowired
-	OrderService orderService ;
+	OrderService orderService;
 	
 	@PostMapping
 	public ResponseEntity<?> createOrder(OrderDto order){

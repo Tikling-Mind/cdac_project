@@ -1,7 +1,6 @@
 package com.tiffin_wala.entities;
 
 import java.time.LocalDate;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
