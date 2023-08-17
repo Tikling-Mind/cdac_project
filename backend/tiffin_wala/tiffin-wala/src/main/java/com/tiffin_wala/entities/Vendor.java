@@ -45,4 +45,24 @@ public class Vendor extends BaseEntity {
 //	private Set<SubscriptionPlan> plans = new HashSet<SubscriptionPlan>();
 
 
+	public String getFirstName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getLastName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setBlock(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setApprove(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

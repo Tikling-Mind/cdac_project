@@ -43,13 +43,8 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/{customerId}") // get customer by Customer Id-----------
-	public ResponseEntity<?> getCustomerById(@PathVariable int customerId){
+	public ResponseEntity<?> getCustomerById(@PathVariable Long customerId){
 			return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK) ;
-	}
-	
-	@GetMapping("/vendor/{vendorId}") // Get Customer by vendor ---------
-	public ResponseEntity<?> getCustomersByVendorId(@PathVariable int vendorId){
-		return new ResponseEntity<>(customerService.getCustomersByVendorId(vendorId), HttpStatus.OK) ;
 	}
 	
 	@PutMapping("/{customerId}") // Update Customer Details -----------------
@@ -58,7 +53,7 @@ public class CustomerController {
 	}
 	 
 	@DeleteMapping("/{customerId}") // Delete Customer ----------------------
-	public ResponseEntity<?> deleteCustomerById(@PathVariable int customerId){
+	public ResponseEntity<?> deleteCustomerById(@PathVariable Long customerId){
 		return new ResponseEntity<>(customerService.deleteCustomerById(customerId), HttpStatus.OK ) ;
 	}
 
