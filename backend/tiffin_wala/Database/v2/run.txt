@@ -1,0 +1,4 @@
+
+mysql -u root -p
+root
+source D:\CDAC_DATA\ACTS_DAC_23\Project\Database\v2\Database.sql

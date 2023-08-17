@@ -1,15 +1,22 @@
-package com.tiffin_wala.entities;
+package com.app.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.tiffin_wala.enums.PlanType;
+import com.app.enums.PlanType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,10 +45,9 @@ public class SubscriptionPlan extends BaseEntity{
 //	private Set<Tiffin> tiffins = new HashSet<Tiffin>();
 //	
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "vendor_id")
 	private Vendor vendor;
-	
-}
 	
 	
