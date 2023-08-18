@@ -18,6 +18,8 @@ public interface TiffinService {
 
 	String deleteTiffinById(int tiffinId);
 
+	TiffinDto blockTiffinById(int tiffinId);
+
 
 
 }
