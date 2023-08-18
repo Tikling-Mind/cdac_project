@@ -1,25 +1,37 @@
 package com.tiffin_wala.entities;
 
-public class Customer {
+import java.time.LocalDate;
 
-	public boolean block;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "customers")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class Customer extends BaseEntity {
 	
-	public boolean isBlock() {
-		return block;
-	}
-
-	public void setBlock(boolean block) {
-		block = block;
-	}
-
-	public String getFirstName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getLastName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	String firstName;
+	String lastName;
+	String email;
+	String mobile;
+	LocalDate registerDate;
+	String password;
+	boolean isBlocked;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="address_id")
+	Address address;	
+	
 }
