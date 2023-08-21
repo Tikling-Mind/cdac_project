@@ -59,13 +59,15 @@ public class CustomerServiceImpl implements CustomerService {
 		return "Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been removed!";
 	}
 
+
 	@Override
-	public String blockCustomerById(Long customerId) {
-		Customer customer = customerRepo.findById(customerId).
-				orElseThrow(()-> new ResourceNotFoundException("Invalid customer ID"));
-		customer.setBlock(true);
-		customerRepo.save(customer);
-		return "Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been blocked!";
+	public String changeBlockingStatus(CustomerDto customerDto) {
+		Customer customer = customerRepo.findById(customerDto.getId())
+				.orElseThrow(()-> new ResourceNotFoundException("Invalid customer ID")) ;
+		customer.setBlocked(customerDto.isBlocked());
+		customerRepo.save(customer) ;
+		String status = customerDto.isBlocked()?"Blocked":"Unblocked" ;
+		return "Customer " + customer.getFirstName() + " "+ customer.getLastName()+ " has been " + status ;
 	}
 
 }
