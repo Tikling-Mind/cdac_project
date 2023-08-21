@@ -16,5 +16,5 @@ public interface CustomerService {
 
 	public String deleteCustomerById(Long customerId);
 
-	public CustomerDto changeBlockingStatus(CustomerDto customer);
+	public String changeBlockingStatus(CustomerDto customer);
 }
