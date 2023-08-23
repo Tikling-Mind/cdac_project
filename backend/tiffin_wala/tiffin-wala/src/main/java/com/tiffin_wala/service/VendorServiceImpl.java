@@ -1,4 +1,4 @@
-package com.tiffin_wala.service;
+ package com.tiffin_wala.service;
 
 import java.util.List;
 import java.util.stream.Collector;
@@ -50,6 +50,27 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
+	public List<VendorDto> getAllApprovedVendors() {
+		List<Vendor> approvedVendors = vendorRepo.findByIsVerified(true)
+										.orElseThrow(() -> new ResourceNotFoundException("No Approved Vendors Exist!"));
+		return approvedVendors.stream()
+				.map(vendor-> modelMapper.map(vendor, VendorDto.class))
+				.collect(Collectors.toList()) ;
+	}
+
+	@Override
+	public List<VendorDto> getAllUnapprovedVendors() {
+		// Query : SELECT * FROM vendors WHERE is_verified="false" ;
+		List<Vendor> vendorList = vendorRepo.findByIsVerified(false)
+							.orElseThrow(() ->  new ResourceNotFoundException("No UnApproved Vendors!")) ;
+		return vendorList.stream()
+				.map(vendor-> modelMapper.map(vendor, VendorDto.class))
+				.collect(Collectors.toList()) ;
+		
+	}
+
+	
+	@Override
 	public VendorDto getVendorById(Long vendorId) {
 		
 		Vendor vendor = vendorRepo.findById(vendorId)
@@ -58,13 +79,18 @@ public class VendorServiceImpl implements VendorService {
 		return modelMapper.map(vendor, VendorDto.class);
 	}
 
+	/*
+	 * @Override public VendorDto getUnapprovedVendorById(Long vendorId) { Vendor
+	 * vendor = vendorRepo.findById(vendorId) .orElseThrow(()->new
+	 * ResourceNotFoundException("Incorrect Vendor Id!"));
+	 * 
+	 * VendorDto vendorDto ; if(vendor.isVerified()) throw new
+	 * ResourceNotFoundException("Incorrect vendor id") ; else{ vendorDto =
+	 * modelMapper.map(vendor, VendorDto.class) ; } return vendorDto; }
+	 */
+	
 	@Override
 	public VendorDto updateVendor(VendorDto detachedVendor) {
-		/*
-		 * // Setup to skip id while mapping TypeMap<VendorDto, Vendor> propertyMapper =
-		 * modelMapper.createTypeMap(VendorDto.class, Vendor.class) ;
-		 * propertyMapper.addMappings(mapper -> mapper.skip(Vendor::setId)) ;
-		 */
 		Vendor vendor = modelMapper.map(detachedVendor, Vendor.class);
 		return modelMapper.map(vendorRepo.save(vendor), VendorDto.class);
 	}
@@ -96,30 +122,6 @@ public class VendorServiceImpl implements VendorService {
 		return "Vendor " + vendor.getFirstName() + " " + vendor.getLastName() + " has been approved!";
 	}
 
-	@Override
-	public List<VendorDto> getAllUnapprovedVendors() {
-		// Query : SELECT * FROM vendors WHERE is_verified="false" ;
-		List<Vendor> vendorList = vendorRepo.findByIsVerified(false)
-							.orElseThrow(() ->  new ResourceNotFoundException("No UnApproved Vendors!")) ;
-		return vendorList.stream()
-				.map(vendor-> modelMapper.map(vendor, VendorDto.class))
-				.collect(Collectors.toList()) ;
-		
-	}
-
-	@Override
-	public VendorDto getUnapprovedVendorById(Long vendorId) {
-		Vendor vendor = vendorRepo.findById(vendorId)
-					.orElseThrow(()->new ResourceNotFoundException("Incorrect Vendor Id!"));
-		
-		VendorDto vendorDto ;
-		if(vendor.isVerified())
-			throw new ResourceNotFoundException("Incorrect vendor id") ;
-		else{
-			vendorDto = modelMapper.map(vendor, VendorDto.class) ;
-		}		
-		return vendorDto;
-	}
 
 	@Override
 	public String changeAvailability(VendorDto vendorDto) {

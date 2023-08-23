@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.tiffin_wala.dto.OrderDto;
 
-public interface OrderService {
+public interface CustomerOrderService {
 
 	OrderDto createOrder(OrderDto order);
 
@@ -14,6 +14,6 @@ public interface OrderService {
 
 	String deleteOrderById(int orderId);
 
-	List<OrderDto> getOrdersByTiffin(int tiffinId);
+	List<OrderDto> getOrdersByTiffinId(int tiffinId);
 
 }
