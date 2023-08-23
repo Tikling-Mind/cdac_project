@@ -1,5 +1,6 @@
 package com.tiffin_wala.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,7 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.tiffin_wala.enums.FoodType;
-
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,16 +32,30 @@ public class Tiffin extends BaseEntity{
 	
 	private String description;
 	
-	private boolean isAvaliable;
+//	private boolean isAvaliable;
 	
 	@Enumerated(EnumType.STRING)
 	private FoodType foodType;
 	
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "subscription_plan_id") 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="vendor_id")
+	private Vendor vendor ;
 	
-	private List<SubscriptionPlan> subscriptionPlans;
-    
+	private LocalDate availableFrom ;
+	
+	private LocalDate availableTo ;
+	
+	// From LSB TO MSB -> the positions of the binary maps to 
+	// Breakfast, Lunch and Dinner. 
+	// The three digit binary is then converted to integer which corresponds to a unique configuration.
+	private int breakLunchDinner ; 
+	
+	/*
+	 * @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	 * 
+	 * @JoinColumn(name = "subscription_plan_id") private List<SubscriptionPlan>
+	 * subscriptionPlans;
+	 */    
     
 	
 	

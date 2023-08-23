@@ -6,12 +6,16 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tiffin_wala.dto.CustomerDto;
 import com.tiffin_wala.entities.Customer;
 import com.tiffin_wala.execptions.ResourceNotFoundException;
 import com.tiffin_wala.repository.CustomerRepository;
 
+@Transactional
+@Service
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
@@ -32,6 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
 		List<CustomerDto> allCustomersList = customerRepo.findAll()
 				.stream().map(customer->modelMapper.map(customer, CustomerDto.class))
 				.collect(Collectors.toList());
+		
 		return allCustomersList;
 	}
 
@@ -59,13 +64,15 @@ public class CustomerServiceImpl implements CustomerService {
 		return "Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been removed!";
 	}
 
+
 	@Override
-	public String blockCustomerById(Long customerId) {
-		Customer customer = customerRepo.findById(customerId).
-				orElseThrow(()-> new ResourceNotFoundException("Invalid customer ID"));
-		customer.setBlock(true);
-		customerRepo.save(customer);
-		return "Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been blocked!";
+	public String changeBlockingStatus(CustomerDto customerDto) {
+		Customer customer = customerRepo.findById(customerDto.getId())
+				.orElseThrow(()-> new ResourceNotFoundException("Invalid customer ID")) ;
+		customer.setBlocked(customerDto.isBlocked());
+		customerRepo.save(customer) ;
+		String status = customerDto.isBlocked()?"Blocked":"Unblocked" ;
+		return "Customer " + customer.getFirstName() + " "+ customer.getLastName()+ " has been " + status ;
 	}
 
 	@Override

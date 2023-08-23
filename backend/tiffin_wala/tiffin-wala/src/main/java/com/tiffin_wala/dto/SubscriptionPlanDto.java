@@ -14,6 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SubscriptionPlanDto {
 	
+	private long id;
+	
 	@NotEmpty
 	@Size(min=5 , message = "Name should have atleast 5 charachter")
 	private String name;

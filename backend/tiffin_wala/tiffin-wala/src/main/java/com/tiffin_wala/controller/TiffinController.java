@@ -38,6 +38,11 @@ public class TiffinController {
 		return new ResponseEntity<>(tiffinService.getTiffinsByVendorId(vendorId), HttpStatus.OK) ;
 	}
 	
+	@GetMapping("/type/{typeId}")
+	public ResponseEntity<?> getTiffinByType(@PathVariable int type){
+		return new ResponseEntity<>(tiffinService.getTiffinByType(type), HttpStatus.OK)  ;
+	}
+	
 	@PutMapping("/{tiffinId}") // Update Tiffin Details -----------------
 	public ResponseEntity<?> updateTiffinById(@PathVariable int tiffinId){
 		return new ResponseEntity<>(tiffinService.updateTiffinDetails(tiffinId), HttpStatus.OK) ;

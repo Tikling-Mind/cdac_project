@@ -16,6 +16,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorDto {
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class VendorDto {
+	private long id;
+	
 	@NotEmpty
 	@Size(min=5 , message = "Firstname should have atleast 5 charachter")
 	private String firstname;

@@ -35,7 +35,6 @@ public class CustomerController {
 			return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.CONFLICT);
 		}
 	}
-
 	
 	@GetMapping // Get list of all  customers --------------------------
 	public ResponseEntity<?> getAllCustomers() {
@@ -57,7 +56,6 @@ public class CustomerController {
 		return new ResponseEntity<>(customerService.deleteCustomerById(customerId), HttpStatus.OK ) ;
 	}
 
-	
 	@PatchMapping("/status/")
 	public ResponseEntity<?> changeBlockingStatus(@RequestBody CustomerDto customer){
 		return new ResponseEntity<> (customerService.changeBlockingStatus(customer), HttpStatus.OK) ;
