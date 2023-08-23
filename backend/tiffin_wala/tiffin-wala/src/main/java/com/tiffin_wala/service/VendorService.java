@@ -24,12 +24,15 @@ public interface VendorService {
 
 	public List<VendorDto> getAllUnapprovedVendors();
 
-	public VendorDto getUnapprovedVendorById(Long vendorId);
-	
+	/*
+	 * public VendorDto getUnapprovedVendorById(Long vendorId);
+	 */	
 	public String changeAvailability(VendorDto vendor);
 
 	public String changeBlockingStatus(VendorDto vendor);
 
 	public List<CustomerDto> getCustomersByVendorId(Long vendorId);
+
+	public List<VendorDto> getAllApprovedVendors();
 
 }

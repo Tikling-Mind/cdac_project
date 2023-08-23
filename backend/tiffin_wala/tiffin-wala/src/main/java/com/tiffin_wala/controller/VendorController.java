@@ -20,12 +20,17 @@ public class VendorController {
 		return new ResponseEntity<>(vendorService.createVendor(vendor), HttpStatus.CREATED) ;
 	}
 	
-	@GetMapping // Get all approved vendors -----------------------------
+	@GetMapping // Get all (approved+unapproved) vendors -----------------------------
 	public ResponseEntity<?> getAllVendors(){
 		return new ResponseEntity<>(vendorService.getAllVendorsList(), HttpStatus.OK) ;
 	}
 	
-	@GetMapping("/{vendorId}") // Get Approved Vendors by Id
+	@GetMapping("/approved") // Get All approved vendors 
+	public ResponseEntity<?> getAllApprovedVendors(){
+		return new ResponseEntity<>(vendorService.getAllApprovedVendors(),HttpStatus.OK) ;
+	}
+	
+	@GetMapping("/{vendorId}") // Get Vendors by Id
 	public ResponseEntity<?> getVendorById(@PathVariable Long vendorId){
 		return new ResponseEntity<>(vendorService.getVendorById(vendorId), HttpStatus.OK) ;
 	}
@@ -50,10 +55,12 @@ public class VendorController {
 		return new ResponseEntity<>(vendorService.getAllUnapprovedVendors(),HttpStatus.OK) ;
 	}
 	
-	@GetMapping("/unapproved/{vendorId}")
-	public ResponseEntity<?> getUnapprovedVendorById(@PathVariable Long vendorId){
-		return new ResponseEntity<>(vendorService.getUnapprovedVendorById(vendorId),HttpStatus.OK) ;
-	}
+	/*
+	 * @GetMapping("/unapproved/{vendorId}") public ResponseEntity<?>
+	 * getUnapprovedVendorById(@PathVariable Long vendorId){ return new
+	 * ResponseEntity<>(vendorService.getUnapprovedVendorById(vendorId),HttpStatus.
+	 * OK) ; }
+	 */
 
 	@PatchMapping("/status/availible")
 	public ResponseEntity<?> changeVendorAvailablibility(@RequestBody VendorDto vendor){

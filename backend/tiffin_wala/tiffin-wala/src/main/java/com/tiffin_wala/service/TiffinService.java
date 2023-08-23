@@ -20,6 +20,8 @@ public interface TiffinService {
 
 	TiffinDto blockTiffinById(int tiffinId);
 
+	List<TiffinDto> getTiffinByType(int type);
+
 
 
 }
