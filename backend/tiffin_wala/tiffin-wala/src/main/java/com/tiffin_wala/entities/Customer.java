@@ -30,8 +30,15 @@ public class Customer extends BaseEntity {
 	String password;
 	boolean isBlocked;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="address_id")
-	Address address;	
+	public String getFirstName() {
+		return firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name="address_id")
+//	Address address;	
 	
 }

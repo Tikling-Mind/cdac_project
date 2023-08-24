@@ -75,10 +75,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return "Customer " + customer.getFirstName() + " "+ customer.getLastName()+ " has been " + status ;
 	}
 
-	@Override
-	public CustomerDto changeBlockingStatus(CustomerDto customer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public CustomerDto changeBlockingStatus(CustomerDto customer) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }

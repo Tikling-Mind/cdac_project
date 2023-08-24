@@ -1,9 +1,12 @@
 package com.tiffin_wala.dto;
 
-import java.time.LocalDateTime;
+
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,31 +18,29 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CustomerDto {
 	
-
-	private long id;
 	
-	@NotEmpty
-	@Size(min=5 , message = "Firstname should have atleast 5 charachter")
+	@NotBlank(message = "Firstname can't be blank")
+	@Length(min=2 , message = "Firstname should have atleast 5 character")
 	private String firstName;
 	
-	@NotEmpty
-	@Size(min=5 , message = "Lastname should have atleast 5 charachter")
+	@NotBlank(message = "Lastname can't be blank")
+	@Length(min=2 , message = "Lastname should have atleast 5 character")
 	private String lastName;
 	
-	@NotEmpty
-	@Email
+	@NotBlank(message = "Email can't be blank")
+	@Email(message = "Invalid email format")
 	private String email;
 	
-	@NotEmpty
-	@Size(min=8 , message ="Password should have atleast 8 charachter")
+	@Length(min = 5,max=20,message = "Invalid password length")
 	private String password;
 	
-	@NotEmpty
-	@Size(min=10 , message = "mobile should have atleast 10 digit")
+	@NotBlank(message = "mobile can't be blank")
+	@Length(min=10 , message = "mobile should have atleast 10 digit")
 	private String mobile;
 	
-	@NotEmpty
-	private LocalDateTime registerDate;
-	
 	private boolean isBlocked;
+	
+	@NotBlank
+	@Length(max=256 ,message= "address must have minimum 256 character")
+	private String address;
 }

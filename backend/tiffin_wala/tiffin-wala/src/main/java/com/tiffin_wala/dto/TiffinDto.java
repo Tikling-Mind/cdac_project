@@ -1,7 +1,12 @@
 package com.tiffin_wala.dto;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,21 +20,30 @@ public class TiffinDto {
 	
 	private long id;
 	
-	@NotEmpty
-	@Size(min=5 , message = "Name should have atleast 5 charachter")
+	@NotBlank(message = "Firstname can't be blank")
+	@Length(min=2 , message = "Firstname should have atleast 5 character")
 	private String name;
 	
-	@NotEmpty
-	@Size(min=5 , message = "Foodtype should have atleast 5 charachter")
+	@NotBlank
+	@Length(min=2 , message = "Foodtype should have atleast 5 charachter")
+	@Column(columnDefinition = "String default Veg")
 	private String foodType;
 	
-	@NotEmpty
+	@NotBlank
 	private double price;
 	
-	@NotEmpty
-	@Size(min=5 , message = "Description should have atleast 5 charachter")
+	@NotBlank
+	@Length(min=5 , message = "Description should have atleast 5 charachter")
 	private String description;
 	
-	private boolean isAvaliable;
+	@NotBlank
+	private boolean avaliablefrom;
+	
+	@NotBlank
+	private boolean avaliableTo;
+	
+	@NotBlank
+	@Column(columnDefinition = "integer default 0")
+	private int breakLunchDinner;
 
 }
