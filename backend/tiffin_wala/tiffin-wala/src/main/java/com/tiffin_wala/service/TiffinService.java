@@ -20,6 +20,10 @@ public interface TiffinService {
 
 	TiffinDto blockTiffinById(Long tiffinId);
 
+	List<TiffinDto> getAllAvailableTiffins();
+
+	List<TiffinDto> getAllUnAvailableTiffins();
+
 
 
 }
