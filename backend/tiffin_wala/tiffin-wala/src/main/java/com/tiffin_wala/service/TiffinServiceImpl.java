@@ -1,19 +1,18 @@
 package com.tiffin_wala.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.tiffin_wala.dto.CustomerOrderDto;
 import com.tiffin_wala.dto.TiffinDto;
 import com.tiffin_wala.entities.Tiffin;
 import com.tiffin_wala.execptions.ResourceNotFoundException;
-import com.tiffin_wala.repository.CustomerRepository;
 import com.tiffin_wala.repository.TiffinRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -79,14 +78,20 @@ public class TIffinServiceImpl implements TiffinService {
 
 	@Override
 	public List<TiffinDto> getAllAvailableTiffins() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tiffin> tiffinList = tiffinRepo.findAllAvailabletiffins().
+				orElseThrow(()-> new ResourceNotFoundException("No tiffins available Today From any Vendor"));
+		List<TiffinDto> tiffinDtoList = tiffinList.stream().map(tiffin->modelMapper.map(tiffin, TiffinDto.class))
+				.collect(Collectors.toList());
+		return tiffinDtoList;
 	}
 
 	@Override
 	public List<TiffinDto> getAllUnAvailableTiffins() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tiffin> tiffinList = tiffinRepo.findAllUnavailabletiffins().
+				orElseThrow(()-> new ResourceNotFoundException("No Unavailable tiffin found"));
+		List<TiffinDto> tiffinDtoList = tiffinList.stream().map(tiffin->modelMapper.map(tiffin, TiffinDto.class))
+				.collect(Collectors.toList());
+		return tiffinDtoList;
 	}
 
 }

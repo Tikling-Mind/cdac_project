@@ -1,21 +1,25 @@
  package com.tiffin_wala.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tiffin_wala.dto.CustomerDto;
+import com.tiffin_wala.dto.CustomerOrderDto;
 import com.tiffin_wala.dto.VendorDto;
 import com.tiffin_wala.entities.Customer;
+import com.tiffin_wala.entities.CustomerOrder;
+import com.tiffin_wala.entities.Tiffin;
 import com.tiffin_wala.entities.Vendor;
 import com.tiffin_wala.execptions.ResourceNotFoundException;
+import com.tiffin_wala.repository.CustomerOrderRepository;
 import com.tiffin_wala.repository.CustomerRepository;
+import com.tiffin_wala.repository.TiffinRepository;
 import com.tiffin_wala.repository.VendorRepository;
 
 @Transactional
@@ -26,6 +30,11 @@ public class VendorServiceImpl implements VendorService {
 	private VendorRepository vendorRepo;
 	@Autowired
 	private CustomerRepository customerRepo ;
+	@Autowired
+	private TiffinRepository tiffinRepo ;
+	@Autowired
+	private CustomerOrderRepository customerOrderRepo ;
+	
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -147,7 +156,31 @@ public class VendorServiceImpl implements VendorService {
 				orElseThrow(()-> new ResourceNotFoundException("Invalid vendor ID"));		
 //				.stream().map(customer->modelmapper.map(customer, CustomerDto.class))
 //				.collect(Collectors.toList());
-		return null;
+		
+		List<Tiffin> tiffinList = tiffinRepo.findAllByVendorId(vendor.getId())
+				.orElseThrow( () -> new ResourceNotFoundException("This vendor has no tiffins.") );
+
+		List<CustomerOrder> customerOrderListForVendor = new ArrayList<>() ;
+		//List<Customer> customerListForVendor = new ArrayList<>() ;
+		List<Customer> customerListForVendor  = new ArrayList<>() ; 
+		
+		tiffinList.forEach(tiffin-> {
+				customerOrderListForVendor.addAll(customerOrderRepo.findByTiffinId(tiffin.getId()));
+				});
+				
+		customerOrderListForVendor.forEach(customerOrder-> {
+				customerListForVendor.add(customerOrder.getCustomer());
+			});
+		
+		List<Customer> distinctCustomers = customerListForVendor.stream()
+                				.distinct()
+                				.collect(Collectors.toList());
+		
+		return distinctCustomers.stream()
+				   .map( customer -> modelMapper.map(customer, CustomerDto.class))
+				   .collect(Collectors.toList());
+		
+		
 	}
 	
 }
