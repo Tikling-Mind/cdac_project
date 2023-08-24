@@ -56,7 +56,7 @@ public class CustomerController {
 		return new ResponseEntity<>(customerService.deleteCustomerById(customerId), HttpStatus.OK ) ;
 	}
 
-	@PatchMapping("/status/")
+	@PatchMapping("/status")
 	public ResponseEntity<?> changeBlockingStatus(@RequestBody CustomerDto customer){
 		return new ResponseEntity<> (customerService.changeBlockingStatus(customer), HttpStatus.OK) ;
 	}

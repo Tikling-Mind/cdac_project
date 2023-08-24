@@ -28,6 +28,16 @@ public class TiffinController {
 			return new ResponseEntity<>(tiffinService.getAllTiffins(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/available")
+	public ResponseEntity<?> getAllAvailableTiffins(){
+		return new ResponseEntity<>(tiffinService.getAllAvailableTiffins(), HttpStatus.OK) ;
+	}
+
+	@GetMapping("/unavailable")
+	public ResponseEntity<?> getAllUnAvailableTiffins(){
+		return new ResponseEntity<>(tiffinService.getAllUnAvailableTiffins(), HttpStatus.OK) ;
+	}
+	
 	@GetMapping("/{tiffinId}") // get tiffin by Tiffin Id-----------
 	public ResponseEntity<?> getTiffinById(@PathVariable Long tiffinId){
 			return new ResponseEntity<>(tiffinService.getTiffinById(tiffinId), HttpStatus.OK) ;
