@@ -10,17 +10,15 @@ public interface TiffinService {
 
 	List<TiffinDto> getAllTiffins();
 
-	TiffinDto getTiffinById(int tiffinId);
+	TiffinDto getTiffinById(Long tiffinId);
 
-	List<TiffinDto> getTiffinsByVendorId(int vendorId);
+	List<TiffinDto> getTiffinsByVendorId(Long vendorId);
 
-	TiffinDto updateTiffinDetails(int tiffinId);
+	TiffinDto updateTiffinDetails(TiffinDto tiffinDto);
 
-	String deleteTiffinById(int tiffinId);
+	String deleteTiffinById(Long tiffinId);
 
-	TiffinDto blockTiffinById(int tiffinId);
-
-	List<TiffinDto> getTiffinByType(int type);
+	TiffinDto blockTiffinById(Long tiffinId);
 
 
 
