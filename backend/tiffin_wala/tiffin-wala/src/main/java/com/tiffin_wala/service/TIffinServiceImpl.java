@@ -77,4 +77,16 @@ public class TIffinServiceImpl implements TiffinService {
 		return modelMapper.map(tiffinRepo.save(tiffin), TiffinDto.class);
 	}
 
+	@Override
+	public List<TiffinDto> getAllAvailableTiffins() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TiffinDto> getAllUnAvailableTiffins() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
