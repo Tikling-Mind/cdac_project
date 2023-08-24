@@ -13,9 +13,8 @@ import com.tiffin_wala.dto.CustomerDto;
 import com.tiffin_wala.entities.Customer;
 import com.tiffin_wala.execptions.ResourceNotFoundException;
 import com.tiffin_wala.repository.CustomerRepository;
-
-@Transactional
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
@@ -36,7 +35,6 @@ public class CustomerServiceImpl implements CustomerService {
 		List<CustomerDto> allCustomersList = customerRepo.findAll()
 				.stream().map(customer->modelMapper.map(customer, CustomerDto.class))
 				.collect(Collectors.toList());
-		
 		return allCustomersList;
 	}
 
@@ -50,8 +48,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto updateCustomerDetails(CustomerDto detachedCustomer) {
-		Customer customer = modelMapper.map(detachedCustomer, Customer.class);
-		customerRepo.save(customer);
+		customerRepo.findById(detachedCustomer.getId()).
+				orElseThrow(()-> new ResourceNotFoundException("Invalid customer ID"));
+		
+		customerRepo.save(modelMapper.map(detachedCustomer, Customer.class));
 		return detachedCustomer;
 	}
 

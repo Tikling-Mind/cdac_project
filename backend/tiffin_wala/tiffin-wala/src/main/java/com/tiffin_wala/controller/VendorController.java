@@ -45,7 +45,7 @@ public class VendorController {
 		return new ResponseEntity<> (vendorService.deleteVendorById(vendorId), HttpStatus.OK) ;
 	}
 		
-	@PostMapping("/approve/{vendorId}")
+	@PatchMapping("/approve/{vendorId}")
 	public ResponseEntity<?> approveVendorById(@PathVariable Long vendorId){
 		return new ResponseEntity<>(vendorService.approveVendorById(vendorId), HttpStatus.OK) ;
 	}	

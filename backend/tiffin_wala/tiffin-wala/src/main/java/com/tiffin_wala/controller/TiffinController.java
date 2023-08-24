@@ -28,33 +28,38 @@ public class TiffinController {
 			return new ResponseEntity<>(tiffinService.getAllTiffins(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/available")
+	public ResponseEntity<?> getAllAvailableTiffins(){
+		return new ResponseEntity<>(tiffinService.getAllAvailableTiffins(), HttpStatus.OK) ;
+	}
+
+	@GetMapping("/unavailable")
+	public ResponseEntity<?> getAllUnAvailableTiffins(){
+		return new ResponseEntity<>(tiffinService.getAllUnAvailableTiffins(), HttpStatus.OK) ;
+	}
+	
 	@GetMapping("/{tiffinId}") // get tiffin by Tiffin Id-----------
-	public ResponseEntity<?> getTiffinById(@PathVariable int tiffinId){
+	public ResponseEntity<?> getTiffinById(@PathVariable Long tiffinId){
 			return new ResponseEntity<>(tiffinService.getTiffinById(tiffinId), HttpStatus.OK) ;
 	}
 	
 	@GetMapping("/vendor/{vendorId}") // Get Tiffin by vendor ---------
-	public ResponseEntity<?> getTiffinsByVendorId(@PathVariable int vendorId){
+	public ResponseEntity<?> getTiffinsByVendorId(@PathVariable Long vendorId){
 		return new ResponseEntity<>(tiffinService.getTiffinsByVendorId(vendorId), HttpStatus.OK) ;
 	}
 	
-	@GetMapping("/type/{typeId}")
-	public ResponseEntity<?> getTiffinByType(@PathVariable int type){
-		return new ResponseEntity<>(tiffinService.getTiffinByType(type), HttpStatus.OK)  ;
-	}
-	
 	@PutMapping("/{tiffinId}") // Update Tiffin Details -----------------
-	public ResponseEntity<?> updateTiffinById(@PathVariable int tiffinId){
-		return new ResponseEntity<>(tiffinService.updateTiffinDetails(tiffinId), HttpStatus.OK) ;
+	public ResponseEntity<?> updateTiffinById(@RequestBody TiffinDto tiffinDto){
+		return new ResponseEntity<>(tiffinService.updateTiffinDetails(tiffinDto), HttpStatus.OK) ;
 	}
 	 
 	@DeleteMapping("/{tiffinId}") // Delete Tiffin ----------------------
-	public ResponseEntity<?> deleteTiffinById(@PathVariable int tiffinId){
+	public ResponseEntity<?> deleteTiffinById(@PathVariable Long tiffinId){
 		return new ResponseEntity<>(tiffinService.deleteTiffinById(tiffinId), HttpStatus.OK ) ;
 	}
 	
 	@PatchMapping("/{tiffinId}") // Block Tiffin ------------------------
-	public ResponseEntity<?> blockTiffinById(@PathVariable int tiffinId){
+	public ResponseEntity<?> blockTiffinById(@PathVariable Long tiffinId){
 		return new ResponseEntity<>(tiffinService.blockTiffinById(tiffinId), HttpStatus.OK) ;
 	}
 
