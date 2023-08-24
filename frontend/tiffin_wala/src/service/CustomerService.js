@@ -3,7 +3,7 @@ import axios from "axios";
 
 const customerURL = IP_ADDRS + "/customer/"
 class CustomerService{
-    // Create new Customer
+
     createCustomer(customer){
         return axios.post(customerURL, customer) ;
     }
