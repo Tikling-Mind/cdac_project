@@ -17,7 +17,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CustomerDto {
 	
-	
+	private long id;
+
 	@NotBlank(message = "Firstname can't be blank")
 	@Length(min=2 , message = "Firstname should have atleast 5 character")
 	private String firstName;

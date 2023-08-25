@@ -30,19 +30,27 @@ public class CustomerOrderController {
 	}
 	
 	@GetMapping("/{orderId}")
-	public ResponseEntity<?> getOrderById(@PathVariable int orderId){
+	public ResponseEntity<?> getOrderById(@PathVariable Long orderId){
 		return new ResponseEntity<>(CustomerorderService.getCustomerOrderById(orderId),HttpStatus.OK) ;
 	}
 	
 	@DeleteMapping("/{orderId}")
-	public ResponseEntity<?> deleteOrderById(@PathVariable int orderId){
-		return new ResponseEntity<>(CustomerorderService.deleteOrderById(orderId), HttpStatus.OK) ;
+	public ResponseEntity<?> deleteOrderById(@PathVariable Long orderId){
+		return new ResponseEntity<>(CustomerorderService.deleteCustomerOrderById(orderId), HttpStatus.OK) ;
 	}
 	
 	@GetMapping("/tiffin/{tiffinId}")
-	public ResponseEntity<?> getOrdersByTiffinId(@PathVariable int tiffinId){
-		return new ResponseEntity<>(CustomerorderService.getOrdersByTiffinId(tiffinId), HttpStatus.OK) ;
+	public ResponseEntity<?> getOrdersByTiffinId(@PathVariable Long tiffinId){
+		return new ResponseEntity<>(CustomerorderService.getCustomerOrdersByTiffinId(tiffinId), HttpStatus.OK) ;
 	}
 	
+	@GetMapping("/customer/{customerId}")
+	public ResponseEntity<?> getOrdersByCustomerId(@PathVariable Long customerId){
+		return new ResponseEntity<>(CustomerorderService.getCustomerOrdersByCustomerId(customerId), HttpStatus.OK) ;
+	}
 	
+	@GetMapping("/vendor/{vendorId}")
+	public ResponseEntity<?> getOrdersByVendorId(@PathVariable Long vendorId){
+		return new ResponseEntity<>(CustomerorderService.getCustomerOrdersByVendorId(vendorId), HttpStatus.OK) ;
+	}
 }
