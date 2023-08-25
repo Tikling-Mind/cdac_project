@@ -16,7 +16,7 @@ import com.tiffin_wala.repository.TiffinRepository;
 
 @Service
 @Transactional
-public class TIffinServiceImpl implements TiffinService {
+public class TiffinServiceImpl implements TiffinService {
 
 	@Autowired
 	private TiffinRepository tiffinRepo;

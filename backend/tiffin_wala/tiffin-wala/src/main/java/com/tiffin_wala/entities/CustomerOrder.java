@@ -34,11 +34,6 @@ public class CustomerOrder extends BaseEntity{
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="customer_id")
 	private Customer customer;
-	
-	
-	public Customer getCustomer() {
-		return customer;
-	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="tiffin_id")
