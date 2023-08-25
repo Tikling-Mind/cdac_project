@@ -22,7 +22,7 @@ public class CustomerOrderDto {
 	
 	@NotEmpty
 	@Column(columnDefinition = "integer default 0")
-	private int breakFastQuantity;
+	private int breakfastQuantity;
 
 	@NotEmpty
 	@Column(columnDefinition = "integer default 0")
