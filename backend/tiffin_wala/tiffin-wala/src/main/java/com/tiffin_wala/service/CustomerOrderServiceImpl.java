@@ -86,7 +86,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
 	@Override
 	public List<CustomerOrderDto> getCustomerOrdersByVendorId(Long vendorId) {
-		List<Tiffin> tiffinListForVendor = tiffinRepo.findByVendorId(vendorId)
+		List<Tiffin> tiffinListForVendor = tiffinRepo.findAllByVendorId(vendorId)
 				.orElseThrow(()-> new ResourceNotFoundException("This vendor has no Tiffins!")) ;		
 		  
 		List<CustomerOrder> customerOrderList = new ArrayList<>() ;
