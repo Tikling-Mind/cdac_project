@@ -48,7 +48,7 @@ public class Tiffin extends BaseEntity{
 	// From LSB TO MSB -> the positions of the binary maps to 
 	// Breakfast, Lunch and Dinner. 
 	// The three digit binary is then converted to integer which corresponds to a unique configuration.
-	private int breakLunchDinner ; 
+	private int breakLunchDinner ;	
 	
 	/*
 	 * @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

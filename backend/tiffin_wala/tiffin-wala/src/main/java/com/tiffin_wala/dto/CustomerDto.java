@@ -1,6 +1,5 @@
 package com.tiffin_wala.dto;
 
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -34,13 +33,13 @@ public class CustomerDto {
 	@Length(min = 5,max=20,message = "Invalid password length")
 	private String password;
 	
-	@NotBlank(message = "mobile can't be blank")
-	@Length(min=10 , message = "mobile should have atleast 10 digit")
+	@NotBlank(message = "Mobile can't be blank")
+	@Length(min=10 , message = "Mobile should have atleast 10 digit")
 	private String mobile;
 	
 	private boolean isBlocked;
 	
 	@NotBlank
-	@Length(max=256 ,message= "address must have minimum 256 character")
+	@Length(max=256 ,message= "Address must have minimum 256 character")
 	private String address;
 }

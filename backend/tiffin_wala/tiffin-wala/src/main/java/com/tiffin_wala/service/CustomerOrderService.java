@@ -2,18 +2,21 @@ package com.tiffin_wala.service;
 
 import java.util.List;
 
-import com.tiffin_wala.dto.OrderDto;
+import com.tiffin_wala.dto.CustomerOrderDto;
 
 public interface CustomerOrderService {
 
-	OrderDto createOrder(OrderDto order);
-
-	List<OrderDto> getAllOrders();
-
-	OrderDto getOrderById(int orderId);
-
-	String deleteOrderById(int orderId);
-
-	List<OrderDto> getOrdersByTiffinId(int tiffinId);
-
+	CustomerOrderDto createOrder(CustomerOrderDto customerOrderDto);
+	
+	List<CustomerOrderDto> getAllCustomerOrders();
+	
+	CustomerOrderDto getCustomerOrderById(Long orderId);
+	
+	String deleteCustomerOrderById(Long customerOrderId);
+	
+	List<CustomerOrderDto> getCustomerOrdersByTiffinId(Long tiffinId);
+	
+	List<CustomerOrderDto> getCustomerOrdersByCustomerId(Long customerId);
+	
+	List<CustomerOrderDto> getCustomerOrdersByVendorId(Long vendorId);
 }

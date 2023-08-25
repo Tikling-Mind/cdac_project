@@ -36,10 +36,10 @@ public class Vendor extends BaseEntity {
 	String mobile;
 	LocalDate registerDate;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="address_id")
-	private Address address;
-	
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name="address_id")
+//	private Address address;
+//	
 //	@JsonManagedReference
 //	@OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
 //	private Set<SubscriptionPlan> plans = new HashSet<SubscriptionPlan>();
