@@ -23,23 +23,21 @@ function App() {
               <Route path='sign-up' element={<SignUp />} />
               <Route path='forgotPassword' element={<ForgotPassword />} />
               <Route path='changePassword' element={<ChangePassword />} />
-              
+             
               {/* Customer Routes */}
               <Route path='customer' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
               <Route path='customer/delete' element={<CustomerDelete />} />
-              <Route path='customer' element={<CustomerHome />} />
               
               
               {/* Vendor Routes  */}
-              <Route path='vendor' element={<CustomerHome />} />
+              <Route path='vendor' element={<VendorHome />} />
               <Route path="vendor/sign-up" element={<CreateVendor />} />
-              <Route path="vendor/sign-up" element={<CreateVendor />} />
-              <Route path="vendor/profile" element={<CustomerProfile />} />
-              <Route path='vendor/update' element={<CustomerUpdate />} />
-              <Route path='vendor/delete' element={<CustomerDelete />} />
+              <Route path="vendor/profile" element={<VendorProfile />} />
+              <Route path='vendor/update' element={<VendorUpdate />} />
+              <Route path='vendor/delete' element={<VendorDelete />} />
               <Route path='vendor/getAllTiffins' element={<VendorTiffinList/>} />
               <Route path='vendor/addTiffin' element={<AddTiffin/>} />
               <Route path='vendor/editTiffin' element={<UpdateTiffin />} />  
@@ -49,7 +47,7 @@ function App() {
               <Route path='vendor/customersByTiffin' element={<CustomersByTiffin/>} />
 
               {/* Admin Routes */}
-              <Route path='admin/' element={<Admin/>} />
+              <Route path='admin/' element={<AdminHome/>} />
               <Route path='admin/getAllApprovedVendors' element={<ApprovedVendorsList/>} />             
               <Route path='admin/getAllUnApprovedVendors' element={<UnApprovedVendors/>} />
               <Route path='admin/blockVendor' element={<BlockVendor/>} />
