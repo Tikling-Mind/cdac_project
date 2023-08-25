@@ -19,4 +19,5 @@ public interface CustomerOrderService {
 	List<CustomerOrderDto> getCustomerOrdersByCustomerId(Long customerId);
 	
 	List<CustomerOrderDto> getCustomerOrdersByVendorId(Long vendorId);
+
 }
