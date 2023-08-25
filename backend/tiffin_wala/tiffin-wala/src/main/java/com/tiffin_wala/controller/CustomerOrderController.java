@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.tiffin_wala.dto.OrderDto;
+import com.tiffin_wala.dto.CustomerOrderDto;
 import com.tiffin_wala.service.CustomerOrderService;
 
 @RestController
@@ -15,7 +15,7 @@ public class CustomerOrderController {
 	CustomerOrderService CustomerorderService;
 	
 	@PostMapping
-	public ResponseEntity<?> createOrder(OrderDto order){
+	public ResponseEntity<?> createOrder(CustomerOrderDto order){
 		return new ResponseEntity<>(CustomerorderService.createOrder(order), HttpStatus.CREATED) ;
 	}
 	

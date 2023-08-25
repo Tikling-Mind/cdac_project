@@ -7,6 +7,9 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tiffin_wala.entities.Address;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CustomerDto {
 	
+	private Long id;
 	
 	@NotBlank(message = "Firstname can't be blank")
 	@Length(min=2 , message = "Firstname should have atleast 5 character")
@@ -32,6 +36,7 @@ public class CustomerDto {
 	private String email;
 	
 	@Length(min = 5,max=20,message = "Invalid password length")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	@NotBlank(message = "mobile can't be blank")
@@ -42,5 +47,5 @@ public class CustomerDto {
 	
 	@NotBlank
 	@Length(max=256 ,message= "address must have minimum 256 character")
-	private String address;
+	private Address address;
 }
