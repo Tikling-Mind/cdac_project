@@ -34,8 +34,7 @@ public class CustomerOrder extends BaseEntity{
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="customer_id")
 	private Customer customer;
-	
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="tiffin_id")
 	private Tiffin tiffin;		
@@ -51,9 +50,9 @@ public class CustomerOrder extends BaseEntity{
 	
 	private LocalDate orderEndDate ;
 	
-	@ManyToOne
-	@JoinColumn(name="address_id")
-	private Address deliveryAddress ;
+//	@ManyToOne
+//	@JoinColumn(name="address_id")
+//	private Address deliveryAddress ;
 	
 	private String DeliveryNote ;	
 	

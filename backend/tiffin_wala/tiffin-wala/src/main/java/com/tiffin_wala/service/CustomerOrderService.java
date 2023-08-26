@@ -6,14 +6,19 @@ import com.tiffin_wala.dto.CustomerOrderDto;
 
 public interface CustomerOrderService {
 
-	CustomerOrderDto createOrder(CustomerOrderDto order);
 
-	List<CustomerOrderDto> getAllOrders();
-
-	CustomerOrderDto getOrderById(int orderId);
-
-	String deleteOrderById(int orderId);
-
-	List<CustomerOrderDto> getOrdersByTiffinId(int tiffinId);
+	CustomerOrderDto createOrder(CustomerOrderDto customerOrderDto);
+	
+	List<CustomerOrderDto> getAllCustomerOrders();
+	
+	CustomerOrderDto getCustomerOrderById(Long orderId);
+	
+	String deleteCustomerOrderById(Long customerOrderId);
+	
+	List<CustomerOrderDto> getCustomerOrdersByTiffinId(Long tiffinId);
+	
+	List<CustomerOrderDto> getCustomerOrdersByCustomerId(Long customerId);
+	
+	List<CustomerOrderDto> getCustomerOrdersByVendorId(Long vendorId);
 
 }

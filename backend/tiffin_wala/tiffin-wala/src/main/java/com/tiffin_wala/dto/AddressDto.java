@@ -18,18 +18,18 @@ import lombok.Setter;
 public class AddressDto {
 
 	@NotBlank
-	@Length(max=256 ,message="Address should not be more than 256 charachter")
+	@Length(max=256 ,message="Address should  be less than 256 charachter")
 	private String Line1;
 
 	@NotBlank
-	@Length(max=256 ,message="Address should not be more than 256 charachter")
+	@Length(max=256 ,message="Address should be less than 256 charachter")
 	private String Line2;
 	
 	@NotBlank
 	private String city;
 	
 	@NotBlank
-	@Length(max=6 ,message = "pincode should not exceeds than 6")
+	@Length(max=6 ,message = "Pincode should have only 6 characters")
 	private Integer pincode;
 	
 	@NotBlank

@@ -23,6 +23,14 @@ class OrderService{
         return axios.get(orderURL+"tiffin/"+id) ;
     }
 
+    getOrdersByVendorId(id){
+        return axios.get(orderURL+"vendor/"+id) ;
+    }
+
+    getOrdersByCustomerId(id){
+        return axios.get(orderURL+"customer/"+id) ;
+    }
+
     updateOrder(order){
         return axios.put(orderURL, order) ;
     }
