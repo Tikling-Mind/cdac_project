@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import swal from "sweetalert" ;
 import UserWelcome from "../common/UserWelcome" ;
-import CustomerTiffinList from "./CustomerTiffinList" ;
+import CustomerTiffinList from "./CustomerTiffinList.jsx" ;
 
 const CustomerHome = ()=>{
     return (<div>
