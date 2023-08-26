@@ -26,8 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDto createCustomer(CustomerDto customerDto) {
 		Customer customer = modelMapper.map(customerDto, Customer.class);
-		customerRepo.save(customer);
-		return customerDto;
+		return modelMapper.map(customerRepo.save(customer), CustomerDto.class);
 	}
 
 	@Override
@@ -66,12 +65,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 	@Override
-	public String changeBlockingStatus(CustomerDto customerDto) {
-		Customer customer = customerRepo.findById(customerDto.getId())
+	public String changeBlockingStatus(Long customerId) {
+		Customer customer = customerRepo.findById(customerId)
 				.orElseThrow(()-> new ResourceNotFoundException("Invalid customer ID")) ;
-		customer.setBlocked(customerDto.isBlocked());
+		customer.setBlocked(!customer.isBlocked());
 		customerRepo.save(customer) ;
-		String status = customerDto.isBlocked()?"Blocked":"Unblocked" ;
+		String status = customer.isBlocked()?"Blocked":"Unblocked" ;
 		return "Customer " + customer.getFirstName() + " "+ customer.getLastName()+ " has been " + status ;
 	}
 

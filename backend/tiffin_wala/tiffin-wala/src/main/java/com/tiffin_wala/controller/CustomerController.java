@@ -46,7 +46,7 @@ public class CustomerController {
 			return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK) ;
 	}
 	
-	@PutMapping("/{customerId}") // Update Customer Details -----------------
+	@PutMapping // Update Customer Details -----------------
 	public ResponseEntity<?> updateCustomer(@RequestBody CustomerDto customer){
 		return new ResponseEntity<>(customerService.updateCustomerDetails(customer), HttpStatus.OK) ;
 	}
@@ -56,9 +56,9 @@ public class CustomerController {
 		return new ResponseEntity<>(customerService.deleteCustomerById(customerId), HttpStatus.OK ) ;
 	}
 
-	@PatchMapping("/status")
-	public ResponseEntity<?> changeBlockingStatus(@RequestBody CustomerDto customer){
-		return new ResponseEntity<> (customerService.changeBlockingStatus(customer), HttpStatus.OK) ;
+	@PatchMapping("/{customerId}")
+	public ResponseEntity<?> changeBlockingStatus(@PathVariable Long customerId){
+		return new ResponseEntity<> (customerService.changeBlockingStatus(customerId), HttpStatus.OK) ;
 	}
 
 }
