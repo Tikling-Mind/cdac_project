@@ -72,7 +72,7 @@ public class VendorController {
 		return new ResponseEntity<> (vendorService.changeBlockingStatus(vendor), HttpStatus.OK) ;
 	}
 	
-	@GetMapping("/vendor/{vendorId}") // Get Customer by vendor ---------
+	@GetMapping("/customer/{vendorId}") // Get Customer by vendor ---------
 	public ResponseEntity<?> getCustomersByVendorId(@PathVariable Long vendorId){
 		return new ResponseEntity<>(vendorService.getCustomersByVendorId(vendorId), HttpStatus.OK) ;
 	}
