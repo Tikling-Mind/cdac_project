@@ -1,6 +1,8 @@
 package com.tiffin_wala.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -21,12 +23,13 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Entity
 public class Address extends BaseEntity {
-
+	
+	@Enumerated(EnumType.STRING) // col : varchar => enum constant name
 	private AddressType addressType;
 	
-	private String Line1;
+	private String line1;
 
-	private String Line2;
+	private String line2;
 
 	private String city;
 
