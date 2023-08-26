@@ -1,5 +1,8 @@
-import VendorList from "../VendorList"
-import CustomerList from "../CustomerList"
+import React, { useState, useEffect } from 'react';
+
+import VendorList from "../vendor/VendorList"
+import 
+CustomerList from "./CustomersList"
 import VendorApprovalList from "./VendorApprovalList"
 
 

@@ -1,9 +1,10 @@
-import VendorList from "../VendorList"
-import CustomerList from "../CustomerList"
+import React, { useState, useEffect } from 'react';
+import VendorList from "../vendor/VendorList"
+import CustomerList from "./CustomersList"
 import VendorApprovalList from "./VendorApprovalList"
 
 
-const UnApprevedVendors = (props) => {
+const UnApprovedVendors = (props) => {
     return (
         <div>
             <div class="d-flex flex-row-reverse">
@@ -16,4 +17,4 @@ const UnApprevedVendors = (props) => {
 
 }
 
-export default UnApprovendors;
+export default UnApprovedVendors;
