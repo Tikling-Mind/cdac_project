@@ -44,8 +44,8 @@ function App() {
         <Router>
           <Routes>
             {/* Layout will be have elements common to all Paths */}
-            <Route path='/' element={<Layout />} >  
-              
+            {/* <Route exact path='/' element={<Layout />} >   */}
+            
               {/* Common Routes */}
               <Route index element={<Home />} />
               {/* <Route path='sign-in' element={<Login />} /> */}
@@ -54,14 +54,14 @@ function App() {
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
               {/* Customer Routes */}
-              <Route path='customer' element={<CustomerHome />} />
+              <Route path='customer/:id' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
               <Route path='customer/delete' element={<CustomerDelete />} />              
               
               {/* Vendor Routes  */}
-              <Route path='vendor' element={<VendorHome />} />
+              <Route path='vendor/:id' element={<VendorHome />} />
               <Route path="vendor/sign-up" element={<CreateVendor />} />
               <Route path="vendor/profile" element={<VendorProfile />} />
               <Route path='vendor/update' element={<VendorUpdate />} />
@@ -82,7 +82,7 @@ function App() {
               <Route path='admin/blockCustomer' element={<BlockCustomer/>} />
               <Route path='admin/getAllCustomers' element={<CustomerList/>} />
 
-            </Route>
+            {/* </Route> */}
           </Routes>
         </Router>
 
