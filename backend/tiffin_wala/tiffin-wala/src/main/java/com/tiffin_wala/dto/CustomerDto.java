@@ -47,5 +47,5 @@ public class CustomerDto {
 	
 	@NotBlank
 	@Length(max=256 ,message= "address must have minimum 256 character")
-	private Address address;
+	private AddressDto address;
 }

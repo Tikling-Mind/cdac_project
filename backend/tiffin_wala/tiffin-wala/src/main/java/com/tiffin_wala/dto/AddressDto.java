@@ -19,11 +19,11 @@ public class AddressDto {
 
 	@NotBlank
 	@Length(max=256 ,message="Address should  be less than 256 charachter")
-	private String Line1;
+	private String line1;
 
 	@NotBlank
 	@Length(max=256 ,message="Address should be less than 256 charachter")
-	private String Line2;
+	private String line2;
 	
 	@NotBlank
 	private String city;
