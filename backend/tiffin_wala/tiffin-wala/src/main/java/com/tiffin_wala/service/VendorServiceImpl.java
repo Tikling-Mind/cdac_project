@@ -1,7 +1,9 @@
  package com.tiffin_wala.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -47,12 +49,17 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public VendorDto createVendor(VendorDto vendorDto) {
+		// Get entities
 		Vendor vendor = modelMapper.map(vendorDto, Vendor.class);
 		Address address = modelMapper.map(vendorDto.getAddress(), Address.class) ;
+		
+		// Address provided during account creation is HOME address.
 		address.setAddressType(AddressType.HOME);
 		vendor = vendorRepo.save(vendor) ;
 		address.setVendor(vendor);
 		address = addressRepo.save(address) ;
+		
+		// Object to be returned
 		AddressDto addressDto = modelMapper.map(address, AddressDto.class) ;
 		VendorDto returnVendorDto = modelMapper.map(vendor, VendorDto.class) ;
 		returnVendorDto.setAddress(addressDto);
@@ -62,92 +69,129 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public List<VendorDto> getAllVendorsList() {
-		//fetching all HOME addresses to find home address of each vendor
-		List<Address> homeAddressList = addressRepo.findAllByAddressType(AddressType.HOME)
-				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"));
-		List<VendorDto> allVendorsList = vendorRepo.findAll()
-				.stream()
-				.map(vendor->{
-					VendorDto vendorDto = modelMapper.map(vendor, VendorDto.class);
-					Address homeAddress = homeAddressList.stream()
-							.filter(address->address.getVendor()==vendor)
-							.collect(Collectors.toList()).get(0);
-					vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class));
-					return vendorDto;
-				})
-				.collect(Collectors.toList());
+		
+	
+		List<VendorDto> allVendorsList = new ArrayList<VendorDto>() ;
+		
+		addressRepo.findAllByAddressType(AddressType.HOME)
+				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"))
+				.forEach(address -> { //Get Vendor corresponding to an address
+									// Create addresss Dto and put it in the list
+					VendorDto vendorDto = modelMapper.map(address.getVendor(), VendorDto.class) ;
+					vendorDto.setAddress(modelMapper.map(address, AddressDto.class)) ;
+					allVendorsList.add(vendorDto);
+				});
+		
+		
+		/*
+		 * List<VendorDto> allVendorsList = vendorRepo.findAll().stream() .map(vendor ->
+		 * { VendorDto vendorDto = modelMapper.map(vendor, VendorDto.class); Address
+		 * homeAddress = homeAddressList.stream()
+		 * .filter(address->address.getVendor()==vendor)
+		 * .collect(Collectors.toList()).get(0);
+		 * 
+		 * vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class)); return
+		 * vendorDto; }) .collect(Collectors.toList());
+		 * 
+		 * if (allVendorsList.isEmpty()) throw new
+		 * ResourceNotFoundException("No Vendors exists") ;
+		 */	
 		
 		if (allVendorsList.isEmpty())
-			throw new ResourceNotFoundException("No Vendors exists") ;
-		
+				throw new ResourceNotFoundException("No vendors exists" ) ;
 		return allVendorsList;
 	}
 
 	@Override
 	public List<VendorDto> getAllApprovedVendors() {
-		//fetching all HOME addresses to find home address of each vendor
-		List<Address> homeAddressList = addressRepo.findAllByAddressType(AddressType.HOME)
-				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"));
-		List<Vendor> approvedVendors = vendorRepo.findByIsVerified(true)
-										.orElseThrow(() -> new ResourceNotFoundException("No Approved Vendors Exist!"));
-		return approvedVendors.stream()
-				.map(vendor->{
-					VendorDto vendorDto = modelMapper.map(vendor, VendorDto.class);
-					Address homeAddress = homeAddressList.stream()
-							.filter(address->address.getVendor()==vendor)
-							.collect(Collectors.toList()).get(0);
-					vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class));
-					return vendorDto;
-				})
-				.collect(Collectors.toList()) ;
-	}
+		
+		List<VendorDto> allApprovedVendorsList = new ArrayList<VendorDto>() ;
+		
+		addressRepo.findAllByAddressType(AddressType.HOME)
+				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"))
+				.forEach(address -> { //Get Vendor corresponding to an address
+									// Create addresss Dto and put it in the list
+					if(address.getVendor().isVerified()) {
+						VendorDto vendorDto = modelMapper.map(address.getVendor(), VendorDto.class) ;
+						vendorDto.setAddress(modelMapper.map(address, AddressDto.class)) ;
+						allApprovedVendorsList.add(vendorDto);					
+					}
+				});
+		
+		if (allApprovedVendorsList.isEmpty())
+			throw new ResourceNotFoundException("No vendors exists" ) ;
+		
+		return allApprovedVendorsList ;
+		
+		/*
+		 * //fetching all HOME addresses to find home address of each vendor
+		 * List<Address> homeAddressList =
+		 * addressRepo.findAllByAddressType(AddressType.HOME) .orElseThrow(()->new
+		 * ResourceNotFoundException("Error occured while fecthing addresses!"));
+		 * List<Vendor> approvedVendors = vendorRepo.findByIsVerified(true)
+		 * .orElseThrow(() -> new
+		 * ResourceNotFoundException("No Approved Vendors Exist!")); return
+		 * approvedVendors.stream() .map(vendor->{ VendorDto vendorDto =
+		 * modelMapper.map(vendor, VendorDto.class); Address homeAddress =
+		 * homeAddressList.stream() .filter(address->address.getVendor()==vendor)
+		 * .collect(Collectors.toList()).get(0);
+		 * vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class)); return
+		 * vendorDto; }) .collect(Collectors.toList()) ;
+		 */	}
 
 	@Override
 	public List<VendorDto> getAllUnapprovedVendors() {
-		//fetching all HOME addresses to find home address of each vendor
-		List<Address> homeAddressList = addressRepo.findAllByAddressType(AddressType.HOME)
-				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"));
-		// Query : SELECT * FROM vendors WHERE is_verified="false" ;
-		List<Vendor> vendorList = vendorRepo.findByIsVerified(false)
-							.orElseThrow(() ->  new ResourceNotFoundException("No UnApproved Vendors!")) ;
-		return vendorList.stream()
-				.map(vendor->{
-					VendorDto vendorDto = modelMapper.map(vendor, VendorDto.class);
-					Address homeAddress = homeAddressList.stream()
-							.filter(address->address.getVendor()==vendor)
-							.collect(Collectors.toList()).get(0);
-					vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class));
-					return vendorDto;
-				})				
-				.collect(Collectors.toList()) ;
+
+		List<VendorDto> allUnApprovedVendorsList = new ArrayList<VendorDto>() ;
+		
+		addressRepo.findAllByAddressType(AddressType.HOME)
+				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"))
+				.forEach(address -> { //Get Vendor corresponding to an address
+									// Create addresss Dto and put it in the list
+					if(!address.getVendor().isVerified()) {
+						VendorDto vendorDto = modelMapper.map(address.getVendor(), VendorDto.class) ;
+						vendorDto.setAddress(modelMapper.map(address, AddressDto.class)) ;
+						allUnApprovedVendorsList.add(vendorDto);					
+					}
+				});
+		
+		if (allUnApprovedVendorsList		.isEmpty())
+			throw new ResourceNotFoundException("No vendors exists" ) ;
+		
+		return allUnApprovedVendorsList ;
+		/*
+		 * //fetching all HOME addresses to find home address of each vendor
+		 * List<Address> homeAddressList =
+		 * addressRepo.findAllByAddressType(AddressType.HOME) .orElseThrow(()->new
+		 * ResourceNotFoundException("Error occured while fecthing addresses!")); //
+		 * Query : SELECT * FROM vendors WHERE is_verified="false" ; List<Vendor>
+		 * vendorList = vendorRepo.findByIsVerified(false) .orElseThrow(() -> new
+		 * ResourceNotFoundException("No UnApproved Vendors!")) ; return
+		 * vendorList.stream() .map(vendor->{ VendorDto vendorDto =
+		 * modelMapper.map(vendor, VendorDto.class); Address homeAddress =
+		 * homeAddressList.stream() .filter(address->address.getVendor()==vendor)
+		 * .collect(Collectors.toList()).get(0);
+		 * vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class)); return
+		 * vendorDto; }) .collect(Collectors.toList()) ;
+		 */
 		
 	}
 
 	
 	@Override
 	public VendorDto getVendorById(Long vendorId) {
-		//fetching all HOME addresses to find home address of each vendor
-		List<Address> homeAddressList = addressRepo.findAllByAddressType(AddressType.HOME)
-								.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"));
+		// Find Vendor
 		Vendor vendor = vendorRepo.findById(vendorId)
-								.orElseThrow(()-> new ResourceNotFoundException("Invalid vendor ID"));
-		Address homeAddress = homeAddressList.stream()
-								.filter(address->address.getVendor()==vendor)
-								.collect(Collectors.toList()).get(0);
+				.orElseThrow(()-> new ResourceNotFoundException("Invalid vendor ID"));
+		
+		// Find Home type address for the vendor
+		Address address = addressRepo.findByAddressTypeAndVendor(AddressType.HOME,vendor) ;
+
+		
 		VendorDto vendorDto =  modelMapper.map(vendor, VendorDto.class);
-		vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class));
+		vendorDto.setAddress(modelMapper.map(address, AddressDto.class));
 		return vendorDto;
 	}
-
-	/*
-	 * @Override public VendorDto getUnapprovedVendorById(Long vendorId) { Vendor
-	 * vendor = vendorRepo.findById(vendorId) .orElseThrow(()->new
-	 * ResourceNotFoundException("Incorrect Vendor Id!"));
-	 * 
-	 * VendorDto vendorDto ; if(vendor.isVerified()) throw new
-	 * ResourceNotFoundException("Incorrect vendor id") ; else{ vendorDto =
-	 * modelMapper.map(vendor, VendorDto.class) ; } return vendorDto; }
-	 */
 	
 	@Override
 	public VendorDto updateVendor(VendorDto detachedVendor) {
@@ -157,14 +201,16 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public String deleteVendorById(Long vendorId) {
-		//fetching all HOME addresses to find home address of each vendor
+		// Get all addresses corresponding to the vendor
 		List<Address> vendorAddressList = addressRepo.findAllByVendorId(vendorId)
 				.orElseThrow(()->new ResourceNotFoundException("Error occursed while fecthing vendor's addresses"));
 		
+		// Delete all Addresses 
 		for (Address address : vendorAddressList) {
 			addressRepo.delete(address);
 		}
 		
+		// Delete Vendor
 		Vendor vendor = vendorRepo.findById(vendorId)
 						.orElseThrow(()-> new ResourceNotFoundException("Invalid vendor ID"));
 		
@@ -173,13 +219,6 @@ public class VendorServiceImpl implements VendorService {
 		return "Vendor " + vendor.getFirstName() + " " + vendor.getLastName() + " has been removed!";
 	}
 
-	/*
-	 * @Override public String blockVendorById(Long vendorId) { Vendor vendor =
-	 * vendorRepo.findById(vendorId). orElseThrow(()-> new
-	 * ResourceNotFoundException("Invalid vendor ID")); vendor.setBlock(true);
-	 * vendorRepo.save(vendor); return "Vendor " + vendor.getFirstName() + " " +
-	 * vendor.getLastName() + " has been blocked!"; }
-	 */
 
 	@Override
 	public String approveVendorById(Long vendorId) {

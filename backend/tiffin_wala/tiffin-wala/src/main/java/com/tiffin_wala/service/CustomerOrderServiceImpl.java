@@ -98,20 +98,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		  
 		tiffinListForVendor.forEach(tiffin-> {
 			  customerOrderList.addAll(customerOrderRepo.findByTiffinId(tiffin.getId()));
-			  });
+		  });
 		 
 		return customerOrderList.stream()
 			   .map( cs -> modelMapper.map(cs, CustomerOrderDto.class))
 			   .collect(Collectors.toList());
-		
-//		Object customerOrdersList = 
-		
-		/*
-		 * return tiffinListForVendor.stream() .map(tiffin ->
-		 * customerOrderRepo.findByTiffinId(tiffin.getId()))
-		 * .collect(Collectors.toList());
-		 */
-		// customerOrdersList;
 	}
 	
 	
