@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { IP_ADDRS } from "../../service/BaseAddress";
 import { BorderAll } from "react-bootstrap-icons";
-
+import { validateEmail,validatePassword,validateMobile, validateUserRole, validateName } from "../validations/Validation";
 function SignUp() {
   const navigate = useNavigate();
   // Object to store User Data
@@ -57,8 +57,8 @@ function SignUp() {
       swal("Validate Email Id First", "", "error");
       return;
     }
-    // Fields should not be empty
-    if (obj.firstName === "" || obj.lastName === "" || obj.email === "" || obj.password === "" || obj.mobile === "" || obj.userRole === "") {
+    // Check validation rules
+    if (validateName(obj.firstName) || validateName(obj.lastName) || validateEmail(obj.email) || validatePassword(obj.password) || validateMobile(obj.mobile) === "" || validateUserRole(obj.userRole)) {
       setError(true);
     } else {  // If fields are not empty
       setSubmitted(true);
