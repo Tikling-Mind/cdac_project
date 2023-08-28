@@ -270,15 +270,43 @@ public class VendorServiceImpl implements VendorService {
 				customerListForVendor.add(customerOrder.getCustomer());
 			});
 		
-		List<Customer> distinctCustomers = customerListForVendor.stream()
+		List<CustomerDto> distinctCustomers = customerListForVendor.stream()
                 				.distinct()
+                				.map((customer)->{
+                					CustomerDto customerDto = modelMapper.map(customer, CustomerDto.class);
+        							Address homeAddress = addressRepo.findByCustomerIdAndAddressType(customerDto.getId(), AddressType.HOME)
+                							.orElseThrow(()->new ResourceNotFoundException("Error occured while fecting customer's HOME address"));
+        							AddressDto homeAddressDto = modelMapper.map(homeAddress, AddressDto.class);
+                					customerDto.setAddress(homeAddressDto);
+        							System.out.println(homeAddress+"\n"+homeAddressDto);
+                					return customerDto;
+                				})
                 				.collect(Collectors.toList());
 		
-		return distinctCustomers.stream()
-				   .map( customer -> modelMapper.map(customer, CustomerDto.class))
-				   .collect(Collectors.toList());
+		return distinctCustomers;
+		
+//		return distinctCustomers.stream()
+//				   .map( customer -> modelMapper.map(customer, CustomerDto.class))
+//				   .collect(Collectors.toList());
 		
 		
+	}
+	
+	public List<VendorDto> findAllVendorsByPincode(Integer pincode){
+		List<Vendor> list = addressRepo.findAllVendorsByPincode(pincode)
+				.orElseThrow(()->new ResourceNotFoundException("Error occured while fetching vendors"));
+				
+		return list.stream()
+				.map((vendor)->{
+					VendorDto vendorDto = modelMapper.map(vendor, VendorDto.class);
+					
+					Address homeAddress = addressRepo.findByVendorIdAndAddressType(vendorDto.getId(), AddressType.HOME)
+							.orElseThrow(()->new ResourceNotFoundException("Error occured while fecting vendor's HOME address"));
+					
+					vendorDto.setAddress(modelMapper.map(homeAddress, AddressDto.class));
+					return vendorDto;
+				})
+				.collect(Collectors.toList());
 	}
 	
 }

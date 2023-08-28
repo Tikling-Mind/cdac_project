@@ -34,5 +34,7 @@ public interface VendorService {
 	public List<CustomerDto> getCustomersByVendorId(Long vendorId);
 
 	public List<VendorDto> getAllApprovedVendors();
+	
+	public List<VendorDto> findAllVendorsByPincode(Integer pincode);
 
 }

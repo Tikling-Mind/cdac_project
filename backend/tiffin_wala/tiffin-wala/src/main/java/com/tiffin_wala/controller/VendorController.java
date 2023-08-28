@@ -77,4 +77,8 @@ public class VendorController {
 		return new ResponseEntity<>(vendorService.getCustomersByVendorId(vendorId), HttpStatus.OK) ;
 	}
 	
+	@GetMapping("/pincode/{pincode}")
+	public ResponseEntity<?> findAllVendorsByPincode(@PathVariable Integer pincode){
+		return new ResponseEntity<>(vendorService.findAllVendorsByPincode(pincode), HttpStatus.OK) ;
+	}
 }
