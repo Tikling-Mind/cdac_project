@@ -9,7 +9,8 @@ import FooterComponent from './components/footer/FooterComponent';
 
 // Common Routes
 import Home from "./components/pages/common/Home"
-// import Login from "./components/pages/customer/"
+import Login from "./components/pages/Login"
+import SignUp from './components/pages/SignUp';
 // Customer Routes
 import CustomerHome from "./components/pages/customer/CustomerHome" ;
 import CustomerAvailableTiffins from "./components/pages/customer/CustomerAvailableTiffins" ;
@@ -37,6 +38,23 @@ import BlockVendor from "./components/pages/admin/BlockVendor" ;
 import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
 import CustomerList from "./components/pages/admin/CustomersList" ;
 function App() {
+  // state to store loggining status
+  const [checkLoggedIn, setCheckLoggedIn] = useState();
+
+  // Get user from sessionStorage
+  useEffect(() => {
+    let cust = JSON.parse(sessionStorage.getItem("customer"));
+    let ven = JSON.parse(sessionStorage.getItem("vendor"));
+    let adm = JSON.parse(sessionStorage.getItem("admin"));
+    if (cust !== null || ven !== null || adm !== null) 
+    	setCheckLoggedIn(true); // User logged in
+    else 
+		setCheckLoggedIn(false); // No user logged in
+  }, []);
+
+  const updateLogin = (val) => {
+    setCheckLoggedIn(val);
+  };
   return (
     <div >
       <header>
@@ -48,8 +66,8 @@ function App() {
             
               {/* Common Routes */}
               <Route index element={<Home />} />
-              {/* <Route path='sign-in' element={<Login />} /> */}
-              {/* <Route path='sign-up' element={<SignUp />} /> */}
+              <Route path='/sign-in' element={<Login isLoggedIn={updateLogin}/>} />
+              <Route path='sign-up' element={<SignUp />} />
               {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
