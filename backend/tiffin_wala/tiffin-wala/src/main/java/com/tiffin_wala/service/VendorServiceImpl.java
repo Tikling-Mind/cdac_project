@@ -73,7 +73,7 @@ public class VendorServiceImpl implements VendorService {
 	
 		List<VendorDto> allVendorsList = new ArrayList<VendorDto>() ;
 		
-		addressRepo.findAllByAddressType(AddressType.HOME)
+		addressRepo.findAllByAddressTypeAndCustomer(AddressType.HOME, null)
 				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"))
 				.forEach(address -> { //Get Vendor corresponding to an address
 									// Create addresss Dto and put it in the list

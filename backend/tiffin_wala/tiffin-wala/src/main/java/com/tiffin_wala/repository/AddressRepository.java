@@ -18,6 +18,10 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 	
 	Optional<List<Address>> findAllByAddressType(AddressType addressType);
 
+	Optional<List<Address>> findAllByAddressTypeAndVendor(AddressType addressType, Vendor vendor);
+
+	Optional<List<Address>> findAllByAddressTypeAndCustomer(AddressType addressType, Customer customer);
+	
 	Optional<List<Address>> findAllByVendorId(Long vendorId);
 
 	Address findByAddressTypeAndVendor(AddressType home, Vendor vendor);

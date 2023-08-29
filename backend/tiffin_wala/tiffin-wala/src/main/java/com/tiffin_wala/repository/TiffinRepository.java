@@ -12,10 +12,10 @@ public interface TiffinRepository extends JpaRepository<Tiffin, Long>{
 	
 	Optional<List<Tiffin>> findAllByVendorId(Long vendorId);
 	
-	@Query("SELECT t FROM Tiffin t WHERE t.availableFrom <= CURRENT_DATE and t.availableTo >= CURRENT_DATE")
+	@Query("SELECT t FROM Tiffin t WHERE t.availableFrom <= CURRENT_DATE and t.availableTo >= CURRENT_DATE and t.breakLunchDinner <> 0")
 	Optional<List<Tiffin>> findAllAvailabletiffins();
 	
-	@Query("SELECT t FROM Tiffin t WHERE t.availableFrom > CURRENT_DATE or t.availableTo < CURRENT_DATE")
+	@Query("SELECT t FROM Tiffin t WHERE t.availableFrom > CURRENT_DATE or t.availableTo < CURRENT_DATE or t.breakLunchDinner = 0")
 	Optional<List<Tiffin>> findAllUnavailabletiffins();
 
 }
