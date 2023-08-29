@@ -1,22 +1,13 @@
 package com.tiffin_wala.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import com.tiffin_wala.enums.OrderStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

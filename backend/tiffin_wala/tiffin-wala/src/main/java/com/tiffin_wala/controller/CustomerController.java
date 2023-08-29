@@ -1,6 +1,5 @@
 package com.tiffin_wala.controller;
 
-import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tiffin_wala.dto.ApiResponse;
 import com.tiffin_wala.dto.CustomerDto;
-import com.tiffin_wala.dto.VendorDto;
 import com.tiffin_wala.service.CustomerService;
 
 @RestController
