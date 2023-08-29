@@ -33,7 +33,8 @@ public class TiffinServiceImpl implements TiffinService {
 	@Override
 	public List<TiffinDto> getAllTiffins() {
 		return tiffinRepo.findAll()
-				.stream().map(tiffin->modelMapper.map(tiffin, TiffinDto.class))
+				.stream()
+				.map(tiffin->modelMapper.map(tiffin, TiffinDto.class))
 				.collect(Collectors.toList());
 	}
 

@@ -1,11 +1,16 @@
 package com.tiffin_wala.dto;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tiffin_wala.entities.Vendor;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TiffinDto {
 	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private long id;
 	
 	@NotBlank(message = "Firstname can't be blank")
@@ -37,13 +43,15 @@ public class TiffinDto {
 	private String description;
 	
 	@NotBlank
-	private boolean avaliablefrom;
+	private LocalDate availableFrom;
 	
 	@NotBlank
-	private boolean avaliableTo;
+	private LocalDate availableTo;
 	
 	@NotBlank
 	@Column(columnDefinition = "integer default 0")
 	private int breakLunchDinner;
+	
+	private Vendor vendor ;
 
 }
