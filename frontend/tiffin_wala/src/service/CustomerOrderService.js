@@ -28,7 +28,10 @@ class OrderService{
     }
 
     getOrdersByCustomerId(id){
-        return axios.get(orderURL+"customer/"+id) ;
+        let x = orderURL+"customer/"+id;
+        let result = axios.get(x);
+        console.log(x);
+        return  result;
     }
 
     updateOrder(order){
