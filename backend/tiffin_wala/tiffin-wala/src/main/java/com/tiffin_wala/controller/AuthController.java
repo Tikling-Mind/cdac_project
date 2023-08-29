@@ -109,7 +109,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/verifyOtp")
-	public ResponseEntity<?> verifyOtp(@RequestBody AuthRequestOtpDto                                                                                                                      Dto requestOTP) {
+	public ResponseEntity<?> verifyOtp(@RequestBody AuthRequestOtpDto requestOTP) {
 		String str;
 		if (loginService.validateOTP(requestOTP.getEmail(), requestOTP.getOTP())) {
 			str = "Email Validated Successfully";
