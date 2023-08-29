@@ -7,7 +7,7 @@ import { loadCaptchaEnginge, validateCaptcha, LoadCanvasTemplate } from "react-s
 import swal from "sweetalert";
 import "../../App.css"
 import { IP_ADDRS } from "../../service/BaseAddress"
-
+import { validateEmail,validatePassword } from "../validations/Validation";
 function Login(props) {
 
     // State to store Login data
@@ -50,12 +50,10 @@ function Login(props) {
     const navigate = useNavigate();
 
     const submitData = (e) => {
-        if (data.username == '') {
-            alert('Username cannot be null');
+        if (validateEmail(data.email)) {
             return;
         }
-        if (data.password == '') {
-            alert('Password cannot be null');
+        if (validatePassword(data.password)) {
             return;
         }
         // Prevent reload/refresh
