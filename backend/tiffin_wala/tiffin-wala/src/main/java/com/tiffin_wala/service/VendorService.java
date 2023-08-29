@@ -37,4 +37,6 @@ public interface VendorService {
 	
 	public List<VendorDto> findAllVendorsByPincode(Integer pincode);
 
+	VendorDto getVendorByEmail(String email);
+
 }
