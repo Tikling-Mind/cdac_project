@@ -17,4 +17,6 @@ public interface CustomerService {
 	public String deleteCustomerById(Long customerId);
 
 	public String changeBlockingStatus(Long customerId);
+	
+	public CustomerDto getCustomerByEmail(String Email);
 }

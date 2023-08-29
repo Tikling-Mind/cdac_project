@@ -37,17 +37,13 @@ public class CustomerServiceImpl implements CustomerService {
 		Address address = modelMapper.map(customerDto.getAddress(), Address.class);
 		address.setAddressType(AddressType.HOME);
 		customer.setRegisterDate(LocalDate.now());
-		System.out.println(customer);
 		
 		customer = customerRepo.save(customer);
-		System.out.println("saved customer");
 		address.setCustomer(customer);
 		address = addressRepo.save(address);
-		System.out.println("saved address");
 		AddressDto addressDto = modelMapper.map(address, AddressDto.class);
 		CustomerDto returnCustomerDto = modelMapper.map(customer, CustomerDto.class);
 		returnCustomerDto.setAddress(addressDto);
-		System.out.println("returning ....");
 		return returnCustomerDto;
 	}
 
@@ -90,18 +86,30 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto getCustomerById(Long customerId) {
-		// fetching all HOME addresses to find home address of each customer
-		List<Address> homeAddressList = addressRepo.findAllByAddressType(AddressType.HOME)
-				.orElseThrow(() -> new ResourceNotFoundException("Error occured while fecthing addresses!"));
+		// Find Customer
 		Customer customer = customerRepo.findById(customerId)
-				.orElseThrow(() -> new ResourceNotFoundException("Invalid customer ID"));
-		Address homeAddress = homeAddressList.stream().filter(address -> address.getCustomer() == customer)
-				.collect(Collectors.toList()).get(0);
-		CustomerDto customerDto = modelMapper.map(customer, CustomerDto.class);
-		customerDto.setAddress(modelMapper.map(homeAddress, AddressDto.class));
-		return customerDto;
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid Customer Id!")) ;
+		// Find Home type address for the customer 
+		Address address = addressRepo.findByAddressTypeAndCustomer(AddressType.HOME,customer) ;
+		
+		CustomerDto customerDto = modelMapper.map(customer, CustomerDto.class) ;
+		customerDto.setAddress(modelMapper.map(address, AddressDto.class));
+		return customerDto ;
 	}
 
+	@Override
+	public CustomerDto getCustomerByEmail(String email) {
+		// Find Customer
+		Customer customer = customerRepo.findByEmail(email)
+				.orElseThrow(() -> new ResourceNotFoundException("Invalid Customer Id!")) ;
+		// Find Home type address for the customer 
+		Address address = addressRepo.findByAddressTypeAndCustomer(AddressType.HOME,customer) ;
+		
+		CustomerDto customerDto = modelMapper.map(customer, CustomerDto.class) ;
+		customerDto.setAddress(modelMapper.map(address, AddressDto.class));
+		return customerDto ;
+	}
+	
 	@Override
 	public CustomerDto updateCustomerDetails(CustomerDto detachedCustomer) {
 		customerRepo.findById(detachedCustomer.getId())
@@ -127,6 +135,8 @@ public class CustomerServiceImpl implements CustomerService {
 		String status = customer.isBlocked() ? "Blocked" : "Unblocked";
 		return "Customer " + customer.getFirstName() + " " + customer.getLastName() + " has been " + status;
 	}
+
+
 
 //	@Override
 //	public CustomerDto changeBlockingStatus(CustomerDto customer) {

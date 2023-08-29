@@ -192,6 +192,21 @@ public class VendorServiceImpl implements VendorService {
 		vendorDto.setAddress(modelMapper.map(address, AddressDto.class));
 		return vendorDto;
 	}
+
+	@Override
+	public VendorDto getVendorByEmail(String email) {
+		// Find Vendor
+		Vendor vendor = vendorRepo.findByEmail(email)
+				.orElseThrow(()-> new ResourceNotFoundException("Invalid vendor ID"));
+		
+		// Find Home type address for the vendor
+		Address address = addressRepo.findByAddressTypeAndVendor(AddressType.HOME,vendor) ;
+
+		
+		VendorDto vendorDto =  modelMapper.map(vendor, VendorDto.class);
+		vendorDto.setAddress(modelMapper.map(address, AddressDto.class));
+		return vendorDto;
+	}
 	
 	@Override
 	public VendorDto updateVendor(VendorDto detachedVendor) {
