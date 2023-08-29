@@ -8,10 +8,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "customers")
@@ -19,7 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@ToString
 public class Customer extends BaseEntity {
 	
 	String firstName;
@@ -28,6 +31,7 @@ public class Customer extends BaseEntity {
 	String mobile;
 	LocalDate registerDate;
 	String password;
+	@Value("false")
 	boolean isBlocked;
 	
 	

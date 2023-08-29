@@ -12,11 +12,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Value;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Entity
 @Table(name = "vendors")
@@ -26,8 +28,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Vendor extends BaseEntity {
 
+	@Value("false")
 	private boolean isVerified;
+	@Value("true")
 	private boolean isAvailable;
+	@Value("false")
 	private boolean isBlocked;
 	
 	String firstName;
