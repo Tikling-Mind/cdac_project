@@ -13,7 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.ToString;
+@ToString
 @Entity
 @Table(name="orders")
 @Getter
@@ -31,9 +32,9 @@ public class CustomerOrder extends BaseEntity{
 	private Tiffin tiffin;		
 
 	// Make zero by default
-	private int breakFastQuantity;
+	private int breakfastQuantity;
 
-	private int LunchQuantity;
+	private int lunchQuantity;
 	
 	private int dinnerQuantity;
 	
@@ -45,7 +46,7 @@ public class CustomerOrder extends BaseEntity{
 //	@JoinColumn(name="address_id")
 //	private Address deliveryAddress ;
 	
-	private String DeliveryNote ;	
+	private String deliveryNote ;	
 	
 	
 	
