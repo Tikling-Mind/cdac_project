@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.tiffin_wala.security.CustomUserDetails;
 
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -20,12 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class JwtUtils {
+//	@Value("${SECRET_KEY}")
+	private String jwtSecretKey = "SBVSv7+ul1J2SbTaeKHHELUQvQOxP/aq5XbOpwtQJCWKRqPF9Yr0L1QLHAfmQ0N0" ;
 	
-	@Value("${SECRET_KEY}")
-	private String jwtSecretKey ;
-	
-	@Value("${EXP_TIMEOUT}")
-	private int jwtExpirationInMs ;
+//	@Value("${EXP_TIMEOUT}")
+	private int jwtExpirationInMs = 86400000;
 	
 	private SecretKey key = Keys.hmacShaKeyFor(jwtSecretKey.getBytes()) ; 
 
