@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -67,23 +66,5 @@ const OrderByCustomer = () => {
         </>
     )
 }
-=======
-import React, { useState, useEffect } from 'react';
-import VendorList from "./VendorList"
 
-
-
-const OrderByCustomer = (props) => {
-    return (
-        <div>
-        <div class="d-flex flex-row-reverse">
-            <div className='flex-fill mx-2'><VendorList /></div>
-        </div>
-        
-        </div>
-    )
-
-}
-
->>>>>>> 8be1652c4f06255064e390bc6b892125c3d9a4c4
 export default OrderByCustomer;

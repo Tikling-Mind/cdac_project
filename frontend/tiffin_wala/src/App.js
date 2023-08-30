@@ -10,8 +10,11 @@ import FooterComponent from './components/footer/FooterComponent';
 // Common Routes
 import Home from "./components/pages/common/Home";
 import Faq from "./components/pages/common/Faq";
+import VendorsList from "./components/pages/common/VendorsList";
+import PrivacyPolicy from "./components/pages/common/PrivacyPolicy";
 import Login from "./components/pages/Login";
 import SignUp from './components/pages/SignUp';
+
 
 // Customer Routes
 import CustomerHome from "./components/pages/customer/CustomerHome" ;
@@ -47,6 +50,9 @@ import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
 import UpdateBasic from './components/pages/common/UpdateBasic';
 import UpdateAddress from './components/pages/common/UpdateAddress';
 
+import TestValidation from '../src/components/validations/TestValidation';
+
+
 function App() {
   // state to store loggining status
   const [checkLoggedIn, setCheckLoggedIn] = useState();
@@ -76,27 +82,19 @@ function App() {
             
               {/* Common Routes */}
               <Route index element={<Home />} />
-<<<<<<< HEAD
               <Route path='sign-in' element={<Login isLoggedIn={updateLogin}/>} />
               <Route path='sign-up' element={<SignUp />} />
               <Route path='faq' element={<Faq />} />
-=======
-              <Route path='/sign-in' element={<Login isLoggedIn={updateLogin}/>} />
-              <Route path='/sign-up' element={<SignUp />} />
-              <Route path='/updateBasic' element={<UpdateBasic />} />
-              <Route path='/updateAddress' element={<UpdateAddress />} />
->>>>>>> 8be1652c4f06255064e390bc6b892125c3d9a4c4
+              <Route path='vendorsList' element={<VendorsList />} />
+              <Route path='updateBasic' element={<UpdateBasic />} />
+              <Route path='updateAddress' element={<UpdateAddress />} />
               {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
               {/* Customer Routes */}
-<<<<<<< HEAD
               <Route path='customer' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
-=======
-              <Route path='customer/:id' element={<CustomerHome />} />
-              <Route path='customer/availableTiffin' element={<CustomerAvailableTiffins />} />
->>>>>>> 8be1652c4f06255064e390bc6b892125c3d9a4c4
+
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
               <Route path='customer/delete' element={<CustomerDelete />} />              
@@ -127,12 +125,18 @@ function App() {
               <Route path='admin/getAllBlockedCustomers' element={<BlockedCustomersList/>} />
               {/* <Route path='admin/blockVendor' element={<BlockVendor/>} />
               <Route path='admin/blockCustomer' element={<BlockCustomer/>} /> */}
+              <Route path='validationForm' element={<TestValidation/>} />
+              <Route path='footer' element={<FooterComponent/>} />
+              <Route path='privacy' element={<PrivacyPolicy/>} />
+
+
 
             {/* </Route> */}
           </Routes>
         </Router>
 
-        <FooterComponent />
+        <FooterComponent /> 
+        
       </header>
     </div>
   );
