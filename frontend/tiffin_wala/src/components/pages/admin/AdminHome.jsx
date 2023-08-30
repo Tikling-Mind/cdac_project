@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import swal from "sweetalert";
 import { IP_ADDRS } from "../../../service/BaseAddress"
 
+
 function Admin() {
     const [admin, setAdmin] = useState({
         email: "",
@@ -11,7 +12,7 @@ function Admin() {
         jwt: ""
     });
 
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(true);
 
     const navigate = useNavigate();
 
