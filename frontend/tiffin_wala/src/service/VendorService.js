@@ -38,11 +38,11 @@ class VendorService{
     }
 
     changeBlockingStatus(vendor,jwt){
-        return axios.patch(vendorURL +"/status/block", vendor,{ headers: { "Authorization": `Bearer ${jwt}` } })
+        return axios.patch(vendorURL +"status/block", vendor,{ headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
-    approveVendor(id, jwt){
-        return axios.patch(vendorURL+"approve/"+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
+    approveVendor(id, user, jwt){
+        return axios.patch(vendorURL+"approve/"+id, user,{ headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
     changeVendorAvailability(vendor, jwt){
