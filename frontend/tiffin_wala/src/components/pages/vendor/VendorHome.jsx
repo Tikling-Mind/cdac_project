@@ -27,7 +27,7 @@ function Vendor() {
             swal("Not Authorized", "", "error");
         }
         else {
-            VendorService.getVendor(id, jwt)
+            VendorService.getVendor(ven.id, ven.jwt)
             // axios.get("http://localhost:8080/customer/"+id)  
                 .then ((res) => {
                     console.log(res.data) ;
@@ -36,9 +36,16 @@ function Vendor() {
                         id : res.data.id,
                         firstName : res.data.firstName,
                         lastName : res.data.lastName,
-                        email : res.data.email
+                        email : res.data.email,
+                        jwt : ven.jwt
+
                     })
-                })
+                }).catch((err) =>{
+                    console.log(ven) ;
+                    swal("Could not get vendor data", "", "error")
+                }
+
+                )
         }
     }, [])
 

@@ -10,6 +10,7 @@ import com.tiffin_wala.service.VendorService;
 
 @RestController
 @RequestMapping("/vendor")
+@CrossOrigin("http://localhost:3000/")
 public class VendorController {
 	
 	@Autowired

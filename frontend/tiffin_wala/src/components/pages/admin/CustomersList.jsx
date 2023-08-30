@@ -16,9 +16,8 @@ const CustomersList = () => {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/getAllBlockedVendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.getCustomerList(admin.jwt)()
+        customerService.getCustomerList(admin.jwt)
             .then(res => {
-                console.log(res.data);
                 setCustomersList(res.data);
             })
             .catch(err => {
@@ -27,14 +26,14 @@ const CustomersList = () => {
             })
     }, [refreshFlag])
 
-    const changeBlockingStatus = (d) => {
+    const changeBlockingStatus = (user) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.changeBlockingStatus(d.id, admin.jwt)
+        customerService.changeBlockingStatus(user.id,user ,admin.jwt)
             .then(res => {
-                setRefreshFlag(~refreshFlag);
+                setRefreshFlag(!refreshFlag);
             }).catch(err =>
-                d.isBlocked
+                user.isBlocked
                 ?swal("Unable to Unblock", "", "error")
                 :swal("Unable to Block", "", "error")
             );
@@ -53,7 +52,7 @@ const CustomersList = () => {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email Id</th>
-                                <th />
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,9 +68,12 @@ const CustomersList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            v.isBlocked                                          
-                                            ?   <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>UnBlock</button>
+
+                                            
+                                            {v.blocked?
+                                                (<button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>UnBlock</button>)
                                             :   <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Block</button>
+                                            }
                                         </td>
                                     </tr>
                                 );

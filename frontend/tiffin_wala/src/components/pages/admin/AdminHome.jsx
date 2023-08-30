@@ -51,7 +51,7 @@ function Admin() {
                     <div className="container" style={{ marginBottom: "50px", textAlign: "center" }}>
                         <div className="row" >
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getAllApprovedVendors")}>
+                                <div className="card" onClick={() => navigate("getAllApprovedVendors")}>
                                     <div className="card-body" >
                                         <h5 className="card-title">Approved Vendors</h5>
                                         <p className="card-text">List of All Vendors</p>
@@ -59,7 +59,7 @@ function Admin() {
                                 </div>
                             </div>
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getAllCustomers")}>
+                                <div className="card" onClick={() => navigate("getAllCustomers")}>
                                     <div className="card-body">
                                         <h5 className="card-title">Get All Customers</h5>
                                         <p className="card-text">List of All Customers</p>
@@ -70,7 +70,7 @@ function Admin() {
 
                         <div className="row my-3">
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getUnapprovedVendors")}>
+                                <div className="card" onClick={() => navigate("getAllUnApprovedVendors")}>
                                     <div className="card-body">
                                         <h5 className="card-title">Unapproved Vendors</h5>
                                         <p className="card-text">List of all Unapproved Vendors</p>
@@ -78,10 +78,20 @@ function Admin() {
                                 </div>
                             </div>
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getBlockedVendors")}>
+                                <div className="card" onClick={() => navigate("getAllBlockedVendors")}>
                                     <div className="card-body">
                                         <h5 className="card-title">Blocked Vendors</h5>
                                         <p className="card-text">List of Blocked Vendors</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row my-3">
+                            <div className="col-sm-6">
+                                <div className="card" onClick={() => navigate("getAllBlockedCustomers")}>
+                                    <div className="card-body">
+                                        <h5 className="card-title">Blocked Customers</h5>
+                                        <p className="card-text">List of all Customers</p>
                                     </div>
                                 </div>
                             </div>

@@ -93,7 +93,7 @@ public class AuthController {
 			System.out.println("User is Vendor " + vendor.getFirstName());
 
 		}else 	// User is admin
-			response = new AuthRespDto(login.getId(),request.getEmail(),"ROLE_ADMIN", "Admin","Authentication Successfull",jwt) ;
+			response = new AuthRespDto(login.getId()	,request.getEmail(),"ROLE_ADMIN", "Admin","Authentication Successfull",jwt) ;
 		System.out.println("User is admin " );
 
 		return new ResponseEntity<>( response, HttpStatus.OK) ;

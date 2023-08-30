@@ -49,6 +49,7 @@ import BlockedCustomersList from "./components/pages/admin/BlockedCustomersList"
 import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
 import UpdateBasic from './components/pages/common/UpdateBasic';
 import UpdateAddress from './components/pages/common/UpdateAddress';
+import AddAddress from './components/pages/common/AddAddress';
 
 import TestValidation from '../src/components/validations/TestValidation';
 
@@ -69,6 +70,7 @@ function App() {
   }, []);
 
   const updateLogin = (val) => {
+    console.log("In updateLogin")
     setCheckLoggedIn(val);
   };
   return (
@@ -84,10 +86,15 @@ function App() {
               <Route index element={<Home />} />
               <Route path='sign-in' element={<Login isLoggedIn={updateLogin}/>} />
               <Route path='sign-up' element={<SignUp />} />
+              <Route path='addAddress' element={<AddAddress />} />
               <Route path='faq' element={<Faq />} />
+
               <Route path='vendorsList' element={<VendorsList />} />
               <Route path='updateBasic' element={<UpdateBasic />} />
               <Route path='updateAddress' element={<UpdateAddress />} />
+              <Route path='/updateBasic' element={<UpdateBasic />} />
+              <Route path='/updateAddress' element={<UpdateAddress />} />
+
               {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
