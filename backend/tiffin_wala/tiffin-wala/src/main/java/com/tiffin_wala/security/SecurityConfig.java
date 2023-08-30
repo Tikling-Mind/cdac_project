@@ -40,11 +40,22 @@ public class SecurityConfig {
 			.and()
 			
 			.authorizeHttpRequests()
-				.antMatchers(HttpMethod.DELETE,"/vendor","/customer").hasRole("ROLE_ADMIN")
-				.antMatchers("/vendor/approve","/vendor/unapproved","/vendor/status/block","/vendor/customer").hasRole("ROLE_ADMIN")
-				.antMatchers("").hasRole("ROLE_VENDOR")
-				.antMatchers("").hasRole("ROLE_CUSTOMER")
-				.antMatchers("/home", "/orders/**","/auth/**", "/swagger*/**", "/v*/api-docs/**","/subscription/**","/customerplan/**").permitAll()
+				.antMatchers(HttpMethod.DELETE,"/vendor","/customer","/vendor/{vendorId}").hasRole("ADMIN")
+				.antMatchers("/vendor/approve/{vendorId}","/vendor/unapproved","/vendor/status/block","/customer","/customer/{customerId}","/order","/order/{tiffinId}","/order/tiffin/{tiffinId}","/order/vendor/{vendorId}").hasRole("ADMIN")
+				.antMatchers(HttpMethod.GET,"/customer").hasRole("ADMIN")
+				.antMatchers("/vendor/approve/{vendorId}", "vendor/unapproved", "/vendor/status/block", "/vendor/customer/{vendorId}").hasRole("ADMIN")
+				.antMatchers(HttpMethod.PATCH,"/customer","/tiffin/{tiffinId}").hasRole("ADMIN")
+				
+				
+				.antMatchers("/vendor/customer","/customer/{customerId}","/order/tiffin/{tiffinId}","/order/vendor/{vendorId}","/tiffin","/tiffin/{tiffinId}","/vendor/status/availible","/vendor/customer/{vendorId}").hasRole("VENDOR")
+				.antMatchers(HttpMethod.POST,"/tiffin").hasRole("VENDOR")
+				.antMatchers(HttpMethod.DELETE,"/tiffin/{tiffinId}").hasRole("VENDOR")
+				.antMatchers(HttpMethod.PUT,"/vendor").hasRole("VENDOR")
+	
+				.antMatchers(HttpMethod.PUT,"/customer").hasRole("CUSTOMER")
+				
+				.antMatchers("/home", "/orders/**","/auth/**", "/swagger*/**", "/v*/api-docs/**","/vendor","vendor/approved","vendor/{vendorId}", "/vendor/pincode/{pincode}").permitAll()
+				
 				.antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
 			.and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
