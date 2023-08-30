@@ -8,24 +8,24 @@ class CustomerService{
         return axios.post(customerURL, customer) ;
     }
 
-    getCustomer(id){
-        return axios.get(customerURL+id) ;
+    getCustomer(id, jwt){
+        return axios.get(customerURL+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
-    getCustomerList(){
-        return axios.get(customerURL) ;
+    getCustomerList(jwt){
+        return axios.get(customerURL, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
-    updateCustomer(customer){
-        return axios.put(customerURL, customer) ;
+    updateCustomer(customer, jwt){
+        return axios.put(customerURL, customer, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
-    deleteCustomer(id){
-        return axios.delete(customerURL+id)
+    deleteCustomer(id, jwt){
+        return axios.delete(customerURL+id, { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
-    changeBlockingStatus(customer){
-        return axios.patch(customerURL+"/status", customer)
+    changeBlockingStatus(id,jwt){
+        return axios.patch(customerURL+id, { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 }
 

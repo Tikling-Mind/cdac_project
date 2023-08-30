@@ -17,6 +17,7 @@ import CustomerAvailableTiffins from "./components/pages/customer/CustomerAvaila
 import CustomerProfile from "./components/pages/customer/CustomerProfile" ;
 import CustomerUpdate from "./components/pages/customer/CustomerUpdate" ;
 import CustomerDelete from "./components/pages/customer/CustomerDelete" ;
+import CustomerTiffinList from "./components/pages/customer/CustomerTiffinList" ;
 // Vendor routes
 import VendorHome from "./components/pages/vendor/VendorHome"  ;
 import CreateVendor from "./components/pages/vendor/CreateVendor"  ;
@@ -34,8 +35,8 @@ import CustomersByTiffin from "./components/pages/vendor/CustomerByTiffin"  ;
 import AdminHome from "./components/pages/admin/AdminHome" ;
 import ApprovedVendorsList from "./components/pages/admin/ApprovedVendorsList" ;
 import UnApprovedVendorsList from "./components/pages/admin/UnApprovedVendorsList" ;
-import BlockVendor from "./components/pages/admin/BlockVendor" ;
-import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
+// import BlockVendor from "./components/pages/admin/BlockVendor" ;
+// import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
 import CustomersList from "./components/pages/admin/CustomersList" ;
 import BlockedCustomersList from "./components/pages/admin/BlockedCustomersList" ;
 import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
@@ -80,6 +81,7 @@ function App() {
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
               <Route path='customer/delete' element={<CustomerDelete />} />              
+              <Route path='customer/customerTiffinList' element={<CustomerTiffinList />} />              
               
               {/* Vendor Routes  */}
               <Route path='vendor/:id' element={<VendorHome />} />
@@ -102,8 +104,8 @@ function App() {
               <Route path='admin/getAllCustomers' element={<CustomersList/>} />
               <Route path='admin/getAllBlockedVendors' element={<BlockedVendorsList/>} />
               <Route path='admin/getAllBlockedCustomers' element={<BlockedCustomersList/>} />
-              <Route path='admin/blockVendor' element={<BlockVendor/>} />
-              <Route path='admin/blockCustomer' element={<BlockCustomer/>} />
+              {/* <Route path='admin/blockVendor' element={<BlockVendor/>} />
+              <Route path='admin/blockCustomer' element={<BlockCustomer/>} /> */}
 
             {/* </Route> */}
           </Routes>

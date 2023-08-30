@@ -11,6 +11,7 @@ import com.tiffin_wala.service.TiffinService;
 
 @RestController
 @RequestMapping("/tiffin")
+@CrossOrigin("http://localhost:3000/")
 public class TiffinController {
 
 	@Autowired

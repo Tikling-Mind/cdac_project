@@ -161,6 +161,7 @@ public class LoginServiceImpl implements LoginService {
 			throw new RuntimeException("OTP expired, genrate new OTP");
 		otpRepository.delete(persistOTP);
 		return true;
+
 	}
 
 }

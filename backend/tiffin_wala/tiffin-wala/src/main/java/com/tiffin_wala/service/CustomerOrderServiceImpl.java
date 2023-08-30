@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tiffin_wala.dto.CustomerOrderDto;
-
 import com.tiffin_wala.dto.TiffinDto;
 import com.tiffin_wala.entities.CustomerOrder;
 import com.tiffin_wala.entities.Tiffin;
@@ -81,10 +80,11 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	
 	@Override
 	public List<CustomerOrderDto> getCustomerOrdersByCustomerId(Long customerId) {
-		List<CustomerOrderDto> customerOrdersList = customerOrderRepo.findByCustomerId(customerId)
-				.stream().map(customerOrder->modelMapper.map(customerOrder, CustomerOrderDto.class))
+		return  customerOrderRepo.findByCustomerId(customerId)
+				.orElseThrow(()->new ResourceNotFoundException("Error occured while fetching customer orders"))
+				.stream()
+				.map(customerOrder->modelMapper.map(customerOrder, CustomerOrderDto.class))
 				.collect(Collectors.toList());
-		return customerOrdersList;
 	}
 
 

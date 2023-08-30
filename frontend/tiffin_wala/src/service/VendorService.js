@@ -8,13 +8,13 @@ class VendorService{
         return axios.post(vendorURL, vendor) ;
     }
 
-    getVendor(id){
-        return axios.get(vendorURL+id) ;
+    getVendor(id, jwt){
+        return axios.get(vendorURL+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
     // Get all (approved + unapproved) vendors
-    getVendorsList(){
-        return axios.get(vendorURL) ;
+    getVendorsList(jwt){
+        return axios.et(vendorURL, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
     // Get all approved Vendors
@@ -23,34 +23,34 @@ class VendorService{
     }
 
     // Get all Unapproved Vendors
-    getAllUnApprovedVendors(){
-        return axios.get(vendorURL+"unapproved")
+    getAllUnApprovedVendors(jwt){
+        return axios.get(vendorURL+"unapproved", { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
-    updateVendor(vendor){
-        return axios.put(vendorURL, vendor) ;
+    updateVendor(vendor, jwt){
+        return axios.put(vendorURL, vendor, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
-    deleteVendor(id){
-        return axios.delete(vendorURL+id)
+    deleteVendor(id, jwt){
+        return axios.delete(vendorURL+id, { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
-    changeBlockingStatus(vendor){
-        return axios.patch(vendorURL +"/status", vendor)
+    changeBlockingStatus(vendor,jwt){
+        return axios.patch(vendorURL +"/status/block", vendor,{ headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
-    approveVendor(id){
-        return axios.patch(vendorURL+"approve/"+id) ;
+    approveVendor(id, jwt){
+        return axios.patch(vendorURL+"approve/"+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
-    changeVendorAvailability(vendor){
-        return axios.patch(vendorURL+"status/available",vendor) ;
+    changeVendorAvailability(vendor, jwt){
+        return axios.patch(vendorURL+"status/available",vendor, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
 
     // Get all Customers for a vendor
-    getCustomersForVendor(id){
-        return axios.get(vendorURL+"/vendor/"+id) ;
+    getCustomersForVendor(id, jwt){
+        return axios.get(vendorURL+"/vendor/"+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 }
 
