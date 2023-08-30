@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import swal from "sweetalert";
 import TiffinService from '../../../service/TiffinService';
+import { useNavigate } from 'react-router-dom';
+import swal from "sweetalert";
 
 
-const CustomerAvailableTiffins = (props) => {
 
+const VendorTiffinList = (props) => {
     const [tiffinList, setTiffinList] = useState([]);
 
+    const [vendor, setVendor] = useState({
+        email: "",
+        id: "",
+        jwt: ""
+    });
+
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const navigate = useNavigate();
+
     useEffect(() => {
-        // let cust = JSON.parse(sessionStorage.getItem("customer")) ;
-        let cust = {
-            id: 4,
-            firstName: "Pradeep",
-            lastName: "Borade",
-            email: "pradipborade911@gmail.com",
-            mobile: "9172467135",
-            registerDate: new Date("July 21, 1983 01:15:00").toLocaleString()
+        let vend = JSON.parse(sessionStorage.getItem("vendor"));
+        if (vend == null) {
+            //swal("Not Authorized", "", "error");
         }
-        TiffinService.getTiffinsList()
+        else {
+            setLoggedIn(true);
+            setVendor({
+                id: vend.id,
+                email: vend.email,
+                jwt: vend.jwt
+            })
+        }
+        
+
+        TiffinService.getTiffinsByVendorId(vendor.id)
             .then(res => {
                 console.log(res.data);
                 setTiffinList(res.data);
@@ -28,17 +44,27 @@ const CustomerAvailableTiffins = (props) => {
             })
     }, []);
 
-    return (<>
+    const updateTiffin = (tiffin) => {
+        let cust = JSON.parse(sessionStorage.getItem("vendor"))
+        if (cust == null)
+            swal("Please login to update tiffin", "", "error")
+        else {
+            navigate("/placeOrder");
+        }
+
+    }
+
+    return (loggedIn ? (<>
         <div className="container my-4">
             <div>
-                <h3>All tiffins Placed</h3>
+                <h3>All available tiffins</h3>
 
                 <table className="table table-btiffined" style={{ textAlign: "center" }}>
                     <thead className="bg-dark text-light">
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Food Type-</th>
+                            <th>Food Type</th>
                             <th>Breakfast</th>
                             <th>Lunch</th>
                             <th>Dinner  </th>
@@ -47,7 +73,7 @@ const CustomerAvailableTiffins = (props) => {
                             <th>Available Till</th>
                             <th>Vendor</th>
                             <th>Price</th>
-
+                            <th>Update Tiffin</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,14 +83,17 @@ const CustomerAvailableTiffins = (props) => {
                                     <td>{tiffin.id}</td>
                                     <td>{tiffin.name}</td>
                                     <td>{tiffin.foodType}</td>
-                                    <td>{Math.floor(tiffin.breakLunchDinner/100)%10?"Yes":"No"}</td>
-                                    <td>{Math.floor(tiffin.breakLunchDinner/10)%10?"Yes":"No"}</td>
-                                    <td>{tiffin.breakLunchDinner%10?"Yes":"No"}</td>
+                                    <td>{Math.floor(tiffin.breakLunchDinner / 100) % 10 ? "Yes" : "No"}</td>
+                                    <td>{Math.floor(tiffin.breakLunchDinner / 10) % 10 ? "Yes" : "No"}</td>
+                                    <td>{tiffin.breakLunchDinner % 10 ? "Yes" : "No"}</td>
                                     <td>{tiffin.description}</td>
                                     <td>{tiffin.availableFrom}</td>
                                     <td>{tiffin.availableTo}</td>
                                     <td>{tiffin.vendor.firstName}</td>
                                     <td>{tiffin.price}</td>
+                                    <td>
+                                        <button className="btn btn-primary" onClick={() => updateTiffin(tiffin)}> Update </button>
+                                    </td>
                                 </tr>
                             );
                         })}
@@ -72,8 +101,8 @@ const CustomerAvailableTiffins = (props) => {
                 </table>
             </div>
         </div>
-    </>);
-};
+    </>) : <div style={{ textAlign: "center" }}><h1>Please Log in to Access this page</h1></div>);
 
+}
 
-export default CustomerAvailableTiffins;
+export default VendorTiffinList;
