@@ -10,6 +10,8 @@ import FooterComponent from './components/footer/FooterComponent';
 // Common Routes
 import Home from "./components/pages/common/Home";
 import Faq from "./components/pages/common/Faq";
+import VendorsList from "./components/pages/common/VendorsList";
+import PrivacyPolicy from "./components/pages/common/PrivacyPolicy";
 import Login from "./components/pages/Login";
 import SignUp from './components/pages/SignUp';
 
@@ -49,6 +51,9 @@ import UpdateBasic from './components/pages/common/UpdateBasic';
 import UpdateAddress from './components/pages/common/UpdateAddress';
 import AddAddress from './components/pages/common/AddAddress';
 
+import TestValidation from '../src/components/validations/TestValidation';
+
+
 function App() {
   // state to store loggining status
   const [checkLoggedIn, setCheckLoggedIn] = useState();
@@ -83,15 +88,19 @@ function App() {
               <Route path='sign-up' element={<SignUp />} />
               <Route path='addAddress' element={<AddAddress />} />
               <Route path='faq' element={<Faq />} />
+
+              <Route path='vendorsList' element={<VendorsList />} />
+              <Route path='updateBasic' element={<UpdateBasic />} />
+              <Route path='updateAddress' element={<UpdateAddress />} />
               <Route path='/updateBasic' element={<UpdateBasic />} />
               <Route path='/updateAddress' element={<UpdateAddress />} />
+
               {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
               {/* Customer Routes */}
               <Route path='customer' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
-
 
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
@@ -123,12 +132,18 @@ function App() {
               <Route path='admin/getAllBlockedCustomers' element={<BlockedCustomersList/>} />
               {/* <Route path='admin/blockVendor' element={<BlockVendor/>} />
               <Route path='admin/blockCustomer' element={<BlockCustomer/>} /> */}
+              <Route path='validationForm' element={<TestValidation/>} />
+              <Route path='footer' element={<FooterComponent/>} />
+              <Route path='privacy' element={<PrivacyPolicy/>} />
+
+
 
             {/* </Route> */}
           </Routes>
         </Router>
 
-        <FooterComponent />
+        <FooterComponent /> 
+        
       </header>
     </div>
   );

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 
 class NavbarComponent extends Component {
+    handleSubmit = () => {
+        window.location.href = "http://localhost:3000/vendorsList";
+      };
+    
     render() {
         return (
             <div>
@@ -13,10 +19,10 @@ class NavbarComponent extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                                <a className="nav-link" href="http://localhost:3000">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">About us</a>
+                                <a className="nav-link" href="http://localhost:3000#about-us">About us</a>
                             </li>
                             {/* <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,18 +36,18 @@ class NavbarComponent extends Component {
                                 </div>
                             </li> */}
                             <li className="nav-item">
-                                <a className="nav-link disabled" href="#">Sign up</a>
+                                <a className="nav-link" href="http://localhost:3000/sign-up">Sign up</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link disabled" href="#">Login</a>
+                                <a className="nav-link" href="http://localhost:3000/sign-in">Sign In</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link disabled" href="#">Contact us</a>
+                                <a className="nav-link" href="http://localhost:3000#footer">Contact us</a>
                             </li>
                         </ul>
                         <form className="form-inline my-2 my-lg-0">
                             <input className="form-control mr-sm-2" type="search" placeholder="Enter your pincode" aria-label="Search" />
-                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Find Delivery partners near you</button>
+                            <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={this.handleSubmit} >Find Delivery partners near you</button>
                         </form>
                     </div>
                 </nav>
