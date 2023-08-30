@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import swal from "sweetalert";
 import CustomerOrderService from '../../../service/CustomerOrderService';
 import moment from "moment";
 
-const CustomerTiffinList = () => {
 
+
+const CustomerTiffinList = () => {
     const [tiffinList, setTiffinList] = useState([]);
 
+    const [customer, setCustomer] = useState({
+        email: "",
+        id: "",
+        jwt: ""
+    });
+
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const navigate = useNavigate();
+
     useEffect(() => {
-        // let cust = JSON.parse(sessionStorage.getItem("customer")) ;
-        let cust = {
-            id: 4,
-            firstName: "Pradeep",
-            lastName: "Borade",
-            email: "pradipborade911@gmail.com",
-            mobile: "9172467135",
-            registerDate: new Date("July 21, 1983 01:15:00").toLocaleString()
+        let cust = JSON.parse(sessionStorage.getItem("customer"));
+        if (cust == null) {
+            swal("Not Authorized", "", "error");
         }
-        CustomerOrderService.getOrdersByCustomerId(cust.id)
+        else {
+            setLoggedIn(true);
+            setCustomer({
+                id: cust.id,
+                email: cust.email,
+                jwt: cust.jwt
+            })
+        }
+
+        CustomerOrderService.getOrdersByCustomerId(customer.id)
             .then(res => {
                 console.log(res.data);
                 setTiffinList(res.data);
@@ -28,7 +44,7 @@ const CustomerTiffinList = () => {
             })
     }, []);
 
-    return (<>
+    return (loggedIn ? (<>
         <div className="container my-4">
             <div>
                 <h3>All Orders Placed</h3>
@@ -42,7 +58,6 @@ const CustomerTiffinList = () => {
                             <th>Dinner Quantity</th>
                             <th>Order Start Date</th>
                             <th>Order End Date</th>
-                            {/*<th>Delivery Address</th>*/}
                             <th>Delivery Note</th>
                             <th>Price</th>
                         </tr>
@@ -59,9 +74,9 @@ const CustomerTiffinList = () => {
                                     <td>{order.orderEndDate}</td>
                                     {/*<td>{order.deliveryAddress}</td>*/}
                                     <td>{order.deliveryNote}</td>
-                                    <td>{(order.tiffin.price*order.breakfastQuantity
-                                    +order.tiffin.price*order.dinnerQuantity)
-                                    *(moment(order.orderEndDate)).diff(moment(order.orderStartDate), "days")}
+                                    <td>{(order.tiffin.price * order.breakfastQuantity
+                                        + order.tiffin.price * order.dinnerQuantity)
+                                        * (moment(order.orderEndDate)).diff(moment(order.orderStartDate), "days")}
                                     </td>
                                 </tr>
                             );
@@ -70,7 +85,7 @@ const CustomerTiffinList = () => {
                 </table>
             </div>
         </div>
-    </>);
+    </>) : <div style={{ textAlign: "center" }}><h1>Please Log in to Access this page</h1></div>);
 };
 
 
