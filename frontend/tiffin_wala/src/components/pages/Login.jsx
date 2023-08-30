@@ -50,10 +50,10 @@ function Login(props) {
     const navigate = useNavigate();
 
     const submitData = (e) => {
-        if (validateEmail(data.email)) {
+        if (data.email =="") {
                         return;
         }
-        if (validatePassword(data.password)) {
+        if (data.password =="") {
                         return;
         }
         // Prevent reload/refresh
@@ -63,17 +63,21 @@ function Login(props) {
 
         if (validateCaptcha(user_captcha) === true) { 
             // Store the Input value
+            console.log("data", data)
             const obj = { "email": data.email, "password": data.password } ;
-            
+            console.log("obj", obj)
             // Send request for authenticating user
             axios.post(`${IP_ADDRS}/auth/signin`, obj)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
                 .then(response => {
-                    props.isLogged(true);
+                    console.log( response) ;
+                    // props.isLogged(true);
+                    // console.log("In Vendor Redirect");
                     if (response.data.role.includes("ROLE_CUSTOMER")) {
                         sessionStorage.setItem("customer", JSON.stringify(response.data));
                         navigate(`/customer`);
                     }
                     else if (response.data.role.includes("ROLE_VENDOR")) {
+                        console.log("In Vendor Redirect");
                         sessionStorage.setItem("vendor", JSON.stringify(response.data));
                         navigate(`/vendor`);
                     }
@@ -81,7 +85,9 @@ function Login(props) {
                         sessionStorage.setItem("admin", JSON.stringify(response.data));
                         navigate(`/admin`);
                     }
-                }).catch(err => {
+                })
+                .catch(err => {
+                    console.log("In Catch")
                     swal("Wrong Detials You were Entered", "Enter Correct Details again, Make Sure you are registered before Login", "error");
                 })
         }

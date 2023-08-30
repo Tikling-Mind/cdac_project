@@ -13,6 +13,7 @@ import Faq from "./components/pages/common/Faq";
 import Login from "./components/pages/Login";
 import SignUp from './components/pages/SignUp';
 
+
 // Customer Routes
 import CustomerHome from "./components/pages/customer/CustomerHome" ;
 import CustomerAvailableTiffins from './components/pages/customer/CustomerAvailableTiffins';
@@ -46,6 +47,7 @@ import BlockedCustomersList from "./components/pages/admin/BlockedCustomersList"
 import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
 import UpdateBasic from './components/pages/common/UpdateBasic';
 import UpdateAddress from './components/pages/common/UpdateAddress';
+import AddAddress from './components/pages/common/AddAddress';
 
 function App() {
   // state to store loggining status
@@ -63,6 +65,7 @@ function App() {
   }, []);
 
   const updateLogin = (val) => {
+    console.log("In updateLogin")
     setCheckLoggedIn(val);
   };
   return (
@@ -78,6 +81,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path='sign-in' element={<Login isLoggedIn={updateLogin}/>} />
               <Route path='sign-up' element={<SignUp />} />
+              <Route path='addAddress' element={<AddAddress />} />
               <Route path='faq' element={<Faq />} />
               <Route path='/updateBasic' element={<UpdateBasic />} />
               <Route path='/updateAddress' element={<UpdateAddress />} />
@@ -87,6 +91,7 @@ function App() {
               {/* Customer Routes */}
               <Route path='customer' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
+
 
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
