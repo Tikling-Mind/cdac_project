@@ -18,6 +18,8 @@ import CustomerProfile from "./components/pages/customer/CustomerProfile" ;
 import CustomerUpdate from "./components/pages/customer/CustomerUpdate" ;
 import CustomerDelete from "./components/pages/customer/CustomerDelete" ;
 import CustomerTiffinList from "./components/pages/customer/CustomerTiffinList" ;
+import TiffinOrderForm from "./components/pages/customer/TiffinOrderForm" ;
+
 // Vendor routes
 import VendorHome from "./components/pages/vendor/VendorHome"  ;
 import CreateVendor from "./components/pages/vendor/CreateVendor"  ;
@@ -81,7 +83,9 @@ function App() {
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
               <Route path='customer/delete' element={<CustomerDelete />} />              
-              <Route path='customer/customerTiffinList' element={<CustomerTiffinList />} />              
+              <Route path='customer/customerTiffinList' element={<CustomerTiffinList />} />  
+              <Route path='customer/orderTiffin' element={<TiffinOrderForm />} />              
+            
               
               {/* Vendor Routes  */}
               <Route path='vendor/:id' element={<VendorHome />} />
