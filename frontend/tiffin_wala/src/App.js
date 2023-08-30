@@ -76,27 +76,18 @@ function App() {
             
               {/* Common Routes */}
               <Route index element={<Home />} />
-<<<<<<< HEAD
               <Route path='sign-in' element={<Login isLoggedIn={updateLogin}/>} />
               <Route path='sign-up' element={<SignUp />} />
               <Route path='faq' element={<Faq />} />
-=======
-              <Route path='/sign-in' element={<Login isLoggedIn={updateLogin}/>} />
-              <Route path='/sign-up' element={<SignUp />} />
               <Route path='/updateBasic' element={<UpdateBasic />} />
               <Route path='/updateAddress' element={<UpdateAddress />} />
->>>>>>> 8be1652c4f06255064e390bc6b892125c3d9a4c4
               {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
               {/* Customer Routes */}
-<<<<<<< HEAD
               <Route path='customer' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
-=======
-              <Route path='customer/:id' element={<CustomerHome />} />
-              <Route path='customer/availableTiffin' element={<CustomerAvailableTiffins />} />
->>>>>>> 8be1652c4f06255064e390bc6b892125c3d9a4c4
+
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
               <Route path='customer/delete' element={<CustomerDelete />} />              
