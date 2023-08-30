@@ -8,18 +8,20 @@ public interface LoginService {
 
 	Login findByEmail(String email);
 
-	Login addLogin(UserDto user);
+	UserDto addLogin(UserDto user);
 
-	String changePassword(ChangePasswordDto changePasswordDto);
-
-	String validateEmail(String email);
-
-	String forgotPassword(String email);
-
-	String changeForgottenPassword(ChangePasswordDto changePasswordDto);
-	
-	String sendOTP(String email);
-
-	boolean validateOTP(String email, int otp);
+	/*
+	 * String changePassword(ChangePasswordDto changePasswordDto);
+	 * 
+	 * String validateEmail(String email);
+	 * 
+	 * String forgotPassword(String email);
+	 * 
+	 * String changeForgottenPassword(ChangePasswordDto changePasswordDto);
+	 * 
+	 * String sendOTP(String email);
+	 * 
+	 * boolean validateOTP(String email, int otp);
+	 */
 
 }

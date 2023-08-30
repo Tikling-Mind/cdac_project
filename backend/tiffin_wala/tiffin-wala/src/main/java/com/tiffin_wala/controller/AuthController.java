@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tiffin_wala.dto.AddressDto;
 import com.tiffin_wala.dto.AuthRequestDto;
 import com.tiffin_wala.dto.AuthRequestOtpDto;
 import com.tiffin_wala.dto.AuthRespDto;
@@ -25,6 +26,7 @@ import com.tiffin_wala.dto.VendorDto;
 import com.tiffin_wala.entities.Login;
 import com.tiffin_wala.enums.UserRole;
 import com.tiffin_wala.security.utils.JwtUtils;
+import com.tiffin_wala.service.AddressService;
 import com.tiffin_wala.service.CustomerService;
 import com.tiffin_wala.service.LoginService;
 import com.tiffin_wala.service.VendorService;
@@ -56,6 +58,8 @@ public class AuthController {
 	@Autowired 
 	private VendorService vendorService ;
 	
+	@Autowired
+	private AddressService addressService ;
 	
 	
 	/**
@@ -77,15 +81,21 @@ public class AuthController {
 		
 		AuthRespDto response ;
 		Login login = loginService.findByEmail(request.getEmail()) ;
+		System.out.println("Got login " + login.getEmail());
 		if(login.getUserRole() == UserRole.ROLE_CUSTOMER) {
 			CustomerDto customer = customerService.getCustomerByEmail(request.getEmail()) ; 			
 			response = new AuthRespDto(customer.getId(),customer.getEmail(),"ROLE_CUSTOMER",customer.getFirstName()+" "+ customer.getLastName(),"Authentication Successful!",jwt) ; 			
+			System.out.println("User is Customer " + customer.getFirstName());
+
 		}else if(login.getUserRole()== UserRole.ROLE_VENDOR) {
 			VendorDto vendor = vendorService.getVendorByEmail(request.getEmail()) ;
 			response = new AuthRespDto(vendor.getId(),vendor.getEmail(),"ROLE_VENDOR", vendor.getFirstName()+ " " +vendor.getLastName(),"Authentication Successfull",jwt) ;
+			System.out.println("User is Vendor " + vendor.getFirstName());
+
 		}else 	// User is admin
-			response = new AuthRespDto(0l,request.getEmail(),"ROLE_ADMIN", "Admin","Authentication Successfull",jwt) ;
-		
+			response = new AuthRespDto(login.getId(),request.getEmail(),"ROLE_ADMIN", "Admin","Authentication Successfull",jwt) ;
+		System.out.println("User is admin " );
+
 		return new ResponseEntity<>( response, HttpStatus.OK) ;
 	}
 	
@@ -95,39 +105,52 @@ public class AuthController {
 		return new ResponseEntity<>(loginService.addLogin(user), HttpStatus.CREATED) ;
 	}
 	
-	// method to update password
-	@PostMapping("/updatepassword")
-	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(loginService.changePassword(changePasswordDto));
-	}
-
-	// method to generateOTP
-	@PostMapping("/validateEmail")
-	public ResponseEntity<?> validateEmail(@RequestBody ChangePasswordDto changePasswordDto) {
-		System.out.println(changePasswordDto.getEmail());
-		return ResponseEntity.status(HttpStatus.CREATED).body(loginService.validateEmail(changePasswordDto.getEmail()));
-	}
-
-	@PostMapping("/verifyOtp")
-	public ResponseEntity<?> verifyOtp(@RequestBody AuthRequestOtpDto requestOTP) {
-		String str;
-		if (loginService.validateOTP(requestOTP.getEmail(), requestOTP.getOTP())) {
-			str = "Email Validated Successfully";
-		} else
-			str = "Invalid OTP";
-		return ResponseEntity.status(HttpStatus.CREATED).body(str);
-	}
-
-	@PostMapping("/forgotPassword")
-	public ResponseEntity<?> forgotPassword(@RequestBody ChangePasswordDto changePasswordDto) {
-		System.out.println("email "+changePasswordDto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(loginService.forgotPassword(changePasswordDto.getEmail()));
+	@PostMapping("/address")
+	public ResponseEntity<?> addAddress(@RequestBody @Valid AddressDto address){
+		return new ResponseEntity<>(addressService.addAddress(address), HttpStatus.CREATED) ;
 	}
 	
-	@PostMapping("/changeForgottenPassword")
-	public ResponseEntity<?> changeForgottenPassword(@RequestBody ChangePasswordDto changePasswordDto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(loginService.changeForgottenPassword(changePasswordDto));
-	}
+	/*
+	 * // method to update password
+	 * 
+	 * @PostMapping("/updatepassword") public ResponseEntity<?>
+	 * changePassword(@RequestBody ChangePasswordDto changePasswordDto) { return
+	 * ResponseEntity.status(HttpStatus.CREATED).body(loginService.changePassword(
+	 * changePasswordDto)); }
+	 */
+
+	/*
+	 * // method to generateOTP
+	 * 
+	 * @PostMapping("/validateEmail") public ResponseEntity<?>
+	 * validateEmail(@RequestBody ChangePasswordDto changePasswordDto) {
+	 * System.out.println(changePasswordDto.getEmail()); return
+	 * ResponseEntity.status(HttpStatus.CREATED).body(loginService.validateEmail(
+	 * changePasswordDto.getEmail())); }
+	 */
+
+	/*
+	 * @PostMapping("/verifyOtp") public ResponseEntity<?> verifyOtp(@RequestBody
+	 * AuthRequestOtpDto requestOTP) { String str; if
+	 * (loginService.validateOTP(requestOTP.getEmail(), requestOTP.getOTP())) { str
+	 * = "Email Validated Successfully"; } else str = "Invalid OTP"; return
+	 * ResponseEntity.status(HttpStatus.CREATED).body(str); }
+	 */
+
+	/*
+	 * @PostMapping("/forgotPassword") public ResponseEntity<?>
+	 * forgotPassword(@RequestBody ChangePasswordDto changePasswordDto) {
+	 * System.out.println("email "+changePasswordDto); return
+	 * ResponseEntity.status(HttpStatus.CREATED).body(loginService.forgotPassword(
+	 * changePasswordDto.getEmail())); }
+	 */
+	
+	/*
+	 * @PostMapping("/changeForgottenPassword") public ResponseEntity<?>
+	 * changeForgottenPassword(@RequestBody ChangePasswordDto changePasswordDto) {
+	 * return ResponseEntity.status(HttpStatus.CREATED).body(loginService.
+	 * changeForgottenPassword(changePasswordDto)); }
+	 */
 	
 	
 	
