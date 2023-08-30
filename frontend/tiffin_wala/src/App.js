@@ -34,10 +34,13 @@ import CustomersByTiffin from "./components/pages/vendor/CustomerByTiffin"  ;
 // Admin Routes
 import AdminHome from "./components/pages/admin/AdminHome" ;
 import ApprovedVendorsList from "./components/pages/admin/ApprovedVendorsList" ;
-import UnApprovedVendors from "./components/pages/admin/UnApprovedVendors" ;
+import UnApprovedVendorsList from "./components/pages/admin/UnApprovedVendorsList" ;
 import BlockVendor from "./components/pages/admin/BlockVendor" ;
 import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
-import CustomerList from "./components/pages/admin/CustomersList" ;
+import CustomersList from "./components/pages/admin/CustomersList" ;
+import BlockedCustomersList from "./components/pages/admin/BlockedCustomersList" ;
+import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
+
 function App() {
   // state to store loggining status
   const [checkLoggedIn, setCheckLoggedIn] = useState();
@@ -95,12 +98,14 @@ function App() {
               <Route path='vendor/customersByTiffin' element={<CustomersByTiffin/>} />
 
               {/* Admin Routes */}
-              <Route path='admin/' element={<AdminHome/>} />
+              <Route path='/admin' element={<AdminHome/>} />
               <Route path='admin/getAllApprovedVendors' element={<ApprovedVendorsList/>} />             
-              <Route path='admin/getAllUnApprovedVendors' element={<UnApprovedVendors/>} />
+              <Route path='admin/getAllUnApprovedVendors' element={<UnApprovedVendorsList/>} />
+              <Route path='admin/getAllCustomers' element={<CustomersList/>} />
+              <Route path='admin/getAllBlockedVendors' element={<BlockedVendorsList/>} />
+              <Route path='admin/getAllBlockedCustomers' element={<BlockedCustomersList/>} />
               <Route path='admin/blockVendor' element={<BlockVendor/>} />
               <Route path='admin/blockCustomer' element={<BlockCustomer/>} />
-              <Route path='admin/getAllCustomers' element={<CustomerList/>} />
 
             {/* </Route> */}
           </Routes>
