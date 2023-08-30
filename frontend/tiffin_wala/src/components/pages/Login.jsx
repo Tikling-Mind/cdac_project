@@ -51,10 +51,10 @@ function Login(props) {
 
     const submitData = (e) => {
         if (validateEmail(data.email)) {
-            return;
+                        return;
         }
         if (validatePassword(data.password)) {
-            return;
+                        return;
         }
         // Prevent reload/refresh
         e.preventDefault();
@@ -66,7 +66,7 @@ function Login(props) {
             const obj = { "email": data.email, "password": data.password } ;
             
             // Send request for authenticating user
-            axios.post(`${IP_ADDRS}/auth/signin`, obj)
+            axios.post(`${IP_ADDRS}/auth/signin`, obj)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
                 .then(response => {
                     props.isLogged(true);
                     if (response.data.role.includes("ROLE_CUSTOMER")) {

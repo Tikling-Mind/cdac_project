@@ -1,6 +1,4 @@
 import axios from "axios";
-// import { useState } from "react";
-// import { useEffect } from "react";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
@@ -15,10 +13,11 @@ const BlockedCustomersList = () => {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/getAllBlockedVendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.getAllBlockedCustomers()
+        customerService.getCustomerList(admin.jwt)
             .then(res => {
+                let blockedCustomersList = res.data.filter((cust) => cust.isBlocked ) ;
                 console.log(res.data);
-                setCustomersList(res.data);
+                setCustomersList(blockedCustomersList);
             })
             .catch(err => {
                 console.log(err);
@@ -26,14 +25,14 @@ const BlockedCustomersList = () => {
             })
     }, [refreshFlag])
 
-    const details = (d) => {
+    const unBlockCustomer = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.getAllBlockedCustomers()
+        customerService.changeBlockingStatus(d.id,admin.jwt)
             .then(res => {
                 setRefreshFlag(~refreshFlag);
             }).catch(err =>
-                swal("Unable to Block", "", "error")
+                swal("Unable to Unblock", "", "error")
             );
     }
 
@@ -66,7 +65,7 @@ const BlockedCustomersList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => details(v)}>UnBlock</button>
+                                            <button className="btn btn-danger" onClick={() => unBlockCustomer(v)}>UnBlock</button>
                                         </td>
                                     </tr>
                                 );

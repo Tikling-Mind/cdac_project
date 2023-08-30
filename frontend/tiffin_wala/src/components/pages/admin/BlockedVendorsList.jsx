@@ -16,10 +16,11 @@ const BlockedVendorList = () => {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/getAllBlockedVendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.getAllUnApprovedVendors()
+        vendorService.getAllApprovedVendors()
             .then(res => {
+                let blockedVendorsList = res.data.filter((vendor)=>vendor.isBlocked) ;
                 console.log(res.data);
-                setVendorList(res.data);
+                setVendorList(blockedVendorsList);
             })
             .catch(err => {
                 console.log(err);
@@ -27,14 +28,14 @@ const BlockedVendorList = () => {
             })
     }, [refreshFlag])
 
-    const details = (d) => {
+    const unBlockVendor = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.getAllUnApprovedVendors()
+        vendorService.changeBlockingStatus(d,admin.jwt)()
             .then(res => {
                 setRefreshFlag(~refreshFlag);
             }).catch(err =>
-                swal("Unable to Block", "", "error")
+                swal("Unable to Unblock", "", "error")
             );
     }
 
@@ -67,7 +68,7 @@ const BlockedVendorList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => details(v)}>UnBlock</button>
+                                            <button className="btn btn-danger" onClick={() => unBlockVendor(v)}>UnBlock</button>
                                         </td>
                                     </tr>
                                 );
