@@ -35,8 +35,8 @@ import CustomersByTiffin from "./components/pages/vendor/CustomerByTiffin"  ;
 import AdminHome from "./components/pages/admin/AdminHome" ;
 import ApprovedVendorsList from "./components/pages/admin/ApprovedVendorsList" ;
 import UnApprovedVendorsList from "./components/pages/admin/UnApprovedVendorsList" ;
-import BlockVendor from "./components/pages/admin/BlockVendor" ;
-import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
+// import BlockVendor from "./components/pages/admin/BlockVendor" ;
+// import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
 import CustomersList from "./components/pages/admin/CustomersList" ;
 import BlockedCustomersList from "./components/pages/admin/BlockedCustomersList" ;
 import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
@@ -104,8 +104,8 @@ function App() {
               <Route path='admin/getAllCustomers' element={<CustomersList/>} />
               <Route path='admin/getAllBlockedVendors' element={<BlockedVendorsList/>} />
               <Route path='admin/getAllBlockedCustomers' element={<BlockedCustomersList/>} />
-              <Route path='admin/blockVendor' element={<BlockVendor/>} />
-              <Route path='admin/blockCustomer' element={<BlockCustomer/>} />
+              {/* <Route path='admin/blockVendor' element={<BlockVendor/>} />
+              <Route path='admin/blockCustomer' element={<BlockCustomer/>} /> */}
 
             {/* </Route> */}
           </Routes>

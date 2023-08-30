@@ -15,7 +15,7 @@ function Admin() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect(() => {       
         let adm = JSON.parse(sessionStorage.getItem("admin"));
         if (adm == null) {
             swal("Not Authorized", "", "error");

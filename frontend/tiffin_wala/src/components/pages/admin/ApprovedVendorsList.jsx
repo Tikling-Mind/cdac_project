@@ -1,15 +1,14 @@
 import axios from "axios";
-// import { useState } from "react";
-// import { useEffect } from "react";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { IP_ADDRS } from "../../../service/BaseAddress"
 import vendorService from "../../../service/VendorService"
 
-
+//path: getAllApprovedVendors
 
 const ApprovedVendorList = () => {
+
     const [vendorList, setVendorList] = useState([]);
     const [refreshFlag, setRefreshFlag] = useState(false);
     const navigate = useNavigate();
@@ -29,15 +28,18 @@ const ApprovedVendorList = () => {
             })
     }, [refreshFlag])
 
-    const details = (d) => {
+    const changeBlockingStatus = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
+        d.isBlocked = !d.isBlocked ;
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/block`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.getAllApprovedVendors()
-        .then(res => {
+        vendorService.changeBlockingStatus(d,admin.jwt) 
+            .then(res => {
                 setRefreshFlag(~refreshFlag);
             }).catch(err =>
-                swal("Unable to Block", "", "error")
-            );
+                d.isBlocked
+                ?   swal("Unable to UnBlock", "", "error")
+                :   swal("Unable to Block", "", "error")
+                    );
     }
 
     return (
@@ -69,7 +71,10 @@ const ApprovedVendorList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => details(v)}>Block</button>
+                                            {v.isBlocked}?
+                                                <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Unblock</button>
+                                            :
+                                                <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Block</button>
                                         </td>
                                     </tr>
                                 );

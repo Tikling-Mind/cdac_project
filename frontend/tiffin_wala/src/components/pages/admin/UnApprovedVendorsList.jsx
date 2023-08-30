@@ -18,7 +18,7 @@ const UnApprovedVendorList = () => {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/allvendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.getAllUnApprovedVendors()
+        vendorService.getAllUnApprovedVendors(admin.jwt)
             .then(res => {
                 console.log(res.data);
                 setVendorList(res.data);
@@ -29,14 +29,14 @@ const UnApprovedVendorList = () => {
             })
     }, [refreshFlag])
 
-    const details = (d) => {
+    const approveVendor = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/block`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.getAllUnApprovedVendors()
+        vendorService.approveVendor(d.id, admin.jwt)
         .then(res => {
                 setRefreshFlag(~refreshFlag);
             }).catch(err =>
-                swal("Unable to Block", "", "error")
+                swal("Unable to Approve", "", "error")
             );
     }
 
@@ -69,7 +69,7 @@ const UnApprovedVendorList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => details(v)}>Block</button>
+                                            <button className="btn btn-danger" onClick={() => approveVendor(v)}>Approve</button>
                                         </td>
                                     </tr>
                                 );
