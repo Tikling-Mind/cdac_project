@@ -75,7 +75,7 @@ public class LoginServiceImpl implements LoginService {
 		if (role == UserRole.ROLE_CUSTOMER) {
 			// customer role
 			Customer customer = new Customer(user.getFirstName(), user.getLastName(), user.getEmail(),
-					user.getMobile(), LocalDate.now() , user.getPassword(), false);
+					user.getMobile(), LocalDate.now(), false);
 
 			// saving in customers table
 			// entity = customerRepo.save(customer);
@@ -84,7 +84,7 @@ public class LoginServiceImpl implements LoginService {
 		// vendor role
 		else {
 			Vendor vendor = new Vendor(false, true, false, user.getFirstName(), user.getLastName(), user.getEmail(),
-					user.getMobile(), LocalDate.now() , user.getPassword());
+					user.getMobile(), LocalDate.now() );
 			// saving in vendors table
 			// entity = vendorRepo.save(vendor);
 			vendorRepo.save(vendor);

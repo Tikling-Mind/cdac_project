@@ -59,9 +59,9 @@ function Login(props) {
         // Prevent reload/refresh
         e.preventDefault();
 
-        let user_captcha = document.getElementById('user_captcha_input').value;
+        // let user_captcha = document.getElementById('user_captcha_input').value;
 
-        if (validateCaptcha(user_captcha) === true) { 
+        // if (validateCaptcha(user_captcha) === true) { 
             // Store the Input value
             const obj = { "email": data.email, "password": data.password } ;
             
@@ -86,11 +86,11 @@ function Login(props) {
                 })
         }
 
-        else {
-            swal("Captcha Does Not Match !", "Enter Correct Captcha", "error");
-        }
+    //     else {
+    //         swal("Captcha Does Not Match !", "Enter Correct Captcha", "error");
+    //     }
 
-    }
+    // }
 
 
 

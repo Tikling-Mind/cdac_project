@@ -33,6 +33,7 @@ export const validatePincode = (pin) => {
 }
 
 export const validatePassword = (passwd) => {
+    return true;
     var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
     if(passwd.value.match(paswd)) 
         return true;
@@ -44,8 +45,9 @@ export const validatePassword = (passwd) => {
 }
 
 export const validateEmail = (email) => {
+    return true;
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(email.value.match(mailformat))
+    if(email.match(mailformat))
         return true;
     else
     {

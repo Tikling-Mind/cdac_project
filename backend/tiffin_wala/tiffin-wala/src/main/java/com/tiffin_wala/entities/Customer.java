@@ -30,7 +30,6 @@ public class Customer extends BaseEntity {
 	String email;
 	String mobile;
 	LocalDate registerDate;
-	String password;
 	@Value("false")
 	boolean isBlocked;
 	

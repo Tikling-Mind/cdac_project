@@ -40,7 +40,6 @@ public class Vendor extends BaseEntity {
 	String email;
 	String mobile;
 	LocalDate registerDate;
-	String password;
 
 
 //	@OneToOne(cascade = CascadeType.ALL)
