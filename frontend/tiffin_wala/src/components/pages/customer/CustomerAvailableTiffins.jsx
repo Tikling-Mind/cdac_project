@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import swal from "sweetalert";
 import TiffinService from '../../../service/TiffinService';
+import CustomerOrderService from '../../../service/CustomerOrderService';
+import { useNavigate } from 'react-router-dom';
 
 
 const CustomerAvailableTiffins = (props) => {
 
     const [tiffinList, setTiffinList] = useState([]);
-
+    const navigate = useNavigate() ;
     useEffect(() => {
         // let cust = JSON.parse(sessionStorage.getItem("customer")) ;
-        let cust = {
-            id: 4,
-            firstName: "Pradeep",
-            lastName: "Borade",
-            email: "pradipborade911@gmail.com",
-            mobile: "9172467135",
-            registerDate: new Date("July 21, 1983 01:15:00").toLocaleString()
-        }
-        TiffinService.getTiffinsList()
+        // let cust = {
+        //     id: 4,
+        //     firstName: "Pradeep",
+        //     lastName: "Borade",
+        //     email: "pradipborade911@gmail.com",
+        //     mobile: "9172467135",
+        //     registerDate: new Date("July 21, 1983 01:15:00").toLocaleString()
+        // }
+        TiffinService.getAllAvailableTiffins()
             .then(res => {
                 console.log(res.data);
                 setTiffinList(res.data);
@@ -28,10 +30,19 @@ const CustomerAvailableTiffins = (props) => {
             })
     }, []);
 
+    const orderTiffin=(tiffin) => {
+        let cust = JSON.parse(sessionStorage.getItem("customer"))
+        if(cust == null )
+            swal("Please login to order tiffin","","error")
+        else{
+            navigate("/placeOrder") ;
+        } 
+
+    }
     return (<>
         <div className="container my-4">
             <div>
-                <h3>All tiffins Placed</h3>
+                <h3>All available tiffins</h3>
 
                 <table className="table table-btiffined" style={{ textAlign: "center" }}>
                     <thead className="bg-dark text-light">
@@ -47,7 +58,7 @@ const CustomerAvailableTiffins = (props) => {
                             <th>Available Till</th>
                             <th>Vendor</th>
                             <th>Price</th>
-
+                            <th>Order</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +76,9 @@ const CustomerAvailableTiffins = (props) => {
                                     <td>{tiffin.availableTo}</td>
                                     <td>{tiffin.vendor.firstName}</td>
                                     <td>{tiffin.price}</td>
+                                    <td>
+                                        <button className="btn btn-primary" onClick={() => orderTiffin(tiffin)}> Order </button>
+                                    </td>
                                 </tr>
                             );
                         })}
