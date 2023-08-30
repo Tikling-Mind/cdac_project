@@ -32,9 +32,9 @@ const UnApprovedVendorList = () => {
     const approveVendor = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/block`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.approveVendor(d.id, admin.jwt)
+        vendorService.approveVendor(d.id,d, admin.jwt)
         .then(res => {
-                setRefreshFlag(~refreshFlag);
+                setRefreshFlag(!refreshFlag);
             }).catch(err =>
                 swal("Unable to Approve", "", "error")
             );

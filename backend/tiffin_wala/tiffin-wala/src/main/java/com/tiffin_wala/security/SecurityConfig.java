@@ -36,10 +36,10 @@ public class SecurityConfig {
 			.authenticationEntryPoint((request, response, ex) ->{
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage()) ;
 			})
-			
+
 			.and()
-			
-			.authorizeHttpRequests()
+			.authorizeRequests()
+
 				.antMatchers(HttpMethod.DELETE,"/vendor","/customer","/vendor/{vendorId}").hasRole("ADMIN")
 				.antMatchers("/vendor/approve/{vendorId}","/vendor/unapproved","/vendor/status/block","/customer","/customer/{customerId}","/order","/order/{tiffinId}","/order/tiffin/{tiffinId}","/order/vendor/{vendorId}").hasRole("ADMIN")
 				.antMatchers(HttpMethod.GET,"/customer").hasRole("ADMIN")
@@ -54,9 +54,9 @@ public class SecurityConfig {
 	
 				.antMatchers(HttpMethod.PUT,"/customer").hasRole("CUSTOMER")
 				
-				.antMatchers("/home", "/orders/**","/auth/**", "/swagger*/**", "/v*/api-docs/**","/vendor","vendor/approved","vendor/{vendorId}", "/vendor/pincode/{pincode}").permitAll()
-				
-				.antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated()
+				.antMatchers("/home", "/orders/**","/auth/**", "/swagger*/**", "/v*/api-docs/**","/vendor","/vendor/approved/**","/vendor/{vendorId}", "/vendor/pincode/{pincode}").permitAll()
+
+				.anyRequest().authenticated()
 			.and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()

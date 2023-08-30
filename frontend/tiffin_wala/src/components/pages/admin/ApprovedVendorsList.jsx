@@ -30,13 +30,13 @@ const ApprovedVendorList = () => {
 
     const changeBlockingStatus = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
-        d.isBlocked = !d.isBlocked ;
+        d.blocked = !d.blocked ;
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/block`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
         vendorService.changeBlockingStatus(d,admin.jwt) 
             .then(res => {
-                setRefreshFlag(~refreshFlag);
+                setRefreshFlag(!refreshFlag);
             }).catch(err =>
-                d.isBlocked
+                d.blocked
                 ?   swal("Unable to UnBlock", "", "error")
                 :   swal("Unable to Block", "", "error")
                     );
@@ -71,10 +71,11 @@ const ApprovedVendorList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            {v.isBlocked}?
+                                            {v.blocked?
                                                 <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Unblock</button>
                                             :
                                                 <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Block</button>
+                                            }
                                         </td>
                                     </tr>
                                 );
