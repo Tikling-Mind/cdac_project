@@ -8,9 +8,11 @@ import NavbarComponent from './components/navbar/NavbarComponent';
 import FooterComponent from './components/footer/FooterComponent';
 
 // Common Routes
-import Home from "./components/pages/common/Home"
-import Login from "./components/pages/Login"
+import Home from "./components/pages/common/Home";
+import Faq from "./components/pages/common/Faq";
+import Login from "./components/pages/Login";
 import SignUp from './components/pages/SignUp';
+
 // Customer Routes
 import CustomerHome from "./components/pages/customer/CustomerHome" ;
 import CustomerAvailableTiffins from "./components/pages/customer/CustomerAvailableTiffins" ;
@@ -72,13 +74,14 @@ function App() {
             
               {/* Common Routes */}
               <Route index element={<Home />} />
-              <Route path='/sign-in' element={<Login isLoggedIn={updateLogin}/>} />
+              <Route path='sign-in' element={<Login isLoggedIn={updateLogin}/>} />
               <Route path='sign-up' element={<SignUp />} />
+              <Route path='faq' element={<Faq />} />
               {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
               {/* <Route path='changePassword' element={<ChangePassword />} /> */}
               
               {/* Customer Routes */}
-              <Route path='customer/:id' element={<CustomerHome />} />
+              <Route path='customer' element={<CustomerHome />} />
               <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
               <Route path="customer/profile" element={<CustomerProfile />} />
               <Route path='customer/update' element={<CustomerUpdate />} />
@@ -88,7 +91,7 @@ function App() {
             
               
               {/* Vendor Routes  */}
-              <Route path='vendor/:id' element={<VendorHome />} />
+              <Route path='vendor' element={<VendorHome />} />
               <Route path="vendor/sign-up" element={<CreateVendor />} />
               <Route path="vendor/profile" element={<VendorProfile />} />
               <Route path='vendor/update' element={<VendorUpdate />} />
@@ -102,7 +105,7 @@ function App() {
               <Route path='vendor/customersByTiffin' element={<CustomersByTiffin/>} />
 
               {/* Admin Routes */}
-              <Route path='/admin' element={<AdminHome/>} />
+              <Route path='admin' element={<AdminHome/>} />
               <Route path='admin/getAllApprovedVendors' element={<ApprovedVendorsList/>} />             
               <Route path='admin/getAllUnApprovedVendors' element={<UnApprovedVendorsList/>} />
               <Route path='admin/getAllCustomers' element={<CustomersList/>} />

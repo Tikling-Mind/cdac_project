@@ -3,6 +3,7 @@ import axios from "axios";
 
 const vendorURL = IP_ADDRS + "/vendor/"
 
+
 class VendorService{
     createVendor(vendor){
         return axios.post(vendorURL, vendor) ;
