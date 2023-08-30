@@ -69,7 +69,7 @@ function Vendor() {
                     <div className="container" style={{ marginBottom: "50px", textAlign: "center" }}>
                         <div className="row" >
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getAllApprovedVendors")}>
+                                <div className="card" onClick={() => navigate("/vendor/getAllCustomers")}>
                                     <div className="card-body" >
                                         <h5 className="card-title">My Customer List</h5>
                                         <p className="card-text">List of All Customers</p>
@@ -77,7 +77,7 @@ function Vendor() {
                                 </div>
                             </div>
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getAllCustomers")}>
+                                <div className="card" onClick={() => navigate("/vendor/getAllTiffins")}>
                                     <div className="card-body">
                                         <h5 className="card-title">My Tiffins List</h5>
                                         <p className="card-text">List of all provided tiffins</p>
@@ -88,7 +88,7 @@ function Vendor() {
 
                         <div className="row my-3">
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getUnapprovedVendors")}>
+                                <div className="card" onClick={() => navigate("/vendor/orderList")}>
                                     <div className="card-body">
                                         <h5 className="card-title">My Orders </h5>
                                         <p className="card-text">List of all active orders</p>
@@ -96,7 +96,7 @@ function Vendor() {
                                 </div>
                             </div>
                             <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/getBlockedVendors")}>
+                                <div className="card" onClick={() => navigate("/vendor/profile")}>
                                     <div className="card-body">
                                         <h5 className="card-title">My Profile</h5>
                                         <p className="card-text">View and update profile</p>
@@ -132,5 +132,6 @@ function Vendor() {
     )
 
 }
+
 
 export default Vendor;
