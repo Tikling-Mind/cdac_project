@@ -199,12 +199,14 @@ public class VendorServiceImpl implements VendorService {
 		Vendor vendor = vendorRepo.findByEmail(email)
 				.orElseThrow(()-> new ResourceNotFoundException("Invalid vendor ID"));
 		
+		System.out.println("In VendorService "+ vendor.getFirstName());
 		// Find Home type address for the vendor
 		Address address = addressRepo.findByAddressTypeAndVendor(AddressType.HOME,vendor) ;
-
+		System.out.println("Got Address "+ address.getCity());
 		
 		VendorDto vendorDto =  modelMapper.map(vendor, VendorDto.class);
 		vendorDto.setAddress(modelMapper.map(address, AddressDto.class));
+		System.out.println("VendorDto ready "+ vendorDto.getFirstName() + " "+ vendorDto.getAddress().getCity());
 		return vendorDto;
 	}
 	

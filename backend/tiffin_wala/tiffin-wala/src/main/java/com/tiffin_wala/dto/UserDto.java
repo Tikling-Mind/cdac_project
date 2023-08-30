@@ -17,7 +17,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-			
+	
+	private long id  ;
+	
 	@NotBlank(message = "first name must be supplied")
 	private String firstName;
 	

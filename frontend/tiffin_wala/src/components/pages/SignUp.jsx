@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { IP_ADDRS } from "../../service/BaseAddress";
 import { BorderAll } from "react-bootstrap-icons";
+
 import { validateEmail,validatePassword,validateMobile, validateUserRole, validateName } from "../validations/Validation";
 function SignUp() {
   const navigate = useNavigate();
@@ -16,23 +17,23 @@ function SignUp() {
     password: "",
     mobile: "",
     userRole: "",
-    address : {
-      line1 : "",
-      line2 : "",
-      city : "",
-      pincode : "",
-      state : "",
-    }
+    // address : {
+    //   line1 : "",
+    //   line2 : "",
+    //   city : "",
+    //   pincode : "",
+    //   state : "",
+    // }
   });
 
-  // State for validitiy of email
-  const [validEmailFlag, setValidEmailFlag] = useState(false);
+  // // State for validitiy of email
+  // const [validEmailFlag, setValidEmailFlag] = useState(false);
 
-  // state for otp
-  const [otp, setOtp] = useState({
-    sendOTPflag: false,
-    num: "",
-  });
+  // // state for otp
+  // const [otp, setOtp] = useState({
+  //   sendOTPflag: false,
+  //   num: "",
+  // });
 
   // Update Value after change
   const handleChange = (event) => {
@@ -44,7 +45,7 @@ function SignUp() {
   };
 
   // User Type
-  const options = ["Customer", "Vendor"];
+  const options = ["ROLE_CUSTOMER", "ROLE_VENDOR"];
 
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
@@ -53,12 +54,13 @@ function SignUp() {
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent reload/refresh
-    if (!validEmailFlag) { // Throw error if email has not been validated
-      swal("Validate Email Id First", "", "error");
-      return;
-    }
+    // if (!validEmailFlag) { // Throw error if email has not been validated
+    //   swal("Validate Email Id First", "", "error");
+    //   return;
+    // }
     // Check validation rules
-    if (validateName(obj.firstName) || validateName(obj.lastName) || validateEmail(obj.email) || validatePassword(obj.password) || validateMobile(obj.mobile) === "" || validateUserRole(obj.userRole)) {
+    if (!validateName(obj.firstName)|| !validateName(obj.lastName) || !validateEmail(obj.email) || !validatePassword(obj.password) || !validateMobile(obj.mobile)  || !validateUserRole(obj.userRole)) {
+      console.log("Invalid") ;
       setError(true);
     } else {  // If fields are not empty
       setSubmitted(true);
@@ -72,6 +74,7 @@ function SignUp() {
           navigate(`/AddAddress`);
         })
         .catch((error) => {
+          setSubmitted(false) ;
           console.log(error);
           swal("Something went Wrong", "", "error");
         });
@@ -106,46 +109,46 @@ function SignUp() {
     );
   };
 
-  const sendOTP = () => {
-    if (obj.email === "") {
-      swal("Please Enter Email", "", "error");
-      return;
-    }
-    let emailObj = { email: obj.email };
-    axios
-      .post(`${IP_ADDRS}/auth/validateEmail`, emailObj)
-      .then((res) => {
-        swal(res.data, "", "success");
-        setOtp({ ...otp, sendOTPflag: true });
-      })
-      .catch((err) =>
-        swal({
-          title: "Email Id Already Registered",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-        })
-      );
-  };
+  // const sendOTP = () => {
+  //   if (obj.email === "") {
+  //     swal("Please Enter Email", "", "error");
+  //     return;
+  //   }
+  //   let emailObj = { email: obj.email };
+  //   axios
+  //     .post(`${IP_ADDRS}/auth/validateEmail`, emailObj)
+  //     .then((res) => {
+  //       swal(res.data, "", "success");
+  //       setOtp({ ...otp, sendOTPflag: true });
+  //     })
+  //     .catch((err) =>
+  //       swal({
+  //         title: "Email Id Already Registered",
+  //         icon: "warning",
+  //         buttons: true,
+  //         dangerMode: true,
+  //       })
+  //     );
+  // };
 
-  const verifyOTP = () => {
-    if (obj.email === "") {
-      swal("Please Enter Email", "", "error");
-      return;
-    }
-    if (otp.num === "") {
-      swal("Please Enter OTP", "", "error");
-      return;
-    }
-    let otpObj = { email: obj.email, otp: otp.num };
-    axios
-      .post(`${IP_ADDRS}/auth/verifyOtp`, otpObj)
-      .then((res) => {
-        swal(res.data, "", "success");
-        setValidEmailFlag(true);
-      })
-      .catch((err) => swal(`${err}`, "", "error"));
-  };
+  // const verifyOTP = () => {
+  //   if (obj.email === "") {
+  //     swal("Please Enter Email", "", "error");
+  //     return;
+  //   }
+  //   if (otp.num === "") {
+  //     swal("Please Enter OTP", "", "error");
+  //     return;
+  //   }
+  //   let otpObj = { email: obj.email, otp: otp.num };
+  //   axios
+  //     .post(`${IP_ADDRS}/auth/verifyOtp`, otpObj)
+  //     .then((res) => {
+  //       swal(res.data, "", "success");
+  //       setValidEmailFlag(true);
+  //     })
+  //     .catch((err) => swal(`${err}`, "", "error"));
+  // };
 
   return (
     <div className="card col-md-6 offset-md-3 offset-md-3">
@@ -172,8 +175,8 @@ function SignUp() {
           <label className="label">Email</label> <br />
           <input onChange={handleChange} style={{ width: 300, margin: "auto" }} name="email" value={obj.email} type="email" />
           <br />
-          {validEmailFlag ? (
-            <span>Email Validated</span>
+          {/* {validEmailFlag ? (
+            // <span>Email Validated</span>
           ) : otp.sendOTPflag ? (
             <div>
               <span>
@@ -204,60 +207,22 @@ function SignUp() {
 
               </span>
             </div>
-          )}
+          )} */}
 
           <label className="label">Password</label>
           <input onChange={handleChange} style={{ width: 300, margin: "auto" }} name="password" value={obj.password} type="password" />
-            <br /> 
-          <label className="label">Mobile</label> <br />
-          <input onChange={handleChange} style={{ width: 300, margin: "auto" }} name="mobile" value={obj.mobile} type="number" min={1000000000} minLength={10} maxLength={10} />
+          <br />
+          <label className="label">Mobile</label>  <br />
+          <input onChange={handleChange} style={{ width: 300, margin: "auto" }} name="mobile" value={obj.mobile} type="text" min={1000000000} minLength={10} maxLength={10} />
             <br />
-
-            {/* <fieldset>
-              <legend> Address </legend>
-              <table >
-                <tr>
-                  <td> <label className="label" htmlFor="line1"> Line 1</label></td>
-                  <td>
-                      <input onChange={handleChange}  type="text" name="line1" id="line1" value={obj.address.line1}/> <br />
-                  </td>
-                </tr>
-                <tr>
-                  <td> <label className="label" htmlFor="line2"> Line 1</label></td>
-                  <td>
-                      <input type="text" name="line2" id="line2" value={obj.address.line2}/> <br />
-                  </td>
-                </tr>
-                <tr>
-                  <td> <label className="label" htmlFor="city"> City</label></td>
-                  <td>
-                      <input type="text" name="city" id="city" value={obj.address.city}/> <br />
-                  </td>
-                </tr>
-                <tr>
-                  <td> <label className="label" htmlFor="pincode"> Pin Code</label></td>
-                  <td>
-                      <input type="number" name="pincode" id="pincode" value={obj.address.pincode} style={{ width: 100, margin: "auto" }} min={100000} minLength={6} maxLength={6}/> <br />
-                  </td>
-                </tr>
-                <tr>
-                  <td> <label className="label" htmlFor="state"> State</label></td>
-                  <td>
-                      <input type="text" name="state" id="state" value={obj.address.state} /> <br />
-                  </td>
-                </tr>
-
-              </table>
-            </fieldset> */}
-  
-             <br />
           <label className="label">I am&nbsp;&nbsp;&nbsp; </label>
           <select style={{ width: 170, margin: "auto" }} onChange={handleChange} name="userRole">
             <option>---select one role---</option>
             {options.map((option, index) => {
-              return <option key={index}>{option}</option>;
+              return <option key={option}>{option}</option>;
             })}
-          </select> <br />
+          </select>
+          <br />
           <button onClick={handleSubmit} className="btn btn-primary" type="submit">
             Submit
           </button>

@@ -1,55 +1,56 @@
+import swal from "sweetalert";
 
 export const validateMobile = (mobNo) => {
     var phoneno = /^\d{10}$/;
-    if(mobNo.value.match(phoneno))
+    if(mobNo.match(phoneno))
         return true;
     else
     {
-       alert("Invalid mobile number");
+       swal("Invalid mobile number","","error");
        return false;
     }
 }
 
 export const validateName = (name) => {
     var namePattern = /^[a-zA-Z]{1,256}$/;
-    if(name.value.match(namePattern))
+    if(name.match(namePattern))
         return true;
     else
     {
-       alert("Invalid mobile number");
+       swal("Invalid mobile number","","error");
        return false;
     }
 }
 
 export const validatePincode = (pin) => {
     var pincode = /^\d{6}$/;
-    if(pin.value.match(pincode))
+    if(pin.match(pincode))
         return true;
     else
     {
-       alert("Invalid Pincode");
+       swal("Invalid Pincode","","error");
        return false;
     }
 }
 
 export const validatePassword = (passwd) => {
     var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
-    if(passwd.value.match(paswd)) 
+    if(passwd.match(paswd)) 
         return true;
     else
     { 
-        alert('Password too weak!')
+        swal('Password too weak!',"","error")
         return false;
     }
 }
 
 export const validateEmail = (email) => {
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(email.value.match(mailformat))
+    if(email.match(mailformat))
         return true;
     else
     {
-        alert("Invalid email address!");
+        swal("Invalid email address!","","error");
         return false;
     }
 }

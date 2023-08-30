@@ -8,6 +8,7 @@ import javax.persistence.Table;
 
 import com.tiffin_wala.enums.UserRole;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 
 public class Login extends BaseEntity{
@@ -31,9 +33,4 @@ public class Login extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole ;
 	
-	public Login (String email, String passwd, UserRole userRole) {
-		this.email = email ;
-		this.password = passwd ;
-		this.userRole = userRole ;
-		}
 }

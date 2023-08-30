@@ -6,6 +6,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.tiffin_wala.enums.UserRole;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddressDto {
 
+	private Long id ;
+	
+	private UserRole role ;
+	
 	@NotBlank
 	@Length(max=256 ,message="Address should  be less than 256 charachter")
 	private String line1;
@@ -29,8 +35,8 @@ public class AddressDto {
 	private String city;
 	
 	@NotBlank
-	@Length(max=6 ,message = "Pincode should have only 6 characters")
-	private Integer pincode;
+	@Length(min=6, max=6 ,message = "Pincode should have only 6 characters")
+	private String pincode;
 	
 	@NotBlank
 	private String state;
