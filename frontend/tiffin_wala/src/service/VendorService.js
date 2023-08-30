@@ -10,6 +10,7 @@ class VendorService{
     }
 
     getVendor(id, jwt){
+        console.log(jwt+ " GEt vendor")
         return axios.get(vendorURL+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
