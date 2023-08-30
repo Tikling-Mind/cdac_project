@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { IP_ADDRS } from "../../../service/BaseAddress"
 import customerService  from "../../../service/CustomerService"
+// import BlockCustomer from "./BlockCustomer";
 
 const CustomersList = () => {
     const [customersList, setCustomersList] = useState([]);
@@ -15,7 +16,7 @@ const CustomersList = () => {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/getAllBlockedVendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.getCustomerList()
+        customerService.getCustomerList(admin.jwt)()
             .then(res => {
                 console.log(res.data);
                 setCustomersList(res.data);
@@ -26,14 +27,16 @@ const CustomersList = () => {
             })
     }, [refreshFlag])
 
-    const details = (d) => {
+    const changeBlockingStatus = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.getCustomerList()
+        customerService.changeBlockingStatus(d.id, admin.jwt)
             .then(res => {
                 setRefreshFlag(~refreshFlag);
             }).catch(err =>
-                swal("Unable to Block", "", "error")
+                d.isBlocked
+                ?swal("Unable to Unblock", "", "error")
+                :swal("Unable to Block", "", "error")
             );
     }
 
@@ -66,7 +69,9 @@ const CustomersList = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
                                         <td>
-                                            <button className="btn btn-danger" onClick={() => details(v)}>UnBlock</button>
+                                            v.isBlocked                                          
+                                            ?   <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>UnBlock</button>
+                                            :   <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Block</button>
                                         </td>
                                     </tr>
                                 );
