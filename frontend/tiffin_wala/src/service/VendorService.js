@@ -29,6 +29,11 @@ class VendorService{
         return axios.get(vendorURL+"unapproved", { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
+    getCustomersByVendorId(id, jwt){
+        return axios.get(vendorURL+"customers/"+id,{ headers: { "Authorization": `Bearer ${jwt}` } })
+    }
+
+
     updateVendor(vendor, jwt){
         return axios.put(vendorURL, vendor, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }

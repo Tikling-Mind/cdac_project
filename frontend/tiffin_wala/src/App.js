@@ -52,6 +52,7 @@ import UpdateAddress from './components/pages/common/UpdateAddress';
 import AddAddress from './components/pages/common/AddAddress';
 
 import TestValidation from '../src/components/validations/TestValidation';
+import CustomersByVendor from './components/pages/vendor/CustomersByVendor';
 
 
 function App() {
@@ -122,6 +123,7 @@ function App() {
               <Route path='vendor/orderList' element={<OrderList/>} />
               <Route path='vendor/orderByCustmer' element={<OrderByCutomer/>} />
               <Route path='vendor/customersByTiffin' element={<CustomersByTiffin/>} />
+              <Route path='vendor/customers' element={<CustomersByVendor/>} />
 
               {/* Admin Routes */}
               <Route path='admin' element={<AdminHome/>} />

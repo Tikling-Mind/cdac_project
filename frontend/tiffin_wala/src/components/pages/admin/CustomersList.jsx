@@ -29,7 +29,7 @@ const CustomersList = () => {
     const changeBlockingStatus = (user) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.changeBlockingStatus(user.id,user ,admin.jwt)
+        customerService.changeBlockingStatus(user ,admin.jwt)
             .then(res => {
                 setRefreshFlag(!refreshFlag);
             }).catch(err =>

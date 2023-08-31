@@ -24,8 +24,8 @@ class CustomerService{
         return axios.delete(customerURL+id, { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 
-    changeBlockingStatus(id,user,jwt){
-        return axios.patch(customerURL+id, user , { headers: { "Authorization": `Bearer ${jwt}` } })
+    changeBlockingStatus(user,jwt){
+        return axios.patch(customerURL+"block/", user , { headers: { "Authorization": `Bearer ${jwt}` } })
     }
 }
 

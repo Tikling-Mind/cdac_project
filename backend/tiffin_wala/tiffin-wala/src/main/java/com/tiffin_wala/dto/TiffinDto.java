@@ -52,6 +52,6 @@ public class TiffinDto {
 	@Column(columnDefinition = "integer default 0")
 	private int breakLunchDinner;
 	
-	private Vendor vendor ;
+	private Long vendorId ;
 
 }

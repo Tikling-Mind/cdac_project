@@ -18,21 +18,21 @@ const VendorTiffinList = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        let vend = JSON.parse(sessionStorage.getItem("vendor"));
-        if (vend == null) {
-            //swal("Not Authorized", "", "error");
+        let ven = JSON.parse(sessionStorage.getItem("vendor"));
+        if (ven == null) {
+            swal("Not Authorized", "", "error");
         }
         else {
             setLoggedIn(true);
             setVendor({
-                id: vend.id,
-                email: vend.email,
-                jwt: vend.jwt
+                id: ven.id,
+                email: ven.email,
+                jwt: ven.jwt
             })
         }
         
-
-        TiffinService.getTiffinsByVendorId(vendor.id)
+        console.log(ven.jwt) ;
+        TiffinService.getTiffinsByVendorId(ven.id,ven.jwt)
             .then(res => {
                 console.log(res.data);
                 setTiffinList(res.data);
@@ -88,7 +88,7 @@ const VendorTiffinList = (props) => {
                                     <td>{tiffin.description}</td>
                                     <td>{tiffin.availableFrom}</td>
                                     <td>{tiffin.availableTo}</td>
-                                    <td>{tiffin.vendor.firstName}</td>
+                                    <td>{tiffin.vendorId}</td>
                                     <td>{tiffin.price}</td>
                                     <td>
                                         <button className="btn btn-primary" onClick={() => updateTiffin(tiffin)}> Update </button>
