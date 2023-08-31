@@ -4,12 +4,12 @@ import axios from "axios";
 const tiffinURL = IP_ADDRS + "/tiffin/"
 
 class TiffinService{
-    createTiffin(tiffin){
-        return axios.post(tiffinURL, tiffin) ;
+    createTiffin(tiffin, jwt){
+        return axios.post(tiffinURL, tiffin,{ headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
-    getTiffin(id){
-        return axios.get(tiffinURL+id) ;
+    getTiffin(id, jwt){
+        return axios.get(tiffinURL+id, { headers: { "Authorization": `Bearer ${jwt}` } }) ;
     }
 
     // Get all tiffins
@@ -33,8 +33,8 @@ class TiffinService{
         return axios.get(tiffinURL+"type/"+type) ;
     }
 
-    getTiffinsByVendorId(id){
-        return axios.get(tiffinURL+"vendor/"+id)    }
+    getTiffinsByVendorId(id,jwt){
+        return axios.get(tiffinURL+"vendor/"+id, { headers: { "Authorization": `Bearer ${jwt}` } })    }
 
     updateTiffin(tiffin){
         return axios.put(tiffinURL, tiffin) ;

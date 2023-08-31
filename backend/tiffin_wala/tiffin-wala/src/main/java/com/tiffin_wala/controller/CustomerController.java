@@ -57,9 +57,10 @@ public class CustomerController {
 		return new ResponseEntity<>(customerService.deleteCustomerById(customerId), HttpStatus.OK ) ;
 	}
 
-	@PatchMapping("/{customerId}")
-	public ResponseEntity<?> changeBlockingStatus(@PathVariable Long customerId){
-		return new ResponseEntity<> (customerService.changeBlockingStatus(customerId), HttpStatus.OK) ;
+	@PatchMapping("/block/")
+	public ResponseEntity<?> changeBlockingStatus(@RequestBody CustomerDto customer){
+		System.out.println("In change blocking status");
+		return new ResponseEntity<> (customerService.changeBlockingStatus(customer.getId()), HttpStatus.OK) ;
 	}
 
 }

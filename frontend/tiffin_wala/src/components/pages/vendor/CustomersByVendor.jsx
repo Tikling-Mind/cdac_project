@@ -1,11 +1,12 @@
-import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { IP_ADDRS } from "../../../service/BaseAddress"
 import customerService  from "../../../service/CustomerService"
+import VendorService from '../../../service/VendorService';
+// import BlockCustomer from "./BlockCustomer";
 
-const BlockedCustomersList = () => {
+const CustomersByVendor = () => {
     const [customersList, setCustomersList] = useState([]);
     const [refreshFlag, setRefreshFlag] = useState(false);
     const navigate = useNavigate();
@@ -13,11 +14,9 @@ const BlockedCustomersList = () => {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/getAllBlockedVendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.getCustomerList(admin.jwt)
+        VendorService.getCustomersByVendorId(admin.id, admin.jwt)
             .then(res => {
-                let blockedCustomersList = res.data.filter((cust) => cust.blocked ) ;
-                console.log(res.data);
-                setCustomersList(blockedCustomersList);
+                setCustomersList(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -25,22 +24,24 @@ const BlockedCustomersList = () => {
             })
     }, [refreshFlag])
 
-    const unBlockCustomer = (d) => {
-        let admin = JSON.parse(sessionStorage.getItem("admin"));
-        //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        customerService.changeBlockingStatus(d,admin.jwt)
-            .then(res => {
-                setRefreshFlag(~refreshFlag);
-            }).catch(err =>
-                swal("Unable to Unblock", "", "error")
-            );
-    }
+    // const changeBlockingStatus = (user) => {
+    //     let admin = JSON.parse(sessionStorage.getItem("admin"));
+    //     //axios.get(`${IP_ADDRS}/vendors/${d.id}/unblock`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
+    //     customerService.changeBlockingStatus(user ,admin.jwt)
+    //         .then(res => {
+    //             setRefreshFlag(!refreshFlag);
+    //         }).catch(err =>
+    //             user.isBlocked
+    //             ?swal("Unable to Unblock", "", "error")
+    //             :swal("Unable to Block", "", "error")
+    //         );
+    // }
 
     return (
         <>
             <div className="container my-4">
                 <div>
-                    <h3>All Blocked Customers</h3>
+                    <h3>All Customers</h3>
 
                     <table className="table table-bordered">
                         <thead className="bg-dark text-light">
@@ -49,7 +50,6 @@ const BlockedCustomersList = () => {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email Id</th>
-                                <th />
                             </tr>
                         </thead>
                         <tbody>
@@ -64,9 +64,7 @@ const BlockedCustomersList = () => {
                                         <td>{v.address[0].town}</td>
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td> */}
-                                        <td>
-                                            <button className="btn btn-danger" onClick={() => unBlockCustomer(v)}>UnBlock</button>
-                                        </td>
+                                        
                                     </tr>
                                 );
                             })}
@@ -77,4 +75,4 @@ const BlockedCustomersList = () => {
         </>
     )
 }
-export default BlockedCustomersList;
+export default CustomersByVendor;

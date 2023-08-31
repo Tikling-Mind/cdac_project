@@ -1,6 +1,23 @@
 import React, { useState } from 'react';
+import TiffinOrderForm from '../customer/TiffinOrderForm';
+import TiffinService from '../../../service/TiffinService';
+import swal from 'sweetalert';
+import {useNavigate } from 'react-router-dom';
 
 function AddTiffin() {
+  const [tiffin, setTiffin] = useState(
+    {
+      id : "",
+      name : "",
+      description :"",
+      price : "",
+      breakLunchDinner : 7,
+      foodType : "",
+      availableFrom : "",
+      availableTo : "",
+      vendorId : ""
+    }
+  ) ;
   const [tiffinName, setTiffinName] = useState('');
   const [tiffinDescription, setTiffinDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -8,78 +25,109 @@ function AddTiffin() {
   const [foodType, setFoodType] = useState('vegetarian');
   const [availableFrom, setAvailableFrom] = useState('');
   const [availableTo, setAvailableTo] = useState('');
+  const navigate = useNavigate() ;
 
-  const handleAvailabilityChange = (value) => {
-    if (availability.includes(value)) {
-      setAvailability(availability.filter(item => item !== value));
-    } else {
-      setAvailability([...availability, value]);
-    }
-  };
+  const changeHandler = (e) => {
+    console.log(e.target.name) ;
+    setTiffin((tiffin) => ({
+        ...tiffin, // properties that are not changed            
+        [e.target.name]: e.target.value // update value of change properties
+    }));
+}
+
+  // const handleAvailabilityChange = (value) => {
+  //   if (tiffin.availability.includes(value)) {
+  //     setTiffin(...tiffin, availability.filter(item => item !== value));
+  //   } else {
+  //     setAvailability([...availability, value]);
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform submission logic here
+    let ven = JSON.parse(sessionStorage.getItem("vendor")) ;
+    if(ven !== null){
+      console.log(ven.id) ;
+      tiffin.vendorId = ven.id ;
+      console.log(tiffin) ;
+      TiffinService.createTiffin(tiffin, ven.jwt)
+        .then((res) =>{
+          console.log(res.data)
+          swal("Tiffin Created Successfully!","","success") ;
+        }
+        ).catch((err)=>{
+          swal("Error Creating tiffin","","error") ;
+        }
+        )  
+    }else{
+      swal("Login to create tiffin","","error") ;
+      navigate("/sign-in") ;
+    } 
+      
+    
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>Tiffin Name:</label>
-        <input type="text" value={tiffinName} onChange={(e) => setTiffinName(e.target.value)} />
+        <input type="text" name="name" value={tiffin.name} onChange={changeHandler} />
       </div>
       <div>
         <label>Tiffin Description:</label>
-        <textarea value={tiffinDescription} onChange={(e) => setTiffinDescription(e.target.value)} />
+        <textarea name="description" value={tiffin.description} onChange={changeHandler} />
       </div>
       <div>
         <label>Price:</label>
-        <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
+        <input type="text" name="price" value={tiffin.price} onChange={changeHandler} />
       </div>
-      <div>
+      {/* <div>
         <label>Availability:</label>
         <label>
           <input
             type="checkbox"
+            name="availability"
             value="breakfast"
-            checked={availability.includes('breakfast')}
-            onChange={() => handleAvailabilityChange('breakfast')}
+            checked={tiffin.availability.includes('breakfast')}
+            onChange={changeHandler}
           />
           Breakfast
         </label>
         <label>
           <input
             type="checkbox"
+            name="availability"
             value="lunch"
             checked={availability.includes('lunch')}
-            onChange={() => handleAvailabilityChange('lunch')}
+            onChange={changeHandler}
           />
           Lunch
         </label>
         <label>
           <input
             type="checkbox"
+            name="availability"
             value="dinner"
             checked={availability.includes('dinner')}
-            onChange={() => handleAvailabilityChange('dinner')}
+            onChange={changeHandler}
           />
           Dinner
         </label>
-      </div>
+      </div> */}
       <div>
         <label>Food Type:</label>
-        <select value={foodType} onChange={(e) => setFoodType(e.target.value)}>
-          <option value="vegetarian">Vegetarian</option>
-          <option value="non-vegetarian">Non-Vegetarian</option>
+        <select name="foodType"  onChange={changeHandler}>
+          <option key="vegetarian">VEGETERIAN</option>
+          <option key="non-vegetarian">NON-VEGETERIAN</option>
         </select>
       </div>
       <div>
         <label>Available From:</label>
-        <input type="date" value={availableFrom} onChange={(e) => setAvailableFrom(e.target.value)} />
+        <input type="date" name="availableFrom" value={tiffin.availableFrom} onChange={changeHandler} />
       </div>
       <div>
         <label>Available To:</label>
-        <input type="date" value={availableTo} onChange={(e) => setAvailableTo(e.target.value)} />
+        <input type="date" name="availableTo" value={tiffin.availableTo} onChange={changeHandler} />
       </div>
       <button type="submit">Add Tiffin</button>
     </form>

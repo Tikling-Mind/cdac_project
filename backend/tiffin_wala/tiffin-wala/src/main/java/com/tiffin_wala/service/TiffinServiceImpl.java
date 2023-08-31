@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tiffin_wala.dto.CustomerOrderDto;
 import com.tiffin_wala.dto.TiffinDto;
 import com.tiffin_wala.entities.Tiffin;
+import com.tiffin_wala.entities.Vendor;
 import com.tiffin_wala.execptions.ResourceNotFoundException;
 import com.tiffin_wala.repository.TiffinRepository;
+import com.tiffin_wala.repository.VendorRepository;
 
 @Service
 @Transactional
@@ -22,11 +24,18 @@ public class TiffinServiceImpl implements TiffinService {
 	private TiffinRepository tiffinRepo;
 
 	@Autowired
+	private VendorRepository vendorRepo ;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	public TiffinDto createTiffin(TiffinDto tiffinDto) {
-		Tiffin tiffin = tiffinRepo.save(modelMapper.map(tiffinDto, Tiffin.class));
+		Vendor vendor = vendorRepo.findById(tiffinDto.getVendorId())
+				.orElseThrow(()-> new ResourceNotFoundException("Invalid Vendor Id")) ;
+		Tiffin tiffin = modelMapper.map(tiffinDto, Tiffin.class) ;
+		tiffin.setVendor(vendor);
+		tiffin = tiffinRepo.save(tiffin);
 		return modelMapper.map(tiffin, TiffinDto.class);
 	}
 
