@@ -25,7 +25,6 @@ export const validatePincode = (pin) => {
     if (pincode.test(pin)) {
         return true;
     } else {
-        swal("Invalid Pincode", "", "error");
         return false;
     }
 };
@@ -35,9 +34,10 @@ export const validatePassword = (passwd) => {
     if (paswd.test(passwd)) {
         return true;
     } else {
-        swal("Password too weak!", "", "error");
+        // swal("Password too weak!", "", "error");
         return false;
     }
+
 };
 
 export const validateEmail = (email) => {
@@ -45,9 +45,10 @@ export const validateEmail = (email) => {
     if (mailformat.test(email)) {
         return true;
     } else {
-        swal("Invalid email address!", "", "error");
+        // swal("Invalid email address!", "", "error");
         return false;
     }
+
 };
 
 export const validateUserRole = (role) => {

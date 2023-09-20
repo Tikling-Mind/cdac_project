@@ -1,153 +1,145 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  CssBaseline,
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  Link,
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Layout from "./components/Layout.jsx" ;
 import NavbarComponent from './components/navbar/NavbarComponent';
 import FooterComponent from './components/footer/FooterComponent';
 
-// Common Routes
-import Home from "./components/pages/common/Home";
-import Faq from "./components/pages/common/Faq";
-import VendorsList from "./components/pages/common/VendorsList";
-import PrivacyPolicy from "./components/pages/common/PrivacyPolicy";
-import Login from "./components/pages/Login";
+import Home from './components/pages/common/Home';
+import Faq from './components/pages/common/Faq';
+import VendorsList from './components/pages/common/VendorsList';
+import PrivacyPolicy from './components/pages/common/PrivacyPolicy';
+import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
 
-
-// Customer Routes
-import CustomerHome from "./components/pages/customer/CustomerHome" ;
+import CustomerHome from './components/pages/customer/CustomerHome';
 import CustomerAvailableTiffins from './components/pages/customer/CustomerAvailableTiffins';
-import CustomerProfile from "./components/pages/customer/CustomerProfile" ;
-import CustomerUpdate from "./components/pages/customer/CustomerUpdate" ;
-import CustomerDelete from "./components/pages/customer/CustomerDelete" ;
-import CustomerTiffinList from "./components/pages/customer/CustomerTiffinList" ;
-import TiffinOrderForm from "./components/pages/customer/TiffinOrderForm" ;
+import CustomerProfile from './components/pages/customer/CustomerProfile';
+import CustomerUpdate from './components/pages/customer/CustomerUpdate';
+import CustomerDelete from './components/pages/customer/CustomerDelete';
+import CustomerTiffinList from './components/pages/customer/CustomerTiffinList';
+import TiffinOrderForm from './components/pages/customer/TiffinOrderForm';
 
-// Vendor routes
-import VendorHome from "./components/pages/vendor/VendorHome"  ;
-import CreateVendor from "./components/pages/vendor/CreateVendor"  ;
-import VendorProfile from "./components/pages/vendor/VendorProfile"  ;
-import VendorUpdate from "./components/pages/vendor/VendorUpdate"  ;
-import VendorDelete from "./components/pages/vendor/VendorDelete"  ;
-import VendorTiffinList from "./components/pages/vendor/VendorTiffinList"  ;
-import AddTiffin from "./components/pages/vendor/AddTiffin"  ;
-import UpdateTiffin from "./components/pages/vendor/UpdateTiffin"  ;
-import OrderList from "./components/pages/vendor/OrderList"  ;
-import OrderByCutomer from "./components/pages/vendor/OrderByCustomer"  ;
-import CustomersByTiffin from "./components/pages/vendor/CustomerByTiffin"  ;
+import VendorHome from './components/pages/vendor/VendorHome';
+import CreateVendor from './components/pages/vendor/CreateVendor';
+import VendorProfile from './components/pages/vendor/VendorProfile';
+import VendorUpdate from './components/pages/vendor/VendorUpdate';
+import VendorDelete from './components/pages/vendor/VendorDelete';
+import VendorTiffinList from './components/pages/vendor/VendorTiffinList';
+import AddTiffin from './components/pages/vendor/AddTiffin';
+import UpdateTiffin from './components/pages/vendor/UpdateTiffin';
+import OrderList from './components/pages/vendor/OrderList';
+import OrderByCustomer from './components/pages/vendor/OrderByCustomer';
+import CustomersByTiffin from './components/pages/vendor/CustomerByTiffin';
 
-// Admin Routes
-import AdminHome from "./components/pages/admin/AdminHome" ;
-import ApprovedVendorsList from "./components/pages/admin/ApprovedVendorsList" ;
-import UnApprovedVendorsList from "./components/pages/admin/UnApprovedVendorsList" ;
-// import BlockVendor from "./components/pages/admin/BlockVendor" ;
-// import BlockCustomer from "./components/pages/admin/BlockCustomer" ;
-import CustomersList from "./components/pages/admin/CustomersList" ;
-import BlockedCustomersList from "./components/pages/admin/BlockedCustomersList" ;
-import BlockedVendorsList from "./components/pages/admin/BlockedVendorsList" ;
-import UpdateBasic from './components/pages/common/UpdateBasic';
-import UpdateAddress from './components/pages/common/UpdateAddress';
-import AddAddress from './components/pages/common/AddAddress';
+import AdminHome from './components/pages/admin/AdminHome';
+import ApprovedVendorsList from './components/pages/admin/ApprovedVendorsList';
+import UnApprovedVendorsList from './components/pages/admin/UnApprovedVendorsList';
+import CustomersList from './components/pages/admin/CustomersList';
+import BlockedCustomersList from './components/pages/admin/BlockedCustomersList';
+import BlockedVendorsList from './components/pages/admin/BlockedVendorsList';
 
-import TestValidation from '../src/components/validations/TestValidation';
-import CustomersByVendor from './components/pages/vendor/CustomersByVendor';
+// Import other components and routes here
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1de9b6', // Teal color
+    },
+    secondary: {
+      main: '#26a69a',
+    },
+    text: {
+      primary: '#00000', 
+    },
+  },
+});
 
 function App() {
-  // state to store loggining status
   const [checkLoggedIn, setCheckLoggedIn] = useState();
 
-  // Get user from sessionStorage
   useEffect(() => {
-    let cust = JSON.parse(sessionStorage.getItem("customer"));
-    let ven = JSON.parse(sessionStorage.getItem("vendor"));
-    let adm = JSON.parse(sessionStorage.getItem("admin"));
-    if (cust !== null || ven !== null || adm !== null) 
-    	setCheckLoggedIn(true); // User logged in
-    else 
-		setCheckLoggedIn(false); // No user logged in
+    let cust = JSON.parse(sessionStorage.getItem('customer'));
+    let ven = JSON.parse(sessionStorage.getItem('vendor'));
+    let adm = JSON.parse(sessionStorage.getItem('admin'));
+    if (cust !== null || ven !== null || adm !== null)
+      setCheckLoggedIn(true); // User logged in
+    else setCheckLoggedIn(false); // No user logged in
   }, []);
 
   const updateLogin = (val) => {
-    console.log("In updateLogin")
     setCheckLoggedIn(val);
   };
+
   return (
-    <div >
-      <header>
-        <NavbarComponent />
-        <Router>
-          <Routes>
-            {/* Layout will be have elements common to all Paths */}
-            {/* <Route exact path='/' element={<Layout />} >   */}
-            
+    <ThemeProvider theme={theme}>
+      <div>
+        <CssBaseline />
+        {/* <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6">TiffinWala.com</Typography>
+            <Link href="/">Home</Link>
+            <Link href="/faq">FAQ</Link>
+          </Toolbar>
+        </AppBar> */}
+        <Container>
+          <Router>
+          <NavbarComponent />
+            <Routes>
               {/* Common Routes */}
               <Route index element={<Home />} />
-              <Route path='sign-in' element={<Login isLoggedIn={updateLogin}/>} />
-              <Route path='sign-up' element={<SignUp />} />
-              <Route path='addAddress' element={<AddAddress />} />
-              <Route path='faq' element={<Faq />} />
-
-              <Route path='vendorsList' element={<VendorsList />} />
-              <Route path='updateBasic' element={<UpdateBasic />} />
-              <Route path='updateAddress' element={<UpdateAddress />} />
-              <Route path='/updateBasic' element={<UpdateBasic />} />
-              <Route path='/updateAddress' element={<UpdateAddress />} />
-
-              {/* <Route path='forgotPassword' element={<ForgotPassword />} /> */}
-              {/* <Route path='changePassword' element={<ChangePassword />} /> */}
-              
+              <Route path="sign-in" element={<Login isLoggedIn={updateLogin} />} />
+              <Route path="sign-up" element={<SignUp />} />
+              <Route path="faq" element={<Faq />} />
+              <Route path="vendorsList/:pincode" element={<VendorsList />} />
+              <Route path="privacy" element={<PrivacyPolicy />} />
+              {/* Add other common routes here */}
               {/* Customer Routes */}
-              <Route path='customer' element={<CustomerHome />} />
-              <Route path='customer/availableTiffins' element={<CustomerAvailableTiffins />} />
-
+              <Route path="customer" element={<CustomerHome />} />
+              <Route path="customer/availableTiffins" element={<CustomerAvailableTiffins />} />
               <Route path="customer/profile" element={<CustomerProfile />} />
-              <Route path='customer/update' element={<CustomerUpdate />} />
-              <Route path='customer/delete' element={<CustomerDelete />} />              
-              <Route path='customer/customerTiffinList' element={<CustomerTiffinList />} />  
-              <Route path='customer/orderTiffin' element={<TiffinOrderForm />} />              
-            
-              
-              {/* Vendor Routes  */}
-              <Route path='vendor' element={<VendorHome />} />
+              <Route path="customer/update" element={<CustomerUpdate />} />
+              <Route path="customer/delete" element={<CustomerDelete />} />
+              <Route path="customer/customerTiffinList" element={<CustomerTiffinList />} />
+              <Route path="customer/orderTiffin" element={<TiffinOrderForm />} />
+              {/* Add other customer routes here */}
+              {/* Vendor Routes */}
+              <Route path="vendor" element={<VendorHome />} />
               <Route path="vendor/sign-up" element={<CreateVendor />} />
               <Route path="vendor/profile" element={<VendorProfile />} />
-              <Route path='vendor/update' element={<VendorUpdate />} />
-              <Route path='vendor/delete' element={<VendorDelete />} />
-              <Route path='vendor/getAllTiffins' element={<VendorTiffinList/>} />
-              <Route path='vendor/addTiffin' element={<AddTiffin/>} />
-              <Route path='vendor/editTiffin' element={<UpdateTiffin />} />  
-              <Route path='vendor/deleteTiffins' element={<UpdateTiffin/>} />            
-              <Route path='vendor/orderList' element={<OrderList/>} />
-              <Route path='vendor/orderByCustmer' element={<OrderByCutomer/>} />
-              <Route path='vendor/customersByTiffin' element={<CustomersByTiffin/>} />
-              <Route path='vendor/customers' element={<CustomersByVendor/>} />
-
+              <Route path="vendor/update" element={<VendorUpdate />} />
+              <Route path="vendor/delete" element={<VendorDelete />} />
+              <Route path="vendor/getAllTiffins" element={<VendorTiffinList />} />
+              <Route path="vendor/addTiffin" element={<AddTiffin />} />
+              <Route path="vendor/editTiffin" element={<UpdateTiffin />} />
+              <Route path="vendor/deleteTiffins" element={<UpdateTiffin />} />
+              <Route path="vendor/orderList" element={<OrderList />} />
+              <Route path="vendor/orderByCustomer" element={<OrderByCustomer />} />
+              <Route path="vendor/customersByTiffin" element={<CustomersByTiffin />} />
+              {/* Add other vendor routes here */}
               {/* Admin Routes */}
-              <Route path='admin' element={<AdminHome/>} />
-              <Route path='admin/getAllApprovedVendors' element={<ApprovedVendorsList/>} />             
-              <Route path='admin/getAllUnApprovedVendors' element={<UnApprovedVendorsList/>} />
-              <Route path='admin/getAllCustomers' element={<CustomersList/>} />
-              <Route path='admin/getAllBlockedVendors' element={<BlockedVendorsList/>} />
-              <Route path='admin/getAllBlockedCustomers' element={<BlockedCustomersList/>} />
-              {/* <Route path='admin/blockVendor' element={<BlockVendor/>} />
-              <Route path='admin/blockCustomer' element={<BlockCustomer/>} /> */}
-              <Route path='validationForm' element={<TestValidation/>} />
-              <Route path='footer' element={<FooterComponent/>} />
-              <Route path='privacy' element={<PrivacyPolicy/>} />
-
-
-
-            {/* </Route> */}
-          </Routes>
-        </Router>
-
-        <FooterComponent /> 
-        
-      </header>
-    </div>
+              <Route path="admin" element={<AdminHome />} />
+              <Route path="admin/getAllApprovedVendors" element={<ApprovedVendorsList />} />
+              <Route path="admin/getAllUnApprovedVendors" element={<UnApprovedVendorsList />} />
+              <Route path="admin/getAllCustomers" element={<CustomersList />} />
+              <Route path="admin/getAllBlockedVendors" element={<BlockedVendorsList />} />
+              <Route path="admin/getAllBlockedCustomers" element={<BlockedCustomersList />} />
+              {/* Add other admin routes here */}
+              {/* Import additional routes here */}
+            </Routes>
+          </Router>
+        </Container>
+        <FooterComponent theme={theme} />
+      </div>
+    </ThemeProvider>
   );
 }
 

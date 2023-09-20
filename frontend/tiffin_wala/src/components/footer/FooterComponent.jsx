@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
+import { Typography, Link } from '@mui/material';
 
 class FooterComponent extends Component {
     render() {
         return (
-            <div>
-                <footer className="py-3 my-4">
-                    <ul className="nav justify-content-center border-bottom pb-3 mb-3">
-                        <li className="nav-item" style={{marginRight:"4rem"}}><a href="http://localhost:3000" className="nav-link px-2 text-muted">Home</a></li>
-                        <li className="nav-item" ><a href="http://localhost:3000/faq" className="nav-link px-2 text-muted">FAQs</a></li>
-                        <li className="nav-item" style={{marginLeft:"4rem"}}><a href="  http://localhost:3000/privacy" className="nav-link px-2 text-muted">Privacy Policy</a></li>
-
-                    </ul>
-                    <p className="text-center text-muted">2023 TiffinWala.com. All rights reserved.</p>
-                    <div className="text-center text-muted"><h3>Contact Us</h3>
-                        <div>Email: admin@tiffinwala.com</div>
-                        <div>Phone: +91-123-456-7890</div>
-                        <div>42, Mallikarjun, Baner, Pune-411007</div>
+            <footer style={{ backgroundColor: this.props.theme.palette.primary.main, color: this.props.theme.palette.text.primary }} className="py-3 my-4">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <Typography variant="h6">Contact Us</Typography>
+                            <ul className="list-unstyled">
+                                <li>Email: admin@tiffinwala.com</li>
+                                <li>Phone: +91-123-456-7890</li>
+                                <li>42, Mallikarjun, Baner, Pune-411007</li>
+                            </ul>
+                        </div>
+                        <div className="col-md-4">
+                            <Typography variant="h6">Quick Links</Typography>
+                            <ul className="list-unstyled">
+                                <li><Link href="http://localhost:3000" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link></li>
+                                <li><Link href="http://localhost:3000/faq" style={{ color: 'inherit', textDecoration: 'none' }}>FAQs</Link></li>
+                                <li><Link href="http://localhost:3000/privacy" style={{ color: 'inherit', textDecoration: 'none' }}>Privacy Policy</Link></li>
+                            </ul>
+                        </div>
+                        <div className="col-md-4 text-center">
+                            <Typography variant="h6">© 2023 TiffinWala.com. All rights reserved.</Typography>
+                        </div>
                     </div>
-                </footer>
-            </div>
+                </div>
+            </footer>
         );
     }
 }
