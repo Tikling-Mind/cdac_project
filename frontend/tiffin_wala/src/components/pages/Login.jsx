@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, validateCaptcha, LoadCanvasTemplate } from "react-simple-captcha";
 import swal from "sweetalert";
-import "../../App.css"
+import { Container, Typography, TextField, Button, Checkbox, FormControlLabel, Box, Grid } from '@mui/material';
 import { IP_ADDRS } from "../../service/BaseAddress"
 import { validateEmail, validatePassword } from "../validations/Validation";
 
@@ -28,7 +28,6 @@ function Login(props) {
         loadCaptchaEnginge(6, 'red', 'black', 'upper');
     }, [])
 
-    // change type of password box according to change in checkbox
     useEffect(() => {
         if (isChecked == true) {
             setPassType("text");
@@ -46,7 +45,6 @@ function Login(props) {
         const { name, value } = e.target;
         setData({ ...data, [name]: value });
 
-        // Validate data
         if (name === 'email') {
             setIsDataValid({ ...isDataValid, email: validateEmail(value) });
         } else if (name === 'password') {
@@ -77,7 +75,6 @@ function Login(props) {
                 })
                 .catch(err => {
                     if (err.response && err.response.status === 401) {
-                        // Unauthorized - Invalid credentials
                         swal("Wrong Details", "Please enter valid credentials.", "error");
                     } else {
                         swal("Error", "An error occurred while processing your request.", "error");
@@ -89,77 +86,88 @@ function Login(props) {
     }
 
     return (
-        <div>
-            <br /><br />
-            <div className="container">
-                <div className="row">
-                    <div className="card col-md-6 offset-md-3 offset-md-3">
-                        <h2 className='text-center' style={{ marginTop: "1.5rem" }}><b>Login</b></h2>
-                        <hr className="lead"></hr>
-
-                        <form style={{ textAlign: "center" }}>
-                            <div className="form-group">
-                                <label> Email Id </label>
-                                <input
-                                    type="email"
-                                    placeholder="Enter Email ID"
-                                    name="email"
-                                    className={`form-control ${isDataValid.email ? "" : "is-invalid"}`}
-                                    value={data.email}
-                                    onChange={changeHandler}
-                                    style={{ width: 300, margin: "auto" }}
-                                />
-                                {!isDataValid.email && <div className="invalid-feedback">Invalid Email Id</div>}
-                            </div>
-                            <div className="form-group">
-                                <label> Password </label>
-                                <input
-                                    type={passType}
-                                    placeholder="Password"
-                                    name="password"
-                                    className={`form-control ${isDataValid.password ? "" : "is-invalid"}`}
-                                    value={data.password}
-                                    onChange={changeHandler}
-                                    style={{ width: 300, margin: "auto" }}
-                                />
-                                {!isDataValid.password && <div className="invalid-feedback">Invalid Password</div>}
-                                <span><input type="checkbox" checked={isChecked} onChange={handleShowPassword} id="show" />&emsp;</span><label htmlFor="show">Show Password</label>
-                            </div>
-
-                            <div className="form-group" style={{ marginTop: "20px", textAlign: "center" }}>
+        <Container>
+            <Box mt={5}>
+                <Grid container justifyContent="center">
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h4" align="center" gutterBottom>
+                            Login
+                        </Typography>
+                        <form onSubmit={submitData}>
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                label="Email Id"
+                                name="email"
+                                type="email"
+                                placeholder="Enter Email ID"
+                                value={data.email}
+                                onChange={changeHandler}
+                                error={!isDataValid.email}
+                                helperText={!isDataValid.email ? "Invalid Email Id" : ""}
+                                sx={{ mb: 2 }}
+                            />
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                label="Password"
+                                name="password"
+                                type={passType}
+                                placeholder="Password"
+                                value={data.password}
+                                onChange={changeHandler}
+                                error={!isDataValid.password}
+                                helperText={!isDataValid.password ? "Invalid Password" : ""}
+                                sx={{ mb: 2 }}
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={isChecked}
+                                        onChange={handleShowPassword}
+                                        id="show"
+                                    />
+                                }
+                                label="Show Password"
+                                sx={{ mb: 2 }}
+                            />
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <LoadCanvasTemplate />
                             </div>
-                            <div className="form-group" style={{ textAlign: "center" }}>
-                                <label> Enter Captcha: </label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Captcha"
-                                    id="user_captcha_input"
-                                    name="user_captcha_input"
-                                    className="form-control"
-                                    style={{ width: 200, margin: "auto" }}
-                                />
-                            </div>
-
-                            <div>
-                                <table style={{ margin: "auto" }}>
-                                    <thead />
-                                    <tbody>
-                                        <tr>
-                                            <td><button className="btn btn-success" onClick={submitData}>Login</button></td>
-                                            <td><button className="btn btn-danger" onClick={() => navigate("/")}>Cancel</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                label="Enter Captcha"
+                                id="user_captcha_input"
+                                name="user_captcha_input"
+                                placeholder="Enter Captcha"
+                                sx={{ mb: 2 }}
+                            />
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    type="submit"
+                                    sx={{ mr: 2 }}
+                                >
+                                    Login
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    onClick={() => navigate("/")}
+                                >
+                                    Cancel
+                                </Button>
                             </div>
                         </form>
-                        <div style={{ textAlign: "center" }}>
+                        <div style={{ textAlign: "center", marginTop: "1rem" }}>
                             <a href="/forgotpassword">Forgot password? Click here...</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Grid>
+                </Grid>
+            </Box>
+        </Container>
     );
 }
 
