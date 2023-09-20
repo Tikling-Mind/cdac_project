@@ -58,7 +58,7 @@ const theme = createTheme({
       main: '#26a69a',
     },
     text: {
-      primary: '#00000', // White text color
+      primary: '#00000', 
     },
   },
 });
@@ -99,7 +99,7 @@ function App() {
               <Route path="sign-in" element={<Login isLoggedIn={updateLogin} />} />
               <Route path="sign-up" element={<SignUp />} />
               <Route path="faq" element={<Faq />} />
-              <Route path="vendorsList" element={<VendorsList />} />
+              <Route path="vendorsList/:pincode" element={<VendorsList />} />
               <Route path="privacy" element={<PrivacyPolicy />} />
               {/* Add other common routes here */}
               {/* Customer Routes */}

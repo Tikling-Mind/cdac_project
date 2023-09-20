@@ -25,7 +25,6 @@ export const validatePincode = (pin) => {
     if (pincode.test(pin)) {
         return true;
     } else {
-        swal("Invalid Pincode", "", "error");
         return false;
     }
 };

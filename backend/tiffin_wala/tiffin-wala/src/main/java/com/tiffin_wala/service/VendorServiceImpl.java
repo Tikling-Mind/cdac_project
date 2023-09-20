@@ -110,7 +110,8 @@ public class VendorServiceImpl implements VendorService {
 		addressRepo.findAllByAddressTypeAndCustomer(AddressType.HOME,null)
 				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"))
 				.forEach(address -> { //Get Vendor corresponding to an address
-									// Create addresss Dto and put it in the list
+									// Create addresss Dto and put it in the list'
+					System.out.println(address.getVendor().getFirstName());
 					if(address.getVendor().isVerified()) {
 						VendorDto vendorDto = modelMapper.map(address.getVendor(), VendorDto.class) ;
 						vendorDto.setAddress(modelMapper.map(address, AddressDto.class)) ;
@@ -141,23 +142,18 @@ public class VendorServiceImpl implements VendorService {
 
 	@Override
 	public List<VendorDto> getAllUnapprovedVendors() {
-		System.out.println("Findin upapproved vendors");
 		List<VendorDto> allUnApprovedVendorsList = new ArrayList<VendorDto>() ;
 		
 		addressRepo.findAllByAddressTypeAndCustomer(AddressType.HOME,null)
 				.orElseThrow(()->new ResourceNotFoundException("Error occured while fecthing addresses!"))
 				.forEach(address -> { //Get Vendor corresponding to an address
 									// Create addresss Dto and put it in the list
-					System.out.println(address.getCity());
 					if(!address.getVendor().isVerified()) {
 						VendorDto vendorDto = modelMapper.map(address.getVendor(), VendorDto.class) ;
 						vendorDto.setAddress(modelMapper.map(address, AddressDto.class)) ;
 						allUnApprovedVendorsList.add(vendorDto);					
 					}
-				});
-		System.out.println(allUnApprovedVendorsList.get(0).getFirstName() );
-		System.out.println(allUnApprovedVendorsList.size());
-		
+				});		
 		if (allUnApprovedVendorsList.isEmpty())
 			throw new ResourceNotFoundException("No vendors exists" ) ;
 		

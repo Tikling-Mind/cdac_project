@@ -77,7 +77,7 @@ function Login(props) {
                     if (err.response && err.response.status === 401) {
                         swal("Wrong Details", "Please enter valid credentials.", "error");
                     } else {
-                        swal("Error", "An error occurred while processing your request.", "error");
+                        swal("Error", err.response.data.message, "error");
                     }
                 })
         } else {

@@ -1,97 +1,66 @@
-import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import swal from "sweetalert";
-import { IP_ADDRS } from "../../../service/BaseAddress"
-import vendorService from "../../../service/VendorService"
-
-//path: getAllApprovedVendors
+import { useNavigate, useParams } from 'react-router-dom';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import swal from 'sweetalert';
+import { IP_ADDRS } from '../../../service/BaseAddress';
+import vendorService from '../../../service/VendorService';
 
 const VendorList = () => {
-
+    const pincode = useParams().pincode ;
     const [vendorList, setVendorList] = useState([]);
     const [refreshFlag, setRefreshFlag] = useState(false);
     const navigate = useNavigate();
-    const vendorURL = IP_ADDRS + "/vendor/"
-
-    const handleSubmit = () => {
-        window.location.href = "http://localhost:3000/vendorsList";
-      };
+    const vendorURL = IP_ADDRS + '/vendor/';
 
     useEffect(() => {
-        let admin = JSON.parse(sessionStorage.getItem("admin"));
-        //axios.get(`${IP_ADDRS}/vendors/allvendors`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.getAllApprovedVendors()
-            .then(res => {
-                console.log(res.data);
-                setVendorList(res.data);
+        vendorService
+            .getAllApprovedVendors()
+            .then((res) => {
+                console.log(pincode) ;
+                setVendorList(res.data.filter((vendor)=>vendor.address.pincode==pincode));
+                console.log(vendorList) ;
             })
-            .catch(err => {
-                console.log(err);
-                swal("Something went Wrong", "", "error")
-            })
-    }, [refreshFlag])
+            .catch((err) => {
+                console.error(err);
+                swal('Something went wrong', '', 'error');
+            });
+    }, [refreshFlag]);
 
-    const changeBlockingStatus = (d) => {
-        let admin = JSON.parse(sessionStorage.getItem("admin"));
-        d.isBlocked = !d.isBlocked ;
-        //axios.get(`${IP_ADDRS}/vendors/${d.id}/block`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.changeBlockingStatus(d,admin.jwt) 
-            .then(res => {
-                setRefreshFlag(~refreshFlag);
-            }).catch(err =>
-                d.isBlocked
-                ?   swal("Unable to UnBlock", "", "error")
-                :   swal("Unable to Block", "", "error")
-                    );
-    }
+    const handleVendorClick = (vendorId) => {
+        // Redirect to the vendor details page or do something else when a vendor card is clicked
+        navigate(`/vendorDetails/${vendorId}`);
+    };
 
     return (
-        <>
-            <div className="container my-4">
-                <div>
-                    <h3>All Approved Vendors</h3>
+        <div>
+            <Grid container spacing={2}>
+                {vendorList.map((vendor) => (
+                    <Grid item xs={12} sm={6} md={4} key={vendor.id}>
+                        <Card onClick={() => handleVendorClick(vendor.id)} style={{ cursor: 'pointer' }}>
+                        <CardContent>
+                            <Typography variant="h6" component="div">
+                                {vendor.firstName + " "+ vendor.lastName}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                Address:
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                {vendor.address.line1}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                {vendor.address.line2}
+                            </Typography>
+                        </CardContent>
 
-                    <table className="table table-bordered">
-                        <thead className="bg-dark text-light">
-                            <tr>
-                                <th>Id</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Email Id</th>
-                                <th>Tiffin List</th>
-    
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {vendorList.map((v, i) => {
-                                return (
-                                    <tr key={v.id}>
-                                        <td>{v.id}</td>
-                                        <td>{v.firstName}</td>
-                                        <td>{v.lastName}</td>
-                                        <td>{v.email}</td>
-                                        <td>
-                                            <button className="btn" onClick={this.handleSubmit}>Show</button>
-                                        </td>
-                                        {/* <td>{v.fees}</td>
-                                        <td>{v.address[0].town}</td>
-                                        <td>{v.address[0].city}</td>
-                                        <td>{v.address[0].state}</td> */}
-                                        {/* <td>
-                                            {v.isBlocked}?
-                                                <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Unblock</button>
-                                            :
-                                                <button className="btn btn-danger" onClick={() => changeBlockingStatus(v)}>Block</button>
-                                        </td> */}
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </>
-    )
-}
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </div>
+    );
+};
+
 export default VendorList;

@@ -1,9 +1,8 @@
-import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from "sweetalert";
-import { IP_ADDRS } from "../../../service/BaseAddress"
-
+import { Container, Typography, Card, CardContent, Grid } from '@mui/material';
+import { IP_ADDRS } from "../../../service/BaseAddress";
 
 function Admin() {
     const [admin, setAdmin] = useState({
@@ -27,102 +26,110 @@ function Admin() {
                 id: adm.id,
                 email: adm.email,
                 jwt: adm.jwt
-            })
+            });
         }
     }, [])
 
+    const cardStyle = {
+        cursor: "pointer",
+        minHeight: 120,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: 'primary.main', // Default Material-UI primary color
+        color: "text.primary", // Default Material-UI text color
+        opacity: 0.8,
+    };
+
+    const navigateToPage = (page) => {
+        navigate(page);
+    };
 
     return (
         <>
-            {loggedIn ?
-                (<>
-                    <div className="jumbotron" style={{ marginLeft: 20 }}>
-                        <h3 style={{ marginTop: 10 }}>Hello ,
-                        </h3>
-                        <h1 style={{ marginLeft: 30 }}>
-                            Admin
-                        </h1>
-                        <h5 style={{ marginLeft: 30 }}>
-                            {admin.email}
-                        </h5>
-                    </div>
-                    <hr className="my-4" />
+            {loggedIn ? (
+                <>
+                    <Container>
+                        <Typography variant="h3" align="center" gutterBottom>
+                            Hello, Admin
+                        </Typography>
 
-                    <div className="container" style={{ marginBottom: "50px", textAlign: "center" }}>
-                        <div className="row" >
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("getAllApprovedVendors")}>
-                                    <div className="card-body" >
-                                        <h5 className="card-title">Approved Vendors</h5>
-                                        <p className="card-text">List of All Vendors</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("getAllCustomers")}>
-                                    <div className="card-body">
-                                        <h5 className="card-title">Get All Customers</h5>
-                                        <p className="card-text">List of All Customers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <hr className="my-4" />
 
-                        <div className="row my-3">
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("getAllUnApprovedVendors")}>
-                                    <div className="card-body">
-                                        <h5 className="card-title">Unapproved Vendors</h5>
-                                        <p className="card-text">List of all Unapproved Vendors</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("getAllBlockedVendors")}>
-                                    <div className="card-body">
-                                        <h5 className="card-title">Blocked Vendors</h5>
-                                        <p className="card-text">List of Blocked Vendors</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row my-3">
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("getAllBlockedCustomers")}>
-                                    <div className="card-body">
-                                        <h5 className="card-title">Blocked Customers</h5>
-                                        <p className="card-text">List of all Customers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* 
-                        <div className="row" >
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/disableSubscriptionPlan")}>
-                                    <div className="card-body" >
-                                        <h5 className="card-title">Disable Subscription Plan</h5>
-                                        <p className="card-text">Make Subscription Plan Unavaliable for Purchase</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-6">
-                                <div className="card" onClick={() => navigate("/enableSubscriptionPlan")}>
-                                    <div className="card-body">
-                                        <h5 className="card-title">Enable Subscription Plan</h5>
-                                        <p className="card-text">Make Subscription Plan Avaliable for Purchase</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
-
-                    </div>
-                </>)
-
-                : <div style={{ textAlign: "center" }}><h1>Please Log in to Access this page</h1></div>}
+                        <Container maxWidth="md" style={{ marginBottom: "50px" }}>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} sm={6}>
+                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllApprovedVendors")}>
+                                        <CardContent>
+                                            <Typography variant="h5" component="div">
+                                                Approved Vendors
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                List of All Vendors
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllCustomers")}>
+                                        <CardContent>
+                                            <Typography variant="h5" component="div">
+                                                Get All Customers
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                List of All Customers
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllUnApprovedVendors")}>
+                                        <CardContent>
+                                            <Typography variant="h5" component="div">
+                                                Unapproved Vendors
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                List of all Unapproved Vendors
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllBlockedVendors")}>
+                                        <CardContent>
+                                            <Typography variant="h5" component="div">
+                                                Blocked Vendors
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                List of Blocked Vendors
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllBlockedCustomers")}>
+                                        <CardContent>
+                                            <Typography variant="h5" component="div">
+                                                Blocked Customers
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                List of all Customers
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </Container>
+                    </Container>
+                </>
+            ) : (
+                <Typography variant="h3" align="center" gutterBottom>
+                    Please Log in to Access this page
+                </Typography>
+            )}
         </>
-    )
-
+    );
 }
 
 export default Admin;

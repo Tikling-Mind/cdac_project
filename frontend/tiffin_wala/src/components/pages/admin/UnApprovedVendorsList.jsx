@@ -25,14 +25,14 @@ const UnApprovedVendorList = () => {
             })
             .catch(err => {
                 console.log(err);
-                swal("Something went Wrong", "", "error")
+                swal(err.response.data.message, "", "error")
             })
     }, [refreshFlag])
 
     const approveVendor = (d) => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         //axios.get(`${IP_ADDRS}/vendors/${d.id}/block`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        vendorService.approveVendor(d.id,d, admin.jwt)
+        vendorService.getAllUnApprovedVendors(admin.jwt)
         .then(res => {
                 setRefreshFlag(!refreshFlag);
             }).catch(err =>
