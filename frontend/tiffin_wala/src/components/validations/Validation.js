@@ -5,7 +5,6 @@ export const validateMobile = (mobNo) => {
     if (phoneno.test(mobNo)) {
         return true;
     } else {
-        swal("Invalid mobile number", "", "error");
         return false;
     }
 };
@@ -15,7 +14,6 @@ export const validateName = (name) => {
     if (namePattern.test(name)) {
         return true;
     } else {
-        swal("Invalid name", "", "error");
         return false;
     }
 };
@@ -45,7 +43,6 @@ export const validateEmail = (email) => {
     if (mailformat.test(email)) {
         return true;
     } else {
-        // swal("Invalid email address!", "", "error");
         return false;
     }
 
