@@ -19,6 +19,7 @@ import VendorsList from './components/pages/common/VendorsList';
 import PrivacyPolicy from './components/pages/common/PrivacyPolicy';
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
+import AddAddress from './components/pages/AddAddress';
 
 import CustomerHome from './components/pages/customer/CustomerHome';
 import CustomerAvailableTiffins from './components/pages/customer/CustomerAvailableTiffins';
@@ -98,9 +99,11 @@ function App() {
               <Route index element={<Home />} />
               <Route path="sign-in" element={<Login isLoggedIn={updateLogin} />} />
               <Route path="sign-up" element={<SignUp />} />
+              <Route path="addAddress" element={<AddAddress/>} />
               <Route path="faq" element={<Faq />} />
               <Route path="vendorsList/:pincode" element={<VendorsList />} />
               <Route path="privacy" element={<PrivacyPolicy />} />
+
               {/* Add other common routes here */}
               {/* Customer Routes */}
               <Route path="customer" element={<CustomerHome />} />

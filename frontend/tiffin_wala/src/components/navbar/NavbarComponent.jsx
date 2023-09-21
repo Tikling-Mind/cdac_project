@@ -88,14 +88,15 @@ class NavbarComponent extends Component {
                         <form className="form-inline my-2 my-lg-0">
                             {/* Pincode Input */}
                             <input
-                                className={`form-control mr-sm-2 ${!isPincodeValid ? 'is-invalid' : ''}`}
+                                className={`form-control mr-sm ${!isPincodeValid ? 'is-invalid' : ''}`}
                                 type="search"
                                 placeholder="Enter your pincode"
                                 aria-label="Search"
                                 value={pincode}
                                 onChange={this.handlePincodeChange}
+                                style={{ width: '200px' }} // Keep width constant
                             />
-
+                            &nbsp;
                             {/* Search Button */}
                             <button
                                 className="btn btn-outline-success my-2 my-sm-0"
