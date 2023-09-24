@@ -37,9 +37,14 @@ function Admin() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: 'primary.main', // Default Material-UI primary color
-        color: "text.primary", // Default Material-UI text color
-        opacity: 0.8,
+        background: 'linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), rgba(255, 255, 255, 0.05)',
+        color: "text.primary",
+        border: "1px solid rgba(255, 255, 255, 0.2)",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        transition: "transform 0.2s ease-in-out", // Add a transition for the zoom effect
+        "&:hover": {
+            transform: "scale(1.05)", // Zoom in by 5% on hover
+        },
     };
 
     const navigateToPage = (page) => {
@@ -65,8 +70,8 @@ function Admin() {
                                             <Typography variant="h5" component="div">
                                                 Approved Vendors
                                             </Typography>
-                                            <Typography variant="body2">
-                                                List of All Vendors
+                                            <Typography variant="body2" align="center">
+                                                Show all approved vendors
                                             </Typography>
                                         </CardContent>
                                     </Card>
@@ -75,10 +80,10 @@ function Admin() {
                                     <Card sx={cardStyle} onClick={() => navigateToPage("getAllCustomers")}>
                                         <CardContent>
                                             <Typography variant="h5" component="div">
-                                                Get All Customers
+                                                Customers
                                             </Typography>
-                                            <Typography variant="body2">
-                                                List of All Customers
+                                            <Typography variant="body2" align="center">
+                                                Show All Customers
                                             </Typography>
                                         </CardContent>
                                     </Card>
@@ -89,20 +94,8 @@ function Admin() {
                                             <Typography variant="h5" component="div">
                                                 Unapproved Vendors
                                             </Typography>
-                                            <Typography variant="body2">
-                                                List of all Unapproved Vendors
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllBlockedVendors")}>
-                                        <CardContent>
-                                            <Typography variant="h5" component="div">
-                                                Blocked Vendors
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                List of Blocked Vendors
+                                            <Typography variant="body2" align='center'>
+                                                Show all Unapproved Vendors
                                             </Typography>
                                         </CardContent>
                                     </Card>
@@ -113,8 +106,20 @@ function Admin() {
                                             <Typography variant="h5" component="div">
                                                 Blocked Customers
                                             </Typography>
-                                            <Typography variant="body2">
-                                                List of all Customers
+                                            <Typography variant="body2" align="center">
+                                                Show all Customers
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Card sx={cardStyle} onClick={() => navigateToPage("getAllBlockedVendors")}>
+                                        <CardContent>
+                                            <Typography variant="h5" component="div">
+                                                Blocked Vendors
+                                            </Typography>
+                                            <Typography variant="body2" align="center">
+                                                Show all Blocked Vendors
                                             </Typography>
                                         </CardContent>
                                     </Card>
